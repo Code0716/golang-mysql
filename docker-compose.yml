@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  go_db:
+    image: mysql:5.7
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./mysql:/docker-entrypoint-initdb.d
+    container_name: golang_db
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: world
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+
+  golang:
+    build: .
+    volumes:
+      - ./web:/web
+    container_name: golang_app
+    depends_on:
+      - go_db
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_DB_HOST: go_db
+      MYSQL_DB: world
+      MYSQL_PORT: 3306
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+    restart: always
+
+volumes:
+  mysql_data:
