@@ -38,7 +38,7 @@ func main() {
 
 		city := []City{}
 		//db.AutoMigrate(&city)
-		db.Select("id,name,country_code,district,population").Find(&city)
+		db.Select("id,name,district,population").Find(&city)
 
 		/*for _, value := range city {
 			fmt.Println(value)
