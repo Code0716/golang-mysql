@@ -1,51 +1,57 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 	"net/http"
 
+	"./pkg/modules"
 	"github.com/gin-gonic/gin"
-	//"github.com/jinzhu/gorm"
-
-	"./constants"
-	"./handler/connectDB"
 )
-
-// City struct
-// gorm.Modelと記述するとcreated_at、updated_at、deleted_atが定義される。
-type City struct {
-	//gorm.Model
-	ID          int    //`json:"id"`
-	Name        string //`json:"name"`
-	CountryCode string //`json:"country_code"`
-	District    string //`json:"district"`
-	Population  int    //`json:"population"`
-}
 
 func main() {
 
 	r := gin.Default()
-	r.GET("/hello", func(c *gin.Context) {
-		c.String(http.StatusOK, "Hello world")
+
+	// 全レコード取得
+	r.GET("/cities", func(c *gin.Context) {
+		// struct
+		var cities modules.Cities
+		// interface
+		var world modules.WorldDB
+		world = &cities
+		world.GetAll()
+		c.JSON(http.StatusOK, cities)
+
 	})
 
-	r.GET("/", func(c *gin.Context) {
-		db := connectDB.ConnectMySQL(constants.DBTableWorld)
-		defer db.Close()
-		db.LogMode(true)
-		// 勝手に複数形になるのを抑制
-		db.SingularTable(true)
+	// 全レコード取得
+	r.GET("/countries", func(c *gin.Context) {
+		// struct
+		var countries modules.Countries
+		// interface
+		var world modules.WorldDB
+		world = &countries
+		world.GetAll()
+		c.JSON(http.StatusOK, countries)
 
-		city := []City{}
-		//db.AutoMigrate(&city)
-		db.Select("id,name,district,population").Find(&city)
-
-		/*for _, value := range city {
-			fmt.Println(value)
-		}*/
-		c.JSON(http.StatusOK, city)
-		fmt.Println("DONE")
 	})
+
+	/*
+		TODO
+		//一件取得
+			r.GET("/country/:name", func(c *gin.Context) {
+				// struct
+				var country modules.Country
+				// interface
+				var world modules.WorldDB
+				name := c.Param("name")
+				world(&country, name)
+				world.GetSingle()
+				c.JSON(http.StatusOK, country)
+
+			})*/
 
 	r.Run(":8080")
 }
+
+//curl http://localhost:8080/

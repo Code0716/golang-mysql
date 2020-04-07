@@ -1,4 +1,4 @@
-package connectDB
+package db
 
 import (
 	"fmt"
