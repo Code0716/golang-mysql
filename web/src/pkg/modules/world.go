@@ -5,36 +5,27 @@ import (
 	"../db"
 )
 
+// WorldDB interface
+type WorldDB interface {
+	// 全件取得
+	GetAll()
+	// 一件取得
+	GetSingle(name string)
+}
+
 // City struct
 // gorm.Modelと記述するとcreated_at、updated_at、deleted_atが定義される。
 type City struct {
 	//gorm.Model
-	ID         int    `json:"id"`
-	Name       string `json:"name"`
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	//CountryCode string `json:"country_code"`
 	District   string `json:"district"`
 	Population int    `json:"population"`
 }
 
 // Cities []City
 type Cities []City
-
-// Country struct
-type Country struct {
-	Code      string `json:"code"`
-	Name      string `json:"name"`
-	Continent string `json:"continent"`
-}
-
-// Countries []Country
-type Countries []Country
-
-// WorldDB interface
-type WorldDB interface {
-	// 全件取得
-	GetAll()
-	// 一件取得
-	//GetSingle()
-}
 
 /*GetAll()を共通化できないか？ーーーーーーーーーーーーーーーーーーーーーー*/
 
@@ -47,22 +38,46 @@ func (cities *Cities) GetAll() {
 	db.SingularTable(true)
 
 	//　db.AutoMigrate(&city)
-	//　初期データとして投入したものがdb.Find(&city)で取得出来ないのでこの形にした。
+	//　migrateしないとだめ？
 	db.Select("id,name,district,population").Find(&cities)
 }
 
-// GetAll []Country
-func (countrys *Countries) GetAll() {
+// GetSingle City
+func (cities *Cities) GetSingle(name string) {
 	db := db.ConnectMySQL(constants.DBTableWorld)
 	defer db.Close()
 	db.LogMode(true)
 	// 勝手に複数形になるのを抑制
 	db.SingularTable(true)
-
-	db.Select("code,name,continent").Find(&countrys)
+	db.Select("id,name,district,population").Find(&cities, "name = ?", name)
 }
 
-// GetAll func
-func GetAll(world WorldDB) {
-	world.GetAll()
+// Country struct
+type Country struct {
+	Code      string `json:"code"`
+	Name      string `json:"name"`
+	Continent string `json:"continent"`
+}
+
+// Countries []Country
+type Countries []Country
+
+// GetAll []Country
+func (countries *Countries) GetAll() {
+	db := db.ConnectMySQL(constants.DBTableWorld)
+	defer db.Close()
+	db.LogMode(true)
+	// 勝手に複数形になるのを抑制
+	db.SingularTable(true)
+	db.Select("code,name,continent").Find(&countries)
+}
+
+// GetSingle Country
+func (countries *Countries) GetSingle(name string) {
+	db := db.ConnectMySQL(constants.DBTableWorld)
+	defer db.Close()
+	db.LogMode(true)
+	// 勝手に複数形になるのを抑制
+	db.SingularTable(true)
+	db.Select("code,name,continent").Find(&countries, "name = ?", name)
 }
