@@ -7,50 +7,74 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Routing func
+// Layout func
 func Layout() {
-	// struct
+
 	router := gin.Default()
-	// interface
-	var world modules.WorldDB
 
-	// struct
-	var cities modules.Cities
-	var countries modules.Countries
-
-	// 全レコード取得 cities
-	router.GET("/cities", func(c *gin.Context) {
-		world = &cities
-		world.GetAll()
-		c.JSON(http.StatusOK, cities)
-
-	})
-
-	//　１件取得 city
-	router.GET("/city/:name", func(c *gin.Context) {
-		name := c.Param("name")
-		world = &cities
-		world.GetSingle(name)
-		c.JSON(http.StatusOK, cities)
-
-	})
-
-	// 全レコード取得 countries
-	router.GET("/countries", func(c *gin.Context) {
-		world = &countries
-		world.GetAll()
-		c.JSON(http.StatusOK, countries)
-	})
-
-	//　１件取得 country
-	router.GET("/country/:name", func(c *gin.Context) {
-		name := c.Param("name")
-		world = &countries
-		world.GetSingle(name)
-		c.JSON(http.StatusOK, countries)
-	})
+	// api group
+	api := router.Group("/api")
+	{
+		// 全レコード取得 cities
+		api.GET("/city", getCities)
+		//　１件取得 city
+		api.GET("/city/:name", getCity)
+		// 全レコード取得 countries
+		api.GET("/country", getCountries)
+		//　１件取得 country
+		api.GET("/country/:name", getCountry)
+	}
 
 	router.Run(":8080")
 }
 
 //curl http://localhost:8080/
+
+func getCities(ginContext *gin.Context) {
+	// interface
+	var world modules.WorldDB
+	// struct
+	var cities modules.Cities
+
+	world = &cities
+	world.GetAll()
+	ginContext.JSON(http.StatusOK, cities)
+}
+
+func getCity(ginContext *gin.Context) {
+	// interface
+	var world modules.WorldDB
+	// struct
+	var cities modules.Cities
+
+	name := ginContext.Param("name")
+
+	world = &cities
+	world.GetSingle(name)
+	ginContext.JSON(http.StatusOK, cities)
+}
+
+func getCountries(ginContext *gin.Context) {
+	// interface
+	var world modules.WorldDB
+	// struct
+	var countries modules.Countries
+
+	world = &countries
+
+	world.GetAll()
+	ginContext.JSON(http.StatusOK, countries)
+}
+
+func getCountry(ginContext *gin.Context) {
+	// interface
+	var world modules.WorldDB
+	// struct
+	var countries modules.Countries
+
+	name := ginContext.Param("name")
+
+	world = &countries
+	world.GetSingle(name)
+	ginContext.JSON(http.StatusOK, countries)
+}

@@ -17,11 +17,10 @@ type WorldDB interface {
 // gorm.Modelと記述するとcreated_at、updated_at、deleted_atが定義される。
 type City struct {
 	//gorm.Model
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	//CountryCode string `json:"country_code"`
-	District   string `json:"district"`
-	Population int    `json:"population"`
+	ID         int    `id:"id"`
+	Name       string `json:"name"`
+	Code       string `json:"code"`
+	Population string `json:"population"`
 }
 
 // Cities []City
@@ -39,7 +38,7 @@ func (cities *Cities) GetAll() {
 
 	//　db.AutoMigrate(&city)
 	//　migrateしないとだめ？
-	db.Select("id,name,district,population").Find(&cities)
+	db.Select("id,name,code,population").Find(&cities)
 }
 
 // GetSingle City
@@ -49,7 +48,7 @@ func (cities *Cities) GetSingle(name string) {
 	db.LogMode(true)
 	// 勝手に複数形になるのを抑制
 	db.SingularTable(true)
-	db.Select("id,name,district,population").Find(&cities, "name = ?", name)
+	db.Select("id,name,code").Find(&cities, "name = ?", name)
 }
 
 // Country struct
