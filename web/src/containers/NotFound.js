@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 
 class NotFound extends React.Component {
   render() {
@@ -18,4 +18,3 @@ class NotFound extends React.Component {
   }
 }
 export default NotFound;
-//-------------------------------------------------------------------------

@@ -1,7 +1,5 @@
-import homeReducer from "./homeReducer";
-import sideMenuReducer from "./sideMenuReducer";
+import home from './homeReducer';
 
 export default {
-  home: homeReducer,
-  sideMenu: sideMenuReducer
+  home,
 };

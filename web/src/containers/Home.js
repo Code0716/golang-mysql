@@ -1,61 +1,60 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { useState, useMemo } from 'react';
 import { homeActions } from '../actions/homeActions';
 
-export class Home extends React.Component {
-  render() {
-    const { getData, postData, changeEntity, get, post } = this.props;
-    const { getUrl, postUrl, postEntity } = this.props.entity;
-    return (
-      <React.Fragment>
-        <div className="contents fade-in">
-          <div className="form_container">
-            {getData}
-            {postData}
-            <h1>inputサンプル</h1>
-            <label>GET</label>
-            <input
-              value={getUrl}
-              type="text"
-              onChange={e => changeEntity({ getUrl: e.target.value })}
-            ></input>
-            <button className="action_button" onClick={() => get(getUrl)}>
-              <span>GET button</span>
-            </button>
-            <label>POST</label>
-            <input
-              value={postUrl}
-              type="text"
-              onChange={e => changeEntity({ postUrl: e.target.value })}
-            ></input>
-            <textarea
-              style={{
-                width: '500px',
-                height: '300px',
-                display: 'block',
-                margin: '0 auto',
-              }}
-              value={postEntity}
-              onChange={e => changeEntity({ postEntity: e.target.value })}
-            />
-            <button
-              className="action_button"
-              onClick={() => post(postUrl, postEntity)}
-            >
-              <span>POST button</span>
-            </button>
-          </div>
+const Home = () => {
+  const [getInput, setGetInput] = useState('');
+  const [postInput, setPostInput] = useState('');
+  const [textArea, setTextArea] = useState('');
+
+  const { getData, postData, get, post } = homeActions();
+
+  const country = useMemo(() => {
+    return getData.map((val, index) => <li key={index}>{val.name}</li>);
+  }, [getData]);
+
+  return (
+    <React.Fragment>
+      <div className="contents fade-in">
+        <div className="form_container">
+          <div>非同期通信の確認画面</div>
+          {country}
+          {postData}
+          <h1>inputサンプル</h1>
+          <label>GET</label>
+          <input
+            value={getInput}
+            type="text"
+            onChange={e => setGetInput(e.target.value)}
+          />
+          <button className="action_button" onClick={() => get(getInput)}>
+            <span>GET button</span>
+          </button>
+          <label>POST</label>
+          <input
+            value={postInput}
+            type="text"
+            onChange={e => setPostInput(e.target.value)}
+          ></input>
+          <textarea
+            style={{
+              width: '500px',
+              height: '300px',
+              display: 'block',
+              margin: '0 auto',
+            }}
+            value={textArea}
+            onChange={e => setTextArea(e.target.value)}
+          />
+          <button
+            className="action_button"
+            onClick={() => post(postInput, textArea)}
+          >
+            <span>POST button</span>
+          </button>
         </div>
-      </React.Fragment>
-    );
-  }
-}
+      </div>
+    </React.Fragment>
+  );
+};
 
-//-------------------------------------------------------------------------
-
-const mapStateToProps = ({ home }) => home;
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(homeActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

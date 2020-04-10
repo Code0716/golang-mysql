@@ -1,72 +1,64 @@
-import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Link } from "react-router-dom";
-import { sideMenuAction } from "../actions/sideMenuAction";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-export class SideMenu extends React.Component {
-  componentWillUnmount() {
-    this.props.initialize();
-  }
+const SideMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  render() {
-    const { initialize, isSideOpen, changeState } = this.props;
+  const pathname = useSelector(({ router }) => router.location.pathname);
 
-    const hamburgerClassName = isSideOpen
-      ? "hamburger hamburger--3dx is-active"
-      : "hamburger hamburger--3dx";
-    const droawerClassName = isSideOpen
-      ? "drawer-menu drawer-open"
-      : "drawer-menu";
+  useEffect(() => setIsOpen(false), [pathname]);
 
-    const links = [
-      {
-        label: "Top",
-        url: "/"
-      },
-      {
-        label: "Not Found",
-        url: "not_found"
-      }
-    ];
+  const links = [
+    {
+      label: '非同期通信の確認画面',
+      url: '/',
+    },
+    {
+      label: 'Not Found',
+      url: 'not_found',
+    },
+  ];
 
-    const linksList = links => {
-      const linkArray = links.map(item => (
-        <li key={item.url} onClick={() => initialize()}>
-          <Link to={item.url}>{item.label}</Link>
-        </li>
-      ));
-      return linkArray;
-    };
+  const linksList = links => {
+    const linkArray = links.map(item => (
+      <li key={item.url}>
+        <Link to={item.url}>{item.label}</Link>
+      </li>
+    ));
+    return linkArray;
+  };
 
-    return (
-      <aside className="fade-in">
-        <nav>
-          <input
-            type="checkbox"
-            className="check"
-            id="checked"
-            onChange={() => changeState({ isSideOpen: !isSideOpen })}
-          />
-          <label className="menu-btn" htmlFor="checked">
-            <span className={hamburgerClassName}>
-              <span className="hamburger-box">
-                <span className="hamburger-inner" />
-              </span>
+  return (
+    <aside className="fade-in">
+      <nav>
+        <input
+          type="checkbox"
+          className="check"
+          id="checked"
+          checked={isOpen}
+          onChange={() => setIsOpen(!isOpen)}
+        />
+        <label className="menu-btn" htmlFor="checked">
+          <span
+            className={
+              isOpen
+                ? 'hamburger hamburger--3dx is-active'
+                : 'hamburger hamburger--3dx'
+            }
+          >
+            <span className="hamburger-box">
+              <span className="hamburger-inner" />
             </span>
-          </label>
-          <label className="close-menu" htmlFor="checked" />
-          <div className={droawerClassName}>
-            <ul className="sub">{linksList(links)}</ul>
-          </div>
-        </nav>
-      </aside>
-    );
-  }
-}
+          </span>
+        </label>
+        <label className="close-menu" htmlFor="checked" />
+        <div className="drawer-menu">
+          <ul className="sub">{linksList(links)}</ul>
+        </div>
+      </nav>
+    </aside>
+  );
+};
 
-const mapStateToProps = ({ sideMenu }) => sideMenu;
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(sideMenuAction, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);
+export default SideMenu;

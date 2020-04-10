@@ -2,13 +2,12 @@ import axios from 'axios';
 import config from '../config';
 
 class HttpRequest {
-  get(data) {
+  get(url) {
     return axios
-      .get(config.API_SERVER_URL + data.url)
+      .get(config.API_SERVER_URL + url)
       .then(response => {
-        console.log(response);
-        const payload = JSON.stringify(response.data);
-        return { payload };
+        const payload = response.data;
+        return payload;
       })
       .catch(error => {
         return { error };

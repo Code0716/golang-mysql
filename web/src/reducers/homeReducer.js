@@ -1,18 +1,8 @@
-import {
-  HOME_GET,
-  HOME_POST,
-  CHANGE_STATE,
-  CHANGE_ENTITY
-} from "../actions/homeActions";
+import { CHANGE_STATE } from '../actions/homeActions';
 
 const initialState = {
-  getData: "",
-  postData: "",
-  entity: {
-    getUrl: "",
-    postUrl: "",
-    postEntity: ""
-  }
+  getData: [],
+  postData: [],
 };
 
 function homeReducer(state = initialState, { type, payload }) {
@@ -20,13 +10,9 @@ function homeReducer(state = initialState, { type, payload }) {
     case CHANGE_STATE:
       return {
         ...state,
-        ...payload
+        ...payload,
       };
-    case CHANGE_ENTITY:
-      return {
-        ...state,
-        entity: { ...state.entity, ...payload }
-      };
+
     default:
       return state;
   }
