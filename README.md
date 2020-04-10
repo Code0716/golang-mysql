@@ -1,5 +1,5 @@
 # golang-mysql
-Golan and MySql
+Golang and MySql
 
 GolangでMySqlのtableを取得するサンプル。
 （world.sqlを利用）<br>
