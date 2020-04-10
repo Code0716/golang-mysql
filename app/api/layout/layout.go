@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"../pkg/modules"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,6 +12,11 @@ import (
 func Layout() {
 
 	router := gin.Default()
+
+	// CORS 対応
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:8080"}
+	router.Use(cors.New(config))
 
 	// api group
 	api := router.Group("/api")
@@ -25,7 +31,7 @@ func Layout() {
 		api.GET("/country/:name", getCountry)
 	}
 
-	router.Run(":8080")
+	router.Run(":8000")
 }
 
 func getCities(ginContext *gin.Context) {

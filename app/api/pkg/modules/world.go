@@ -48,7 +48,7 @@ func (cities *Cities) GetSingle(name string) {
 	db.LogMode(true)
 	// 勝手に複数形になるのを抑制
 	db.SingularTable(true)
-	db.Select("id,name,code").Find(&cities, "name = ?", name)
+	db.Select("id,name,code,population").Find(&cities, "name = ?", name)
 }
 
 // Country struct

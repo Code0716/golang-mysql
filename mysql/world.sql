@@ -1587,7 +1587,7 @@ INSERT INTO `city` VALUES (1533,'Jokohama [Yokohama]','JPN','Kanagawa',3339594);
 INSERT INTO `city` VALUES (1534,'Osaka','JPN','Osaka',2595674);
 INSERT INTO `city` VALUES (1535,'Nagoya','JPN','Aichi',2154376);
 INSERT INTO `city` VALUES (1536,'Sapporo','JPN','Hokkaido',1790886);
-INSERT INTO `city` VALUES (1537,'Kioto','JPN','Kyoto',1461974);
+INSERT INTO `city` VALUES (1537,'Kyoto','JPN','Kyoto',1461974);
 INSERT INTO `city` VALUES (1538,'Kobe','JPN','Hyogo',1425139);
 INSERT INTO `city` VALUES (1539,'Fukuoka','JPN','Fukuoka',1308379);
 INSERT INTO `city` VALUES (1540,'Kawasaki','JPN','Kanagawa',1217359);
