@@ -1,15 +1,11 @@
 package main
 
 import (
-	//"fmt"
-	//"./pkg/modules"
-
-	//"github.com/gin-gonic/gin"
-	//"net/http"
-	"./layout"
+	"../api/layout"
 )
 
 func main() {
+	// Routing
 	layout.Layout()
 }
 

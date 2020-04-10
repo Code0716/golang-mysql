@@ -28,8 +28,6 @@ func Layout() {
 	router.Run(":8080")
 }
 
-//curl http://localhost:8080/
-
 func getCities(ginContext *gin.Context) {
 	// interface
 	var world modules.WorldDB

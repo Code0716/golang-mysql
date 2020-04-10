@@ -8,6 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+// City struct
 type City struct {
 	ID          int
 	Name        string
@@ -16,6 +17,7 @@ type City struct {
 	Population  int
 }
 
+// CityList func
 func CityList() {
 	// sql.Open("mysql", "user:password@tcp(container-name:port)/dbname")
 	db, err := sql.Open("mysql", "dbuser:dbpassword@tcp(go_db:3306)/world")

@@ -1,6 +1,6 @@
 FROM golang:alpine
 
-WORKDIR /web/src
+WORKDIR /app/cmd
 
 COPY /mysql /mysql
 
