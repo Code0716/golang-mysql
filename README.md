@@ -8,6 +8,7 @@ Golang で MySql の table を取得するサンプル。
 Golang <br>
 Gin GORM <br>
 
+TypeScript
 React(hooks)<br>
 react-redux<br>
 connected-react-router<br>
