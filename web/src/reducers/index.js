@@ -1,5 +1,5 @@
-import home from './homeReducer';
+import { testGetPostReducer as testGetPost } from './testGetPostReducer';
 
 export default {
-  home,
+  testGetPost,
 };

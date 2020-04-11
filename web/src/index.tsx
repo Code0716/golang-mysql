@@ -6,7 +6,9 @@ import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
 import configureStore, { history } from './store/store';
 
-import Home from '../src/containers/Home';
+import { Home } from '../src/containers/Home';
+
+import TestGetPost from '../src/containers/TestGetPost';
 import NotFound from './containers/NotFound.js';
 import SideMenu from '../src/components/SideMenu';
 import './sass/style.scss';
@@ -19,6 +21,7 @@ ReactDOM.render(
       <SideMenu />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/test" component={TestGetPost} />
         <Route component={NotFound} />
       </Switch>
     </ConnectedRouter>

@@ -120,7 +120,7 @@ q {
 blockquote {
   &:after,
   &:before {
-    content: "";
+    content: '';
     content: none;
   }
 }
@@ -128,7 +128,7 @@ blockquote {
 q {
   &:after,
   &:before {
-    content: "";
+    content: '';
     content: none;
   }
 }
@@ -138,7 +138,7 @@ table {
   border-spacing: 0;
 }
 
-@import "slide";
+@import 'slide';
 .flex_box {
   display: flex;
   justify-content: center;
@@ -156,11 +156,29 @@ table {
 /*共通部分---------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
 
+input[type='text'],
+input[type='password'],
+input[type='text'],
+input[type='password'],
+input[type='email'],
+textarea,
+select {
+  outline: none !important;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+*:active {
+  outline: none !important;
+}
+
 body {
   color: #330000;
-  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ",
-    Meiryo, "游ゴシック体", "Yu Gothic", YuGothic, "MS P Gothic",
-    "ＭＳ Ｐゴシック", arial, helvetica, sans-serif;
+  font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ',
+    Meiryo, '游ゴシック体', 'Yu Gothic', YuGothic, 'MS P Gothic',
+    'ＭＳ Ｐゴシック', arial, helvetica, sans-serif;
   line-height: 1.6;
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
@@ -311,7 +329,7 @@ body {
   &:before,
   &:after {
     position: absolute;
-    content: "";
+    content: '';
   }
   &:before {
     width: 5.2em;
@@ -384,10 +402,26 @@ body {
     display: block;
     margin: 0 auto;
   }
+
+  select {
+    display: inline-block;
+    height: 2em;
+    padding: 2px 2%;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background: #fafafa;
+    -webkit-appearance: none;
+    font-size: 100%;
+    font-family: inherit;
+    margin-top: 5px;
+    margin: 20px auto;
+    outline: none;
+  }
+
   input {
-    &[type="text"],
-    &[type="password"],
-    &[type="email"] {
+    &[type='text'],
+    &[type='password'],
+    &[type='email'] {
       display: inline-block;
       height: 2em;
       padding: 2px 2%;
@@ -401,9 +435,9 @@ body {
       margin: 20px auto;
       outline: none;
     }
-    &[type="text"]:focus,
-    &[type="password"]:focus,
-    &[type="email"]:focus {
+    &[type='text']:focus,
+    &[type='password']:focus,
+    &[type='email']:focus {
       box-shadow: 0px 0px 5px #55ccff;
       border: 1px solid #55ccff;
       background: #ffffff;

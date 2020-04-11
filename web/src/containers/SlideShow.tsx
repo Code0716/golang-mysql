@@ -1,10 +1,13 @@
 import React from 'react';
+
 import { FormContainer } from '../components/FormContainer';
 
-export const Home = () => {
+const TestGetPost = () => {
   return (
     <FormContainer>
-      <div>HOME</div>
+      <div>TODO</div>
     </FormContainer>
   );
 };
+
+export default TestGetPost;

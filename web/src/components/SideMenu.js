@@ -11,8 +11,12 @@ const SideMenu = () => {
 
   const links = [
     {
-      label: '非同期通信の確認画面',
+      label: 'HOME',
       url: '/',
+    },
+    {
+      label: '非同期通信の確認画面',
+      url: '/test',
     },
     {
       label: 'Not Found',

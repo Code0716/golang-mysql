@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
-import { push } from 'connected-react-router';
+//import { push } from 'connected-react-router';
 
 import HttpRequest from '../service/api/HttpRequest';
 // Actions
@@ -24,12 +24,12 @@ interface PostAction extends Action {
 
 export type HttpRequestActionTypes = GetAction | PostAction;
 
-export const homeActions = () => {
+export const testGetPostActions = () => {
   const dispatch = useDispatch();
   //store
-  const homeState = useSelector(({ home }) => home);
+  const testGetPost = useSelector(({ testGetPost }) => testGetPost);
 
-  const { getData, postData, entity } = homeState;
+  const { getData, postData, entity } = testGetPost;
 
   const get = useCallback(
     async url => {

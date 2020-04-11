@@ -1,4 +1,4 @@
-import { ActionTypes } from '../actions/homeActions';
+import { ActionTypes } from '../actions/testGetPostActions';
 
 export interface State {
   getData: Array<Object>;
@@ -9,7 +9,7 @@ const initialState: State = {
   postData: [],
 };
 
-function homeReducer(state = initialState, { type, payload }) {
+export function testGetPostReducer(state = initialState, { type, payload }) {
   switch (type) {
     case ActionTypes.CHANGE_STATE:
       return {
@@ -21,5 +21,3 @@ function homeReducer(state = initialState, { type, payload }) {
       return state;
   }
 }
-
-export default homeReducer;
