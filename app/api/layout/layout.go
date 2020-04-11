@@ -1,9 +1,12 @@
 package layout
 
 import (
+	"fmt"
 	"net/http"
 
 	"../pkg/modules"
+	"../pkg/scraping"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -29,6 +32,10 @@ func Layout() {
 		api.GET("/country", getCountries)
 		//　１件取得 country
 		api.GET("/country/:name", getCountry)
+		// 大陸一覧
+		api.GET("/continent", getContinentsDB)
+		// スクレイピング
+		api.GET("/scraping", getScrape)
 	}
 
 	router.Run(":8000")
@@ -81,4 +88,16 @@ func getCountry(ginContext *gin.Context) {
 	world = &countries
 	world.GetSingle(name)
 	ginContext.JSON(http.StatusOK, countries)
+}
+
+func getScrape(ginContext *gin.Context) {
+	data := scraping.Scrape()
+	fmt.Println(data)
+	//ginContext.JSON(http.StatusOK, data)
+
+}
+
+func getContinentsDB(ginContext *gin.Context) {
+	data := modules.GetContinentsDB("GetCountDB")
+	ginContext.JSON(http.StatusOK, data)
 }

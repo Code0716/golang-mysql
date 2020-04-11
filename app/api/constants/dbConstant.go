@@ -6,5 +6,5 @@ const (
 	DBUser       = "dbuser"
 	DBPassword   = "dbpassword"
 	DBProtocol   = "tcp(go_db:3306)"
-	DBTableWorld = "world"
+	DBWorld = "world"
 )

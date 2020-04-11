@@ -1,8 +1,8 @@
 import { ActionTypes } from '../actions/testGetPostActions';
 
 export interface State {
-  getData: Array<Object>;
-  postData: Array<Object>;
+  getData: { code: string; name: string }[];
+  postData: { id: number; code: string; name: string }[];
 }
 const initialState: State = {
   getData: [],

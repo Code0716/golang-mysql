@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import { testGetPostActions } from '../actions/testGetPostActions';
-import { Select } from '../components/Select';
-
-import { FormContainer } from '../components/FormContainer';
+import React, { useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
+import { Select } from '../components/Select';
+import { FormContainer } from '../components/FormContainer';
+import { testGetPostActions } from '../actions/testGetPostActions';
 
 const TestGetPost = () => {
   const [getInput, setGetInput] = useState('/city');
@@ -12,9 +11,9 @@ const TestGetPost = () => {
 
   const { getData, postData, get, post } = testGetPostActions();
 
-  const selctData: { key: string; value: string }[] = [
-    { key: '/country', value: '/country' },
-    { key: '/city', value: '/city' },
+  const selctData: { value: string }[] = [
+    { value: '/country' },
+    { value: '/city' },
   ];
 
   const disabled: boolean = true;
@@ -41,12 +40,7 @@ const TestGetPost = () => {
         disabled={disabled}
       />
       <textarea
-        style={{
-          width: '500px',
-          height: '300px',
-          display: 'block',
-          margin: '0 auto',
-        }}
+        className="test_textarea"
         disabled={disabled}
         value={textArea}
         onChange={e => setTextArea(e.target.value)}

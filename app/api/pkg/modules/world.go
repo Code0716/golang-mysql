@@ -17,7 +17,7 @@ type WorldDB interface {
 // gorm.Modelと記述するとcreated_at、updated_at、deleted_atが定義される。
 type City struct {
 	//gorm.Model
-	ID         int    `id:"id"`
+	ID         int    `json:"id"`
 	Name       string `json:"name"`
 	Code       string `json:"code"`
 	Population string `json:"population"`
@@ -30,7 +30,7 @@ type Cities []City
 
 // GetAll []City
 func (cities *Cities) GetAll() {
-	db := db.ConnectMySQL(constants.DBTableWorld)
+	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.LogMode(true)
 	// 勝手に複数形になるのを抑制
@@ -43,7 +43,7 @@ func (cities *Cities) GetAll() {
 
 // GetSingle City
 func (cities *Cities) GetSingle(name string) {
-	db := db.ConnectMySQL(constants.DBTableWorld)
+	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.LogMode(true)
 	// 勝手に複数形になるのを抑制
@@ -63,7 +63,7 @@ type Countries []Country
 
 // GetAll []Country
 func (countries *Countries) GetAll() {
-	db := db.ConnectMySQL(constants.DBTableWorld)
+	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.LogMode(true)
 	// 勝手に複数形になるのを抑制
@@ -73,10 +73,31 @@ func (countries *Countries) GetAll() {
 
 // GetSingle Country
 func (countries *Countries) GetSingle(name string) {
-	db := db.ConnectMySQL(constants.DBTableWorld)
+	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.LogMode(true)
 	// 勝手に複数形になるのを抑制
 	db.SingularTable(true)
 	db.Select("code,name,continent").Find(&countries, "name = ?", name)
+}
+
+// Continent types
+type Continent struct {
+	Continent string `json:"continent"`
+}
+
+// CountryContinents array
+type CountryContinents []Continent
+
+// GetContinentsDB func
+// count
+func GetContinentsDB(path string) CountryContinents {
+	var countryContinents CountryContinents
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+	db.LogMode(true)
+	// 勝手に複数形になるのを抑制
+	db.SingularTable(true)
+	db.Raw("SELECT DISTINCT continent FROM country").Scan(&countryContinents)
+	return countryContinents
 }
