@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { LinksPathnames } from '../constant/commonConstant';
 
 const SideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,16 +12,20 @@ const SideMenu = () => {
 
   const links = [
     {
-      label: 'HOME',
-      url: '/',
+      label: LinksPathnames.HOME.name,
+      url: LinksPathnames.HOME.path,
     },
     {
-      label: '非同期通信の確認画面',
-      url: '/test',
+      label: LinksPathnames.SLIDE.name,
+      url: LinksPathnames.SLIDE.path,
     },
     {
-      label: 'Not Found',
-      url: 'not_found',
+      label: LinksPathnames.TEST.name,
+      url: LinksPathnames.TEST.path,
+    },
+    {
+      label: LinksPathnames.NOT_FOUND.name,
+      url: LinksPathnames.NOT_FOUND.path,
     },
   ];
 

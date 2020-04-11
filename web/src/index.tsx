@@ -6,8 +6,10 @@ import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
 import configureStore, { history } from './store/store';
 
-import { Home } from '../src/containers/Home';
+import { LinksPathnames } from './constant/commonConstant';
 
+import { Home } from '../src/containers/Home';
+import { SlideShow } from '../src/containers/SlideShow';
 import TestGetPost from '../src/containers/TestGetPost';
 import NotFound from './containers/NotFound.js';
 import SideMenu from '../src/components/SideMenu';
@@ -20,8 +22,9 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <SideMenu />
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/test" component={TestGetPost} />
+        <Route exact path={LinksPathnames.HOME.path} component={Home} />
+        <Route exact path={LinksPathnames.SLIDE.path} component={SlideShow} />
+        <Route exact path={LinksPathnames.TEST.path} component={TestGetPost} />
         <Route component={NotFound} />
       </Switch>
     </ConnectedRouter>

@@ -7,7 +7,7 @@ class NotFound extends React.Component {
     return (
       <FormContainer>
         <h1>ページが見つかりません。</h1>
-        <Link to="/">Top</Link>
+        <Link to="/">HOME</Link>
       </FormContainer>
     );
   }

@@ -2,12 +2,10 @@ import React from 'react';
 
 import { FormContainer } from '../components/FormContainer';
 
-const TestGetPost = () => {
+export const SlideShow = () => {
   return (
     <FormContainer>
-      <div>TODO</div>
+      <div>side show todo</div>
     </FormContainer>
   );
 };
-
-export default TestGetPost;
