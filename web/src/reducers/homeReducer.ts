@@ -1,13 +1,17 @@
-import { CHANGE_STATE } from '../actions/homeActions';
+import { ActionTypes } from '../actions/homeActions';
 
-const initialState = {
+export interface State {
+  getData: Array<Object>;
+  postData: Array<Object>;
+}
+const initialState: State = {
   getData: [],
   postData: [],
 };
 
 function homeReducer(state = initialState, { type, payload }) {
   switch (type) {
-    case CHANGE_STATE:
+    case ActionTypes.CHANGE_STATE:
       return {
         ...state,
         ...payload,

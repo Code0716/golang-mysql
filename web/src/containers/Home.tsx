@@ -8,9 +8,10 @@ const Home = () => {
 
   const { getData, postData, get, post } = homeActions();
 
-  const country = useMemo(() => {
-    return getData.map((val, index) => <li key={index}>{val.name}</li>);
-  }, [getData]);
+  const country = useMemo(
+    () => getData.map((val, index) => <li key={index}>{val.name}</li>),
+    [getData],
+  );
 
   return (
     <React.Fragment>

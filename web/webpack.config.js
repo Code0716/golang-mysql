@@ -3,7 +3,7 @@ const rootDir = `${__dirname}/dist/`;
 module.exports = [
   {
     // メインとなるJavaScriptファイル（エントリーポイント）
-    entry: `./src/index.js`,
+    entry: `./src/index.tsx`,
 
     // ファイルの出力設定
     output: {
@@ -15,8 +15,8 @@ module.exports = [
     module: {
       rules: [
         {
-          // 拡張子 .js の場合
-          test: /\.js$/,
+          // 拡張子 .js .jsx の場合
+          test: /\.(js|jsx)$/,
           use: [
             {
               // Babel を利用する
@@ -42,6 +42,12 @@ module.exports = [
           ],
           // node_modules は除外する
           exclude: /node_modules/,
+        },
+        {
+          // 拡張子 .ts もしくは .tsx の場合
+          test: /\.tsx?$/,
+          // TypeScript をコンパイルする
+          use: 'ts-loader',
         },
         {
           test: /\.(scss)$/,
@@ -80,6 +86,10 @@ module.exports = [
           include: [/node_modules/],
         },
       ],
+    },
+    // import 文で .ts や .tsx ファイルを解決するため
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.json'],
     },
     //ソースマップはbuild時削除
     devtool: 'inline-source-map',

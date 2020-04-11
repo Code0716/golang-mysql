@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    // export default を許可する。初期値はfalse
+    "allowSyntheticDefaultImports": true,
+    // jsもトランスパイルできるようにする。
+    "allowJs": true,
+    "declaration": false,
+    "sourceMap": true,
+    // TSはECMAScript 5に変換
+    "target": "es5",
+    // TSのモジュールはES Modulesとして出力
+    "module": "es2015",
+    // JSXの書式を有効に設定
+    "jsx": "react",
+    "moduleResolution": "node",
+    "lib": ["esnext", "es5", "es6", "dom"]
+  }
+}

@@ -1,15 +1,28 @@
-import { push } from 'connected-react-router';
 import { useCallback } from 'react';
+import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
+import { push } from 'connected-react-router';
+
 import HttpRequest from '../service/api/HttpRequest';
 // Actions
-
-export const CHANGE_STATE = 'CHANGE_HOME_STATE';
-export const CHANGE_ENTITY = 'CHANGE_HOME_ENTITY';
-export const HOME_GET = 'HOME_GET';
-export const HOME_POST = 'HOME_POST';
+export const ActionTypes = {
+  GET: 'HOME_GET',
+  POST: 'HOME_POST',
+  CHANGE_STATE: 'HOME_CHANGE_STATE',
+} as const;
 
 // Action Creators
+
+// Actionの型 Actionを継承 TODO
+interface GetAction extends Action {
+  type: typeof ActionTypes.GET;
+}
+
+interface PostAction extends Action {
+  type: typeof ActionTypes.POST;
+}
+
+export type HttpRequestActionTypes = GetAction | PostAction;
 
 export const homeActions = () => {
   const dispatch = useDispatch();
@@ -20,17 +33,17 @@ export const homeActions = () => {
 
   const get = useCallback(
     async url => {
-      dispatch({ type: HOME_GET, url });
+      dispatch({ type: ActionTypes.GET, url });
       const data = await HttpRequest.get(url);
       // Asiaのみ取得
-      dispatch({ type: CHANGE_STATE, payload: { getData: data } });
+      dispatch({ type: ActionTypes.CHANGE_STATE, payload: { getData: data } });
     },
     [dispatch],
   );
 
   const post = useCallback(
     // TODO
-    (url, json) => dispatch({ type: HOME_POST, payload: { url, json } }),
+    (url, json) => dispatch({ type: ActionTypes.POST, payload: { url, json } }),
     [dispatch],
   );
 
