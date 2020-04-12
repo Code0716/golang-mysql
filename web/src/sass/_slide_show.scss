@@ -1,0 +1,27 @@
+.virtualized_row {
+  padding: 5px 0;
+  box-sizing: border-box;
+  display: flex;
+  text-align: left;
+  cursor: pointer;
+}
+
+.virtualized_head {
+  border-bottom: #ffffff 1px solid;
+}
+.colum_row {
+  transition: all 0.3s;
+  border-bottom: #ffffff 1px solid;
+}
+
+.colum_row:hover {
+  color: #00aeec;
+  border-color: violet;
+}
+
+.continent_description {
+  white-space: nowrap;
+  color: #ffffff;
+  box-sizing: border-box;
+  padding: 10px;
+}

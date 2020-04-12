@@ -37,7 +37,6 @@ func (cities *Cities) GetAll() {
 	db.SingularTable(true)
 
 	//　db.AutoMigrate(&city)
-	//　migrateしないとだめ？
 	db.Select("id,name,code,population").Find(&cities)
 }
 

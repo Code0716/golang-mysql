@@ -156,6 +156,20 @@ table {
 /*共通部分---------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
 
+// display
+.d-flex {
+  display: flex;
+}
+
+.d-block {
+  display: block;
+}
+
+// width
+.w100 {
+  width: 100%;
+}
+
 input[type='text'],
 input[type='password'],
 input[type='text'],
@@ -401,7 +415,6 @@ body {
   height: 100vw;
   margin: 0 auto;
   padding: 10px;
-  text-align: center;
   label {
     display: block;
     margin: 0 auto;
@@ -511,7 +524,4 @@ body {
   margin: 0 auto;
 }
 
-.virtualized_row {
-  display: flex;
-  text-align: left;
-}
+@import 'slide_show';

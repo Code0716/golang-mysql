@@ -1,15 +1,30 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 import { FormContainer } from '../components/FormContainer';
 import { slideShowActions } from '../actions/slideShowActions';
 
 export const SlideShow = () => {
-  const slideShow = useSelector(({ slideShow }) => slideShow);
+  const dispatch = useDispatch();
 
-  const { continents, countries, cities } = slideShow;
-  const { getContinents, getCities, getCountries } = slideShowActions();
+  const [isHover, setIsHover] = useState(false);
+  const {
+    // store
+    currentContinent,
+    description,
+    continents,
+    countries,
+    cities,
+    // actions
+    getContinents,
+    getCities,
+    getCountries,
+    getContinentDesc,
+  } = slideShowActions();
+
+  const makePath = continent => continent.replace(' ', '_').toLowerCase();
 
   useEffect(() => {
     getContinents();
@@ -19,19 +34,46 @@ export const SlideShow = () => {
     <FormContainer>
       <AutoSizer>
         {({ width, height }) => (
-          <React.Fragment>
+          <div className="d-flex">
             <Table
               data={continents}
               height={height}
-              width={width}
-              rowHeight={30}
+              width={200}
+              headerHeight={35}
+              rowHeight={35}
               rowGetter={({ index }) => continents[index]}
               rowCount={continents.length}
               rowClassName="virtualized_row"
+              onRowClick={({ rowData }) =>
+                dispatch(push(makePath(rowData.continent)))
+              }
             >
-              <Column width={200} label="continent" dataKey="continent" />
+              <Column
+                width={200}
+                label="Continent"
+                dataKey="continent"
+                className="colum_row"
+                cellRenderer={({ rowData }) => (
+                  <span
+                    className="d-block w100"
+                    onMouseOver={() => {
+                      setIsHover(true);
+                      getContinentDesc(rowData.continent);
+                    }}
+                    onMouseLeave={() => setIsHover(false)}
+                  >
+                    {rowData.continent}
+                  </span>
+                )}
+              />
             </Table>
-          </React.Fragment>
+            {isHover && (
+              <div className="continent_description">
+                <span className="d-block">{currentContinent}</span>
+                <p>{description}</p>
+              </div>
+            )}
+          </div>
         )}
       </AutoSizer>
     </FormContainer>

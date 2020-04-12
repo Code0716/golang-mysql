@@ -30,7 +30,13 @@ export const slideShowActions = () => {
   //store
   const slideShow = useSelector(({ slideShow }) => slideShow);
 
-  const { countries, cities } = slideShow;
+  const {
+    currentContinent,
+    description,
+    continents,
+    countries,
+    cities,
+  } = slideShow;
 
   // continent一覧
   const getContinents = useCallback(async () => {
@@ -72,14 +78,38 @@ export const slideShowActions = () => {
     },
     [dispatch],
   );
+  //  description
+  const getContinentDesc = useCallback(
+    async currentContinent => {
+      dispatch({
+        type: ActionTypes.CHANGE_STATE,
+        payload: { currentContinent: currentContinent },
+      });
+      try {
+        //        const data = await HttpRequest.get(`/scraping/${currentContinent}`);
+        // Asiaのみ取得
+        /*     dispatch({
+          type: ActionTypes.CHANGE_STATE,
+          payload: { description: data },
+        });*/
+      } finally {
+        // TODO
+      }
+    },
+    [dispatch, currentContinent],
+  );
 
   return {
     //state
+    currentContinent,
+    description,
+    continents,
     cities,
     countries,
     //action
     getContinents,
     getCountries,
     getCities,
+    getContinentDesc,
   };
 };

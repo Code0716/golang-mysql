@@ -33,7 +33,7 @@ func Layout() {
 		//　１件取得 country
 		api.GET("/country/:name", getCountry)
 		// 大陸一覧
-		api.GET("/continent", getContinentsDB)
+		api.GET("/continent", getContinentsList)
 		// スクレイピング
 		api.GET("/scraping", getScrape)
 	}
@@ -41,6 +41,7 @@ func Layout() {
 	router.Run(":8000")
 }
 
+// 街一覧
 func getCities(ginContext *gin.Context) {
 	// interface
 	var world modules.WorldDB
@@ -52,6 +53,7 @@ func getCities(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, cities)
 }
 
+//　まち
 func getCity(ginContext *gin.Context) {
 	// interface
 	var world modules.WorldDB
@@ -65,6 +67,7 @@ func getCity(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, cities)
 }
 
+// 国一覧
 func getCountries(ginContext *gin.Context) {
 	// interface
 	var world modules.WorldDB
@@ -77,6 +80,7 @@ func getCountries(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, countries)
 }
 
+// 国get
 func getCountry(ginContext *gin.Context) {
 	// interface
 	var world modules.WorldDB
@@ -90,6 +94,7 @@ func getCountry(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, countries)
 }
 
+//スクレイピング　TODO
 func getScrape(ginContext *gin.Context) {
 	data := scraping.Scrape()
 	fmt.Println(data)
@@ -97,7 +102,8 @@ func getScrape(ginContext *gin.Context) {
 
 }
 
-func getContinentsDB(ginContext *gin.Context) {
+// 大陸一覧.
+func getContinentsList(ginContext *gin.Context) {
 	data := modules.GetContinentsDB("GetCountDB")
 	ginContext.JSON(http.StatusOK, data)
 }
