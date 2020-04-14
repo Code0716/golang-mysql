@@ -173,7 +173,12 @@ table {
 .w100 {
   width: 100%;
 }
-label {
+// text
+.test_center {
+  text-align: center;
+}
+
+.image_up_label {
   padding: 6px;
   border-radius: 12px;
   cursor: pointer;
@@ -200,7 +205,6 @@ select {
 body {
   color: rgb(97, 218, 251);
   background-color: rgb(40, 44, 52);
-
   font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ',
     Meiryo, '游ゴシック体', 'Yu Gothic', YuGothic, 'MS P Gothic',
     'ＭＳ Ｐゴシック', arial, helvetica, sans-serif;

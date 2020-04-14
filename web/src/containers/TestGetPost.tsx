@@ -20,38 +20,41 @@ const TestGetPost = () => {
 
   return (
     <FormContainer>
-      <div>非同期通信の確認画面</div>
-      {postData}
-      <h1>inputサンプル</h1>
-      <label>GET</label>
-      <Select
-        value={getInput}
-        option={selctData}
-        onChange={e => setGetInput(e.target.value)}
-      />
-      <button className="action_button" onClick={() => get(getInput)}>
-        <span>GET button</span>
-      </button>
-      <label>POST(TODO)</label>
-      <input
-        value={postInput}
-        type="text"
-        onChange={() => {}}
-        disabled={disabled}
-      />
-      <textarea
-        className="test_textarea"
-        disabled={disabled}
-        value={textArea}
-        onChange={e => setTextArea(e.target.value)}
-      />
-      <button
-        className="action_button"
-        onClick={() => post(postInput, textArea)}
-        disabled={disabled}
-      >
-        <span>POST button</span>
-      </button>
+      <div className="test_center">
+        <div>非同期通信の確認画面</div>
+        {postData}
+        <h1>inputサンプル</h1>
+        <label>GET</label>
+        <Select
+          value={getInput}
+          option={selctData}
+          onChange={e => setGetInput(e.target.value)}
+        />
+        <button className="action_button" onClick={() => get(getInput)}>
+          <span>GET button</span>
+        </button>
+        <label>POST(TODO)</label>
+        <input
+          value={postInput}
+          type="text"
+          onChange={() => {}}
+          disabled={disabled}
+        />
+        <textarea
+          className="test_textarea"
+          disabled={disabled}
+          value={textArea}
+          onChange={e => setTextArea(e.target.value)}
+        />
+        <button
+          className="action_button"
+          onClick={() => post(postInput, textArea)}
+          disabled={disabled}
+        >
+          <span>POST button</span>
+        </button>
+      </div>
+
       <AutoSizer>
         {({ width, height }) => (
           <Table

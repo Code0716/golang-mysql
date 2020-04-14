@@ -22,7 +22,7 @@ export const UploadImage = () => {
 
   return (
     <FormContainer>
-      <label>
+      <label className="image_up_label">
         ＋写真を選択
         <input
           className="d-none"
