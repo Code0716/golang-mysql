@@ -13,7 +13,10 @@ const TestGetPost = () => {
 
   const selctData: { value: string }[] = [
     { value: '/country' },
+    { value: '/country/japan' },
     { value: '/city' },
+    { value: '/city/tokyo' },
+    { value: '/city/kyoto' },
   ];
 
   const disabled: boolean = true;
@@ -61,11 +64,13 @@ const TestGetPost = () => {
             data={getData}
             height={height}
             width={width}
-            rowHeight={30}
+            rowHeight={35}
             rowGetter={({ index }) => getData[index]}
             rowCount={getData.length}
+            rowClassName="d-flex"
           >
-            <Column width={100} flexGrow={1} label="name" dataKey="name" />
+            <Column width={200} flexGrow={1} label="name" dataKey="name" />
+            <Column width={200} label="code" dataKey="code" />
           </Table>
         )}
       </AutoSizer>
