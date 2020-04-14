@@ -47,7 +47,10 @@ export const imageListActions = () => {
   const addUploadImages = useCallback(
     async files => {
       const submitData = new FormData();
-      submitData.append('image', files);
+      files.forEach(element => {
+        submitData.append('images', element);
+      });
+
       dispatch({
         type: ActionTypes.GET_UPLOAD,
       });

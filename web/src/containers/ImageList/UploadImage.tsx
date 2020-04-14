@@ -11,9 +11,14 @@ export const UploadImage = () => {
 
   const handleChangeFile = (e: any) => {
     const target: HTMLInputElement = e.target as HTMLInputElement;
-    const file: File = target.files.item(0);
-    addUploadImages(file);
+    let files: File[] = [];
+
+    for (let index = 0; index < target.files.length; index++) {
+      files.push(target.files.item(index));
+    }
+
+    addUploadImages(files);
   };
 
-  return <input type="file" onChange={e => handleChangeFile(e)} />;
+  return <input type="file" multiple onChange={e => handleChangeFile(e)} />;
 };

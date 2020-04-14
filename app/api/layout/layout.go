@@ -37,7 +37,7 @@ func Layout() {
 		// スクレイピング
 		api.GET("/scraping", getScrape)
 
-		api.POST("/image/upload", getUploadImg)
+		api.POST("/image/upload", getPreUploadImg)
 
 	}
 
@@ -111,14 +111,15 @@ func getContinentsList(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, data)
 }
 
-func getUploadImg(ginContext *gin.Context) {
+// 画像仮保存
+func getPreUploadImg(ginContext *gin.Context) {
 
 	form, _ := ginContext.MultipartForm()
-	files := form.File["image"]
+	files := form.File["images"]
 
 	fmt.Println(files)
 	for _, file := range files {
-		err := ginContext.SaveUploadedFile(file, "../images/"+file.Filename)
+		err := ginContext.SaveUploadedFile(file, "../images/preupload/"+file.Filename)
 		if err != nil {
 			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		}
