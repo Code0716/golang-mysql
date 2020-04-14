@@ -115,10 +115,10 @@ func getUploadImg(ginContext *gin.Context) {
 
 	form, _ := ginContext.MultipartForm()
 	files := form.File["image"]
-	//	image, header, _ := ginContext.Request.FormFile("image")
+
 	fmt.Println(files)
 	for _, file := range files {
-		err := ginContext.SaveUploadedFile(file, "images/"+file.Filename)
+		err := ginContext.SaveUploadedFile(file, "../images/"+file.Filename)
 		if err != nil {
 			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		}
