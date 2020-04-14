@@ -20,5 +20,18 @@ export const UploadImage = () => {
     addUploadImages(files);
   };
 
-  return <input type="file" multiple onChange={e => handleChangeFile(e)} />;
+  return (
+    <FormContainer>
+      <label>
+        ＋写真を選択
+        <input
+          className="d-none"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={e => handleChangeFile(e)}
+        />
+      </label>
+    </FormContainer>
+  );
 };

@@ -1,8 +1,12 @@
 package modules
 
 import (
+	"net/http"
+
 	"../../constants"
 	"../db"
+
+	"github.com/gin-gonic/gin"
 )
 
 // WorldDB interface
@@ -88,9 +92,9 @@ type Continent struct {
 // CountryContinents array
 type CountryContinents []Continent
 
-// GetContinentsDB func
+// getContinentsDB func
 // count
-func GetContinentsDB(path string) CountryContinents {
+func getContinentsDB(path string) CountryContinents {
 	var countryContinents CountryContinents
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
@@ -99,4 +103,63 @@ func GetContinentsDB(path string) CountryContinents {
 	db.SingularTable(true)
 	db.Raw("SELECT DISTINCT continent FROM country").Scan(&countryContinents)
 	return countryContinents
+}
+
+// 街一覧
+func GetCities(ginContext *gin.Context) {
+	// interface
+	var world WorldDB
+	// struct
+	var cities Cities
+
+	world = &cities
+	world.GetAll()
+	ginContext.JSON(http.StatusOK, cities)
+}
+
+//　まち
+func GetCity(ginContext *gin.Context) {
+	// interface
+	var world WorldDB
+	// struct
+	var cities Cities
+
+	name := ginContext.Param("name")
+
+	world = &cities
+	world.GetSingle(name)
+	ginContext.JSON(http.StatusOK, cities)
+}
+
+// 国一覧
+func GetCountries(ginContext *gin.Context) {
+	// interface
+	var world WorldDB
+	// struct
+	var countries Countries
+
+	world = &countries
+
+	world.GetAll()
+	ginContext.JSON(http.StatusOK, countries)
+}
+
+// 国Get
+func GetCountry(ginContext *gin.Context) {
+	// interface
+	var world WorldDB
+	// struct
+	var countries Countries
+
+	name := ginContext.Param("name")
+
+	world = &countries
+	world.GetSingle(name)
+	ginContext.JSON(http.StatusOK, countries)
+}
+
+// 大陸一覧.
+func GetContinentsList(ginContext *gin.Context) {
+	data := getContinentsDB("GetCountDB")
+	ginContext.JSON(http.StatusOK, data)
 }

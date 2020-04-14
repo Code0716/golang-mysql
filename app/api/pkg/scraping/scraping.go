@@ -1,12 +1,15 @@
 package scraping
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-//Scrape func スクレイピングする関数
-func Scrape() string {
+//scrape func スクレイピングする関数
+func scrape() string {
 	// TODO スクレイピングパッケージをいれるところから。
 	url := "http://example.com/"
 
@@ -21,4 +24,13 @@ func Scrape() string {
 		panic(err)
 	}
 	return string(byteArray)
+}
+
+//GetScrape TODO
+//スクレイピング　TODO
+func GetScrape(ginContext *gin.Context) {
+	data := scrape()
+	fmt.Println(data)
+	//ginContext.JSON(http.StatusOK, data)
+
 }

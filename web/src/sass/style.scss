@@ -165,9 +165,18 @@ table {
   display: block;
 }
 
+.d-none {
+  display: none;
+}
+
 // width
 .w100 {
   width: 100%;
+}
+label {
+  padding: 6px;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 input[type='text'],

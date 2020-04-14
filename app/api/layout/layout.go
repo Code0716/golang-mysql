@@ -1,9 +1,6 @@
 package layout
 
 import (
-	"fmt"
-	"net/http"
-
 	"../pkg/modules"
 	"../pkg/scraping"
 
@@ -25,26 +22,26 @@ func Layout() {
 	api := router.Group("/api")
 	{
 		// 全レコード取得 cities
-		api.GET("/city", getCities)
+		api.GET("/city", modules.GetCities)
 		//　１件取得 city
-		api.GET("/city/:name", getCity)
+		api.GET("/city/:name", modules.GetCity)
 		// 全レコード取得 countries
-		api.GET("/country", getCountries)
+		api.GET("/country", modules.GetCountries)
 		//　１件取得 country
-		api.GET("/country/:name", getCountry)
+		api.GET("/country/:name", modules.GetCountry)
 		// 大陸一覧
-		api.GET("/continent", getContinentsList)
+		api.GET("/continent", modules.GetContinentsList)
 		// スクレイピング
-		api.GET("/scraping", getScrape)
+		api.GET("/scraping", scraping.GetScrape)
 
-		api.POST("/image/upload", getPreUploadImg)
+		api.POST("/image/upload", modules.GetPreUploadImg)
 
 	}
 
 	router.Run(":8000")
 }
 
-// 街一覧
+/*// 街一覧
 func getCities(ginContext *gin.Context) {
 	// interface
 	var world modules.WorldDB
@@ -110,21 +107,4 @@ func getContinentsList(ginContext *gin.Context) {
 	data := modules.GetContinentsDB("GetCountDB")
 	ginContext.JSON(http.StatusOK, data)
 }
-
-// 画像仮保存
-func getPreUploadImg(ginContext *gin.Context) {
-
-	form, _ := ginContext.MultipartForm()
-	files := form.File["images"]
-
-	fmt.Println(files)
-	for _, file := range files {
-		err := ginContext.SaveUploadedFile(file, "../images/preupload/"+file.Filename)
-		if err != nil {
-			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
-		}
-	}
-
-	ginContext.JSON(http.StatusOK, gin.H{"message": "success!!"})
-
-}
+*/
