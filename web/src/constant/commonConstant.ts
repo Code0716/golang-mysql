@@ -11,6 +11,11 @@ export namespace LinksPathnames {
     path: '/slide',
   };
 
+  export const IMAGE_LIST: { name: string; path: string } = {
+    name: 'IMAGE LIST',
+    path: '/images',
+  };
+
   export const TEST: { name: string; path: string } = {
     name: '非同期通信の確認画面',
     path: '/test',

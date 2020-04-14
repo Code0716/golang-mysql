@@ -18,7 +18,7 @@ class HttpRequest {
     const { url, json } = data.payload;
     const switchObject = JSON.parse(json);
     return axios
-      .post(apiPrefix + url, { data: switchObject })
+      .post(config.API_SERVER_URL + url, { data: switchObject })
       .then(response => {
         const payload = response.data;
         return { payload };
@@ -26,6 +26,14 @@ class HttpRequest {
       .catch(error => {
         return { error };
       });
+  }
+
+  postImg(url, submitData) {
+    axios.post(config.API_SERVER_URL + url, submitData, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    });
   }
 }
 

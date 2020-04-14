@@ -36,6 +36,9 @@ func Layout() {
 		api.GET("/continent", getContinentsList)
 		// スクレイピング
 		api.GET("/scraping", getScrape)
+
+		api.POST("/image/upload", getUploadImg)
+
 	}
 
 	router.Run(":8000")
@@ -106,4 +109,21 @@ func getScrape(ginContext *gin.Context) {
 func getContinentsList(ginContext *gin.Context) {
 	data := modules.GetContinentsDB("GetCountDB")
 	ginContext.JSON(http.StatusOK, data)
+}
+
+func getUploadImg(ginContext *gin.Context) {
+
+	form, _ := ginContext.MultipartForm()
+	files := form.File["image"]
+	//	image, header, _ := ginContext.Request.FormFile("image")
+	fmt.Println(files)
+	for _, file := range files {
+		err := ginContext.SaveUploadedFile(file, "images/"+file.Filename)
+		if err != nil {
+			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		}
+	}
+
+	ginContext.JSON(http.StatusOK, gin.H{"message": "success!!"})
+
 }

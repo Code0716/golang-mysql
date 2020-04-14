@@ -32,6 +32,8 @@ export const SlideShow = () => {
 
   return (
     <FormContainer>
+      <div>TODO</div>
+      {/*保存された画像を地域別にスライドショーにする。 */}
       <AutoSizer>
         {({ width, height }) => (
           <div className="d-flex">
