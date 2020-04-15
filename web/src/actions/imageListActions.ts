@@ -49,7 +49,7 @@ export const imageListActions = () => {
 
   //  preupload image
   const addPreUploadImages = useCallback(
-    async files => {
+    async (files: File[]) => {
       const submitData = new FormData();
       files.forEach(element => {
         submitData.append('images', element);
@@ -70,7 +70,7 @@ export const imageListActions = () => {
 
   //  PreUpload delete image
   const deletePreImage = useCallback(
-    async index => {
+    async (index: number) => {
       const copyImages = cloneDeep(preUploadImages);
       const newState = copyImages.filter(elm => elm !== copyImages[index]);
       dispatch({

@@ -2,7 +2,7 @@ package images
 
 import (
 	"encoding/base64"
-	"fmt"
+	//"fmt"
 	"net/http"
 	//"mime/multipart"
 	"os"
@@ -55,7 +55,6 @@ func GetPreUploadImg(ginContext *gin.Context) {
 
 // get save image and Encode to base64
 func encode(fileNama string) string {
-	fmt.Println(fileNama)
 	file, _ := os.Open(preImagePath + fileNama)
 	defer file.Close()
 

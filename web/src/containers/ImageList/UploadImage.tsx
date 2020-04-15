@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
 
 //const createObjectURL = (window.URL || window.webkitURL).createObjectURL;
@@ -13,19 +12,22 @@ export const UploadImage = () => {
     deletePreImage,
   } = imageListActions();
 
-  const handleChangeFile = useCallback((e: any) => {
-    const target: HTMLInputElement = e.target as HTMLInputElement;
-    let files: File[] = [];
+  const handleChangeFile = useCallback(
+    (e: any) => {
+      const target: HTMLInputElement = e.target as HTMLInputElement;
+      let files: File[] = [];
 
-    for (let index = 0; index < target.files.length; index++) {
-      files.push(target.files.item(index));
-    }
+      for (let index = 0; index < target.files.length; index++) {
+        files.push(target.files.item(index));
+      }
 
-    addPreUploadImages(files);
-  }, []);
+      addPreUploadImages(files);
+    },
+    [preUploadImages],
+  );
 
   const preUploadImagesRender = useMemo(() => {
-    const imgs = preUploadImages.map((imagePath, index) => (
+    const imgs = preUploadImages.map((imagePath: string, index: number) => (
       <div key={`pre-up-img${index}`} className="preupload_img">
         <button
           className="button delete_preup"
