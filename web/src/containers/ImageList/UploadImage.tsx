@@ -20,15 +20,17 @@ export const UploadImage = () => {
     addUploadImages(files);
   }, []);
 
-  const preUploadImagesRender = useMemo(() => {
+  const preUploadImagesRender = () => {
     const imgs = preUploadImages.map((imagePath, index) => (
-      <img
-        key={`pre-up-img${index}`}
-        src={'data:image/png;base64,' + imagePath}
-      />
+      <div className="preupload_img">
+        <img
+          key={`pre-up-img${index}`}
+          src={'data:image/png;base64,' + imagePath}
+        />
+      </div>
     ));
-    return <div>{imgs}</div>;
-  }, [preUploadImages]);
+    return <div className="preupload_imgbox">{imgs}</div>;
+  };
 
   return (
     <FormContainer>
@@ -42,7 +44,7 @@ export const UploadImage = () => {
           onChange={e => handleChangeFile(e)}
         />
       </label>
-      <div>{preUploadImagesRender}</div>
+      <div>{preUploadImagesRender()}</div>
     </FormContainer>
   );
 };

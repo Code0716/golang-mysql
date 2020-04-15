@@ -1,0 +1,20 @@
+.preupload_imgbox {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  .preupload_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(50% - 5px);
+    margin-bottom: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    img {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+  }
+}
