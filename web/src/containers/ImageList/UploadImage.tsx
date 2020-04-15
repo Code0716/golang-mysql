@@ -52,7 +52,7 @@ export const UploadImage = () => {
           type="file"
           accept="image/*"
           multiple
-          onChange={e => handleChangeFile(e)}
+          onChange={handleChangeFile}
         />
       </label>
       <div>{preUploadImagesRender}</div>

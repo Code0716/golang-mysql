@@ -1,5 +1,11 @@
 .DS_Store
 /mysql_data
 node_modules/
-upload/
-preupload/
+app/images/preupload/*.jpg
+app/images/preupload/*.png
+app/images/preupload/*.gif
+app/images/preupload/*.ico
+app/images/upload/*.jpg
+app/images/upload/*.png
+app/images/upload/*.gif
+app/images/upload/*.ico
