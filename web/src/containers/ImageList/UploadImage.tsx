@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
@@ -7,9 +7,9 @@ import { imageListActions } from '../../actions/imageListActions';
 //const createObjectURL = (window.URL || window.webkitURL).createObjectURL;
 
 export const UploadImage = () => {
-  const { addUploadImages } = imageListActions();
+  const { preUploadImages, addUploadImages } = imageListActions();
 
-  const handleChangeFile = (e: any) => {
+  const handleChangeFile = useCallback((e: any) => {
     const target: HTMLInputElement = e.target as HTMLInputElement;
     let files: File[] = [];
 
@@ -18,7 +18,17 @@ export const UploadImage = () => {
     }
 
     addUploadImages(files);
-  };
+  }, []);
+
+  const preUploadImagesRender = useMemo(() => {
+    const imgs = preUploadImages.map((imagePath, index) => (
+      <img
+        key={`pre-up-img${index}`}
+        src={'data:image/png;base64,' + imagePath}
+      />
+    ));
+    return <div>{imgs}</div>;
+  }, [preUploadImages]);
 
   return (
     <FormContainer>
@@ -32,6 +42,7 @@ export const UploadImage = () => {
           onChange={e => handleChangeFile(e)}
         />
       </label>
+      <div>{preUploadImagesRender}</div>
     </FormContainer>
   );
 };

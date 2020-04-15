@@ -2,6 +2,7 @@ package layout
 
 import (
 	"../pkg/modules"
+	"../pkg/modules/images"
 	"../pkg/scraping"
 
 	"github.com/gin-contrib/cors"
@@ -34,7 +35,7 @@ func Layout() {
 		// スクレイピング
 		api.GET("/scraping", scraping.GetScrape)
 
-		api.POST("/image/upload", modules.GetPreUploadImg)
+		api.POST("/image/upload", images.GetPreUploadImg)
 
 	}
 

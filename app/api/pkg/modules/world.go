@@ -30,7 +30,8 @@ type City struct {
 // Cities []City
 type Cities []City
 
-/*GetAll()を共通化できないか？ーーーーーーーーーーーーーーーーーーーーーー*/
+// GetAll()を共通化できないか？ ーーーーーーーーーーーーーーーーーーーーーー
+// 引数をinterface{}型にするか？
 
 // GetAll []City
 func (cities *Cities) GetAll() {
@@ -40,7 +41,7 @@ func (cities *Cities) GetAll() {
 	// 勝手に複数形になるのを抑制
 	db.SingularTable(true)
 
-	//　db.AutoMigrate(&city)
+	//　db.AutoMigrate(&cities)
 	db.Select("id,name,code,population").Find(&cities)
 }
 
@@ -105,7 +106,7 @@ func getContinentsDB(path string) CountryContinents {
 	return countryContinents
 }
 
-// 街一覧
+// GetCities 街一覧
 func GetCities(ginContext *gin.Context) {
 	// interface
 	var world WorldDB
@@ -117,7 +118,7 @@ func GetCities(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, cities)
 }
 
-//　まち
+// GetCity 街
 func GetCity(ginContext *gin.Context) {
 	// interface
 	var world WorldDB
@@ -131,7 +132,7 @@ func GetCity(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, cities)
 }
 
-// 国一覧
+// GetCountries 国一覧
 func GetCountries(ginContext *gin.Context) {
 	// interface
 	var world WorldDB
@@ -144,7 +145,7 @@ func GetCountries(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, countries)
 }
 
-// 国Get
+// GetCountry 国Get
 func GetCountry(ginContext *gin.Context) {
 	// interface
 	var world WorldDB
@@ -158,7 +159,7 @@ func GetCountry(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, countries)
 }
 
-// 大陸一覧.
+// GetContinentsList 大陸一覧.
 func GetContinentsList(ginContext *gin.Context) {
 	data := getContinentsDB("GetCountDB")
 	ginContext.JSON(http.StatusOK, data)

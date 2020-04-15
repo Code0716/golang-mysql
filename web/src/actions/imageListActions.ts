@@ -8,6 +8,7 @@ import HttpRequest from '../service/api/HttpRequest';
 export const ActionTypes = {
   GET_LIST: 'IMAGE_LIST_GET_LIST',
   GET_UPLOAD: 'IMAGE_LIST_GET_UPLOAD_IMAGES',
+  POST_PRE_UPLOAD: 'IMAGE_LIST_POST_PRE_UPLOAD',
   CHANGE_STATE: 'IMAGE_LIST_CHANGE_STATE',
 } as const;
 
@@ -25,7 +26,7 @@ export const imageListActions = () => {
   //store
   const imageList = useSelector(({ imageList }) => imageList);
 
-  const { images } = imageList;
+  const { images, preUploadImages } = imageList;
 
   //  画像一覧
   const getImages = useCallback(async () => {
@@ -51,16 +52,12 @@ export const imageListActions = () => {
         submitData.append('images', element);
       });
 
-      dispatch({
-        type: ActionTypes.GET_UPLOAD,
-      });
-
       try {
-        await HttpRequest.postImg('/image/upload', submitData);
-        /* dispatch({
-        type: ActionTypes.CHANGE_STATE,
-        payload: { uploadImages: data },
-      });*/
+        const response = await HttpRequest.postImg('/image/upload', submitData);
+        dispatch({
+          type: ActionTypes.POST_PRE_UPLOAD,
+          payload: response.data,
+        });
       } finally {
         // TODO
       }
@@ -71,6 +68,7 @@ export const imageListActions = () => {
   return {
     //state
     images,
+    preUploadImages,
     //action
     getImages,
     addUploadImages,

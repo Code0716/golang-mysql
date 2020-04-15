@@ -25,7 +25,7 @@ export const ImageList = () => {
   return (
     <FormContainer>
       <UploadImage />
-      <AutoSizer>
+      {/* <AutoSizer>
         {({ width, height }) => (
           <div className="d-flex">
             <Table
@@ -51,7 +51,7 @@ export const ImageList = () => {
             </Table>
           </div>
         )}
-      </AutoSizer>
+      </AutoSizer>*/}
     </FormContainer>
   );
 };

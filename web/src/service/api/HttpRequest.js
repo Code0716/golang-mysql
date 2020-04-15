@@ -29,7 +29,7 @@ class HttpRequest {
   }
 
   postImg(url, submitData) {
-    axios.post(config.API_SERVER_URL + url, submitData, {
+    return axios.post(config.API_SERVER_URL + url, submitData, {
       headers: {
         'content-type': 'multipart/form-data',
       },

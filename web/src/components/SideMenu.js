@@ -27,10 +27,6 @@ const SideMenu = () => {
       label: LinksPathnames.TEST.name,
       url: LinksPathnames.TEST.path,
     },
-    {
-      label: LinksPathnames.NOT_FOUND.name,
-      url: LinksPathnames.NOT_FOUND.path,
-    },
   ];
 
   const linksList = links => {
