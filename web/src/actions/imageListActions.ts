@@ -72,17 +72,11 @@ export const imageListActions = () => {
   const deletePreImage = useCallback(
     async index => {
       const copyImages = cloneDeep(preUploadImages);
-      console.log(copyImages);
-
       const newState = copyImages.filter(elm => elm !== copyImages[index]);
-      try {
-        dispatch({
-          type: ActionTypes.DELETE_PRE_UPLOAD,
-          payload: newState,
-        });
-      } finally {
-        // TODO
-      }
+      dispatch({
+        type: ActionTypes.DELETE_PRE_UPLOAD,
+        payload: newState,
+      });
     },
     [dispatch, preUploadImages],
   );
