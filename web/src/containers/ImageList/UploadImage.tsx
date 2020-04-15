@@ -7,7 +7,11 @@ import { imageListActions } from '../../actions/imageListActions';
 //const createObjectURL = (window.URL || window.webkitURL).createObjectURL;
 
 export const UploadImage = () => {
-  const { preUploadImages, addUploadImages } = imageListActions();
+  const {
+    preUploadImages,
+    addPreUploadImages,
+    deletePreImage,
+  } = imageListActions();
 
   const handleChangeFile = useCallback((e: any) => {
     const target: HTMLInputElement = e.target as HTMLInputElement;
@@ -17,23 +21,28 @@ export const UploadImage = () => {
       files.push(target.files.item(index));
     }
 
-    addUploadImages(files);
+    addPreUploadImages(files);
   }, []);
 
-  const preUploadImagesRender = () => {
+  const preUploadImagesRender = useMemo(() => {
     const imgs = preUploadImages.map((imagePath, index) => (
-      <div className="preupload_img">
-        <img
-          key={`pre-up-img${index}`}
-          src={'data:image/png;base64,' + imagePath}
-        />
+      <div key={`pre-up-img${index}`} className="preupload_img">
+        <button
+          className="button delete_preup"
+          onClick={() => {
+            deletePreImage(index);
+          }}
+        >
+          削除
+        </button>
+        <img src={'data:image/png;base64,' + imagePath} />
       </div>
     ));
     return <div className="preupload_imgbox">{imgs}</div>;
-  };
+  }, [preUploadImages]);
 
   return (
-    <FormContainer>
+    <React.Fragment>
       <label className="image_up_label">
         ＋写真を選択
         <input
@@ -44,7 +53,17 @@ export const UploadImage = () => {
           onChange={e => handleChangeFile(e)}
         />
       </label>
-      <div>{preUploadImagesRender()}</div>
-    </FormContainer>
+      <div>{preUploadImagesRender}</div>
+      {preUploadImages.length !== 0 && (
+        <button
+          className="action_button"
+          onClick={() => {
+            // TODO
+          }}
+        >
+          <span>Commit</span>
+        </button>
+      )}
+    </React.Fragment>
   );
 };

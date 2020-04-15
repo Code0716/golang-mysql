@@ -14,19 +14,19 @@ const SideMenu = () => {
     {
       label: LinksPathnames.HOME.name,
       url: LinksPathnames.HOME.path,
-    },
-    {
-      label: LinksPathnames.SLIDE.name,
-      url: LinksPathnames.SLIDE.path,
-    },
-    {
+    },  {
       label: LinksPathnames.IMAGE_LIST.name,
       url: LinksPathnames.IMAGE_LIST.path,
     },
+  /*  {
+      label: LinksPathnames.SLIDE.name,
+      url: LinksPathnames.SLIDE.path,
+    },
+  
     {
       label: LinksPathnames.TEST.name,
       url: LinksPathnames.TEST.path,
-    },
+    },*/
   ];
 
   const linksList = links => {

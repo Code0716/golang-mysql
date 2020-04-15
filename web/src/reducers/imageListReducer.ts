@@ -14,10 +14,15 @@ const initialState: State = {
 
 export function imageListReducer(state = initialState, { type, payload }) {
   switch (type) {
-    case ActionTypes.POST_PRE_UPLOAD:
+    case ActionTypes.UPDATE_PRE_UPLOAD:
       return {
         ...state,
         preUploadImages: [...state.preUploadImages, ...payload],
+      };
+    case ActionTypes.DELETE_PRE_UPLOAD:
+      return {
+        ...state,
+        preUploadImages: [...payload],
       };
     case ActionTypes.CHANGE_STATE:
       return {

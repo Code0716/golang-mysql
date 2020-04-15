@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
+import { cloneDeep } from 'lodash';
+
 //import { push } from 'connected-react-router';
 
 import HttpRequest from '../service/api/HttpRequest';
@@ -8,7 +10,8 @@ import HttpRequest from '../service/api/HttpRequest';
 export const ActionTypes = {
   GET_LIST: 'IMAGE_LIST_GET_LIST',
   GET_UPLOAD: 'IMAGE_LIST_GET_UPLOAD_IMAGES',
-  POST_PRE_UPLOAD: 'IMAGE_LIST_POST_PRE_UPLOAD',
+  UPDATE_PRE_UPLOAD: 'IMAGE_LIST_UPDATE_PRE_UPLOAD',
+  DELETE_PRE_UPLOAD: 'IMAGE_LIST_DELETE_PRE_UPLOAD',
   CHANGE_STATE: 'IMAGE_LIST_CHANGE_STATE',
 } as const;
 
@@ -44,8 +47,8 @@ export const imageListActions = () => {
     }
   }, [dispatch]);
 
-  //  画像upload
-  const addUploadImages = useCallback(
+  //  preupload image
+  const addPreUploadImages = useCallback(
     async files => {
       const submitData = new FormData();
       files.forEach(element => {
@@ -55,14 +58,33 @@ export const imageListActions = () => {
       try {
         const response = await HttpRequest.postImg('/image/upload', submitData);
         dispatch({
-          type: ActionTypes.POST_PRE_UPLOAD,
+          type: ActionTypes.UPDATE_PRE_UPLOAD,
           payload: response.data,
         });
       } finally {
         // TODO
       }
     },
-    [dispatch],
+    [dispatch, preUploadImages],
+  );
+
+  //  PreUpload delete image
+  const deletePreImage = useCallback(
+    async index => {
+      const copyImages = cloneDeep(preUploadImages);
+      console.log(copyImages);
+
+      const newState = copyImages.filter(elm => elm !== copyImages[index]);
+      try {
+        dispatch({
+          type: ActionTypes.DELETE_PRE_UPLOAD,
+          payload: newState,
+        });
+      } finally {
+        // TODO
+      }
+    },
+    [dispatch, preUploadImages],
   );
 
   return {
@@ -71,6 +93,7 @@ export const imageListActions = () => {
     preUploadImages,
     //action
     getImages,
-    addUploadImages,
+    addPreUploadImages,
+    deletePreImage,
   };
 };
