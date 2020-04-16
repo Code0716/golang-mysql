@@ -24,5 +24,9 @@ func ConnectMySQL(dbname string) *gorm.DB {
 		panic(err.Error())
 	}
 	fmt.Println("db connected: ", &db)
+	db.LogMode(true)
+	// 勝手に複数形になるのを抑制
+	db.SingularTable(true)
+
 	return db
 }

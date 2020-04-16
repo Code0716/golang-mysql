@@ -9,26 +9,43 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// WorldDB interface
-type WorldDB interface {
-	// 全件取得
-	GetAll()
-	// 一件取得
-	GetSingle(name string)
-}
+type (
+	// WorldDB interface
+	WorldDB interface {
+		// 全件取得
+		GetAll()
+		// 一件取得
+		GetSingle(name string)
+	}
+	// City struct
+	City struct {
+		//gorm.Model
+		ID         int    `json:"id"`
+		Name       string `json:"name"`
+		Code       string `json:"code"`
+		Population string `json:"population"`
+	}
+	// Cities type
+	Cities []City
 
-// City struct
-// gorm.Modelと記述するとcreated_at、updated_at、deleted_atが定義される。
-type City struct {
-	//gorm.Model
-	ID         int    `json:"id"`
-	Name       string `json:"name"`
-	Code       string `json:"code"`
-	Population string `json:"population"`
-}
+	// Country struct
+	Country struct {
+		Code      string `json:"code"`
+		Name      string `json:"name"`
+		Continent string `json:"continent"`
+	}
 
-// Cities []City
-type Cities []City
+	// Countries []Country
+	Countries []Country
+
+	// Continent types
+	Continent struct {
+		Continent string `json:"continent"`
+	}
+
+	// CountryContinents array
+	CountryContinents []Continent
+)
 
 // GetAll()を共通化できないか？ ーーーーーーーーーーーーーーーーーーーーーー
 // 引数をinterface{}型にするか？
@@ -37,9 +54,6 @@ type Cities []City
 func (cities *Cities) GetAll() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.LogMode(true)
-	// 勝手に複数形になるのを抑制
-	db.SingularTable(true)
 
 	//　db.AutoMigrate(&cities)
 	db.Select("id,name,code,population").Find(&cities)
@@ -49,29 +63,15 @@ func (cities *Cities) GetAll() {
 func (cities *Cities) GetSingle(name string) {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.LogMode(true)
-	// 勝手に複数形になるのを抑制
-	db.SingularTable(true)
+
 	db.Select("id,name,code,population").Find(&cities, "name = ?", name)
 }
-
-// Country struct
-type Country struct {
-	Code      string `json:"code"`
-	Name      string `json:"name"`
-	Continent string `json:"continent"`
-}
-
-// Countries []Country
-type Countries []Country
 
 // GetAll []Country
 func (countries *Countries) GetAll() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.LogMode(true)
-	// 勝手に複数形になるのを抑制
-	db.SingularTable(true)
+
 	db.Select("code,name,continent").Find(&countries)
 }
 
@@ -79,19 +79,9 @@ func (countries *Countries) GetAll() {
 func (countries *Countries) GetSingle(name string) {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.LogMode(true)
-	// 勝手に複数形になるのを抑制
-	db.SingularTable(true)
+
 	db.Select("code,name,continent").Find(&countries, "name = ?", name)
 }
-
-// Continent types
-type Continent struct {
-	Continent string `json:"continent"`
-}
-
-// CountryContinents array
-type CountryContinents []Continent
 
 // getContinentsDB func
 // count
@@ -99,9 +89,7 @@ func getContinentsDB(path string) CountryContinents {
 	var countryContinents CountryContinents
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.LogMode(true)
-	// 勝手に複数形になるのを抑制
-	db.SingularTable(true)
+
 	db.Raw("SELECT DISTINCT continent FROM country").Scan(&countryContinents)
 	return countryContinents
 }
