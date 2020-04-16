@@ -43,12 +43,6 @@ func (image *preupload) CreateFileInfo() {
 	db.Create(&image)
 }
 
-func savePreImageInfo(imageInfo preupload) {
-	var saveFunc createFileData
-	saveFunc = &imageInfo
-	saveFunc.CreateFileInfo()
-}
-
 // save  upload info
 func (image *upload) CreateFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
@@ -56,9 +50,7 @@ func (image *upload) CreateFileInfo() {
 	db.Create(&image)
 }
 
-func saveImageInfo(imageInfo upload) {
-	var saveFunc createFileData
-	saveFunc = &imageInfo
+func saveImageInfo(saveFunc createFileData) {
 	saveFunc.CreateFileInfo()
 }
 
@@ -82,7 +74,7 @@ func GetPreUploadImg(ginContext *gin.Context) {
 		now := time.Now()
 		// regist to db file info
 		newImage := preupload{Title: file.Filename, Create: now, Path: preImagePath + file.Filename}
-		savePreImageInfo(newImage)
+		saveImageInfo(&newImage)
 
 		base64gify[index] = encodePreupload(file.Filename)
 	}
