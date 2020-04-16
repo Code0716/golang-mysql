@@ -63,7 +63,7 @@ export const UploadImage = () => {
             // TODO
           }}
         >
-          <span>Commit</span>
+          <span>Commit Upload</span>
         </button>
       )}
     </React.Fragment>

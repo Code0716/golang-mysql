@@ -17,17 +17,8 @@ import (
 const preImagePath = "../images/preupload/"
 
 type (
-	imagesFuncs interface {
-		// 全件取得
-		//ReadAll()
-		// 一件取得
-		//ReadSingle(path string)
-
-		CreateFileInfo(imageInfo preupload)
-
-		//Update(ginContext *gin.Context, name string)
-
-		//Delete(name string, path string)
+	createFileData interface {
+		CreateFileInfo()
 	}
 
 	preupload struct {
@@ -37,58 +28,44 @@ type (
 		Path   string    `json:"path"`
 	}
 
-	preuploadArray []preupload
+	upload struct {
+		ID     int       `json:"id"`
+		Title  string    `json:"title"`
+		Create time.Time `json:"create"`
+		Path   string    `json:"path"`
+	}
 )
 
+// save  preupload info
+func (image *preupload) CreateFileInfo() {
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+	db.Create(&image)
+}
+
+func savePreImageInfo(imageInfo preupload) {
+	var saveFunc createFileData
+	saveFunc = &imageInfo
+	saveFunc.CreateFileInfo()
+}
+
 // save  upload info
-func (image *preupload) CreateFileInfo(imageInfo preupload) {
+func (image *upload) CreateFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	//　db.AutoMigrate(&cities)
-	db.Create(&imageInfo)
+	db.Create(&image)
 }
 
-// get  upload info
-/*func (images *preuploadArray) ReadAll() *preuploadArray {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	//　db.AutoMigrate(&cities)
-	db.Select("id,title,create,path").Find(&images)
-	return images
-}*/
-
-func saveImageInfo(imageInfo preupload) {
-	var saveFunc imagesFuncs
-	var image preupload
-	saveFunc = &image
-	saveFunc.CreateFileInfo(imageInfo)
+func saveImageInfo(imageInfo upload) {
+	var saveFunc createFileData
+	saveFunc = &imageInfo
+	saveFunc.CreateFileInfo()
 }
 
-// get save image and Encode to base64
-func encode(fileNama string) string {
-	file, err := os.Open(preImagePath + fileNama)
-
-	if err != nil {
-		return err.Error()
-
-	}
-
-	defer file.Close()
-
-	fi, _ := file.Stat() // interface
-	size := fi.Size()    // file size
-
-	data := make([]byte, size)
-	file.Read(data)
-	return base64.StdEncoding.EncodeToString(data)
-}
-
-// GetPreUploadImg 画像仮保存
+// GetPreUploadImg save preupload image and regist db
 func GetPreUploadImg(ginContext *gin.Context) {
 	form, _ := ginContext.MultipartForm()
 	files := form.File["images"]
-
-	now := time.Now()
 
 	// base64 string
 	base64gify := make([]string, len(files))
@@ -101,12 +78,34 @@ func GetPreUploadImg(ginContext *gin.Context) {
 			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 			return
 		}
-		//
+
+		now := time.Now()
+		// regist to db file info
 		newImage := preupload{Title: file.Filename, Create: now, Path: preImagePath + file.Filename}
-		saveImageInfo(newImage)
-		base64gify[index] = encode(file.Filename)
+		savePreImageInfo(newImage)
+
+		base64gify[index] = encodePreupload(file.Filename)
 	}
 
 	// send to josn to front
 	ginContext.JSON(http.StatusOK, base64gify)
+}
+
+// get save image and Encode to base64
+func encodePreupload(fileNama string) string {
+	file, err := os.Open(preImagePath + fileNama)
+
+	if err != nil {
+		return err.Error()
+	}
+
+	defer file.Close()
+
+	fi, _ := file.Stat() // interface
+	size := fi.Size()    // file size
+
+	data := make([]byte, size)
+	file.Read(data)
+
+	return base64.StdEncoding.EncodeToString(data)
 }
