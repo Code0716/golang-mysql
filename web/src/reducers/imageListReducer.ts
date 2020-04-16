@@ -6,7 +6,7 @@ export interface LoadImage {
   info: {
     id: number;
     title: string;
-    create: string;
+    create: Date;
     path: string;
   };
 }
