@@ -1,9 +1,18 @@
 import { ActionTypes } from '../actions/imageListActions';
 
 // 型の定義
+export interface LoadImage {
+  img: string;
+  info: {
+    id: number;
+    title: string;
+    create: string;
+    path: string;
+  };
+}
 export interface State {
   images: { continent: string }[];
-  preUploadImages: string[];
+  preUploadImages: LoadImage[];
 }
 
 // 初期値

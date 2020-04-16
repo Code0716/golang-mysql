@@ -139,9 +139,14 @@ table {
 }
 
 @import 'slide';
+
+/*-----------------------------------------------------------------------------------*/
+/*共通部分---------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
 .flex_box {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -151,11 +156,6 @@ table {
   align-items: center;
   flex-wrap: wrap;
 }
-
-/*-----------------------------------------------------------------------------------*/
-/*共通部分---------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-
 // display
 .d-flex {
   display: flex;
@@ -537,5 +537,61 @@ body {
   margin: 0 auto;
 }
 
+/*-----------------------------------------------------------------------------------*/
+/*.button----------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+.button {
+  display: inline-block;
+  width: 200px;
+  height: 50x;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  z-index: 2;
+  background-color: #61befb;
+  border: 2px solid #61befb;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+}
+
+.button,
+.button::before,
+.button::after {
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+.button::before,
+.button::after {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  content: '';
+}
+.button:hover {
+  background-color: #fff;
+  border-color: #00aeec;
+  color: #00aeec;
+}
+.button::before,
+.button::after {
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #61befb;
+}
+.button::before {
+  right: 0;
+}
+.button::after {
+  left: 0;
+}
+.button:hover::before,
+.button:hover::after {
+  width: 0;
+  background-color: #00aeec;
+}
 @import 'slide_show';
 @import 'images';

@@ -35,7 +35,7 @@ func Layout() {
 		// スクレイピング
 		api.GET("/scraping", scraping.GetScrape)
 
-		api.POST("/image/upload", images.GetPreUploadImg)
+		api.POST("/image/pre_upload", images.GetPreUploadImg)
 
 	}
 

@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"time"
-	//"mime/multipart"
 
 	"../../../constants"
 	"../../db"
@@ -59,8 +58,8 @@ func GetPreUploadImg(ginContext *gin.Context) {
 	form, _ := ginContext.MultipartForm()
 	files := form.File["images"]
 
-	// base64 string
-	base64gify := make([]string, len(files))
+	// base64 string slice
+	jsonData := make([]map[string]interface{}, len(files))
 
 	// save images
 	for index, file := range files {
@@ -76,16 +75,19 @@ func GetPreUploadImg(ginContext *gin.Context) {
 		newImage := preupload{Title: file.Filename, Create: now, Path: preImagePath + file.Filename}
 		saveImageInfo(&newImage)
 
-		base64gify[index] = encodePreupload(file.Filename)
+		base64gify := encodeBase64(preImagePath, file.Filename)
+
+		jsonData[index] = map[string]interface{}{"img": base64gify, "info": newImage}
+
 	}
 
 	// send to josn to front
-	ginContext.JSON(http.StatusOK, base64gify)
+	ginContext.JSON(http.StatusOK, jsonData)
 }
 
 // get save image and Encode to base64
-func encodePreupload(fileNama string) string {
-	file, err := os.Open(preImagePath + fileNama)
+func encodeBase64(savePath string, fileNama string) string {
+	file, err := os.Open(savePath + fileNama)
 
 	if err != nil {
 		return err.Error()

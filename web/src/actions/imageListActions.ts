@@ -56,7 +56,10 @@ export const imageListActions = () => {
       });
 
       try {
-        const response = await HttpRequest.postImg('/image/upload', submitData);
+        const response = await HttpRequest.postImg(
+          '/image/pre_upload',
+          submitData,
+        );
         dispatch({
           type: ActionTypes.UPDATE_PRE_UPLOAD,
           payload: response.data,
@@ -70,9 +73,9 @@ export const imageListActions = () => {
 
   //  PreUpload delete image
   const deletePreImage = useCallback(
-    async (index: number) => {
+    async (id: number) => {
       const copyImages = cloneDeep(preUploadImages);
-      const newState = copyImages.filter(elm => elm !== copyImages[index]);
+      const newState = copyImages.filter(elm => elm.info.id !== id);
       dispatch({
         type: ActionTypes.DELETE_PRE_UPLOAD,
         payload: newState,
