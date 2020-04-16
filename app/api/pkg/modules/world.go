@@ -47,9 +47,6 @@ type (
 	CountryContinents []Continent
 )
 
-// GetAll()を共通化できないか？ ーーーーーーーーーーーーーーーーーーーーーー
-// 引数をinterface{}型にするか？
-
 // GetAll []City
 func (cities *Cities) GetAll() {
 	db := db.ConnectMySQL(constants.DBWorld)
@@ -57,14 +54,6 @@ func (cities *Cities) GetAll() {
 
 	//　db.AutoMigrate(&cities)
 	db.Select("id,name,code,population").Find(&cities)
-}
-
-// GetSingle City
-func (cities *Cities) GetSingle(name string) {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-
-	db.Select("id,name,code,population").Find(&cities, "name = ?", name)
 }
 
 // GetAll []Country
@@ -75,6 +64,21 @@ func (countries *Countries) GetAll() {
 	db.Select("code,name,continent").Find(&countries)
 }
 
+// GetAll []Continent
+func (countryContinents *CountryContinents) GetAll() {
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+	db.Raw("SELECT DISTINCT continent FROM country").Scan(&countryContinents)
+}
+
+// GetSingle City
+func (cities *Cities) GetSingle(name string) {
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+
+	db.Select("id,name,code,population").Find(&cities, "name = ?", name)
+}
+
 // GetSingle Country
 func (countries *Countries) GetSingle(name string) {
 	db := db.ConnectMySQL(constants.DBWorld)
@@ -83,72 +87,77 @@ func (countries *Countries) GetSingle(name string) {
 	db.Select("code,name,continent").Find(&countries, "name = ?", name)
 }
 
-// getContinentsDB func
-// count
-func getContinentsDB(path string) CountryContinents {
-	var countryContinents CountryContinents
+// GetSingle Continents
+func (countryContinents *CountryContinents) GetSingle(name string) {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
+	db.Select("continent").Find(&countryContinents, "name = ?", name)
+}
 
-	db.Raw("SELECT DISTINCT continent FROM country").Scan(&countryContinents)
-	return countryContinents
+// GetList from db
+func GetList(worlddb WorldDB) {
+	WorldDB.GetAll(worlddb)
+}
+
+// GetRow from db
+func GetRow(worlddb WorldDB, name string) {
+	WorldDB.GetSingle(worlddb, name)
 }
 
 // GetCities 街一覧
 func GetCities(ginContext *gin.Context) {
-	// interface
-	var world WorldDB
 	// struct
 	var cities Cities
-
-	world = &cities
-	world.GetAll()
-	ginContext.JSON(http.StatusOK, cities)
-}
-
-// GetCity 街
-func GetCity(ginContext *gin.Context) {
-	// interface
-	var world WorldDB
-	// struct
-	var cities Cities
-
-	name := ginContext.Param("name")
-
-	world = &cities
-	world.GetSingle(name)
+	GetList(&cities)
 	ginContext.JSON(http.StatusOK, cities)
 }
 
 // GetCountries 国一覧
 func GetCountries(ginContext *gin.Context) {
-	// interface
-	var world WorldDB
 	// struct
 	var countries Countries
-
-	world = &countries
-
-	world.GetAll()
-	ginContext.JSON(http.StatusOK, countries)
-}
-
-// GetCountry 国Get
-func GetCountry(ginContext *gin.Context) {
-	// interface
-	var world WorldDB
-	// struct
-	var countries Countries
-
-	name := ginContext.Param("name")
-
-	world = &countries
-	world.GetSingle(name)
+	GetList(&countries)
 	ginContext.JSON(http.StatusOK, countries)
 }
 
 // GetContinentsList 大陸一覧.
 func GetContinentsList(ginContext *gin.Context) {
-	data := getContinentsDB("GetCountDB")
-	ginContext.JSON(http.StatusOK, data)
+
+	var continents CountryContinents
+	GetList(&continents)
+	ginContext.JSON(http.StatusOK, continents)
+}
+
+// GetCity 街
+func GetCity(ginContext *gin.Context) {
+	// struct
+	var cities Cities
+
+	name := ginContext.Param("name")
+
+	GetRow(&cities, name)
+	ginContext.JSON(http.StatusOK, cities)
+}
+
+// GetCountry 国Get
+func GetCountry(ginContext *gin.Context) {
+
+	// struct
+	var countries Countries
+
+	name := ginContext.Param("name")
+
+	GetRow(&countries, name)
+	ginContext.JSON(http.StatusOK, countries)
+}
+
+// GetContinent func
+func GetContinent(ginContext *gin.Context) {
+	// struct
+	var continents CountryContinents
+
+	name := ginContext.Param("name")
+
+	GetRow(&continents, name)
+	ginContext.JSON(http.StatusOK, continents)
 }
