@@ -31,10 +31,10 @@ export const UploadImage = () => {
 
   const preUploadImagesRender = useMemo(() => {
     const imgs = preUploadImages.map((elemnt: LoadImage, index: number) => (
-      <React.Fragment key={`pre-up-img${index}`}>
-        <div className="preupload_img">
+      <div className="mb-10 flex-box" key={`pre-up-img${index}`}>
+        <div className="preupload-img">
           <button
-            className="button delete_preup"
+            className="button"
             onClick={() => {
               deletePreImage(elemnt.info.id);
             }}
@@ -43,20 +43,20 @@ export const UploadImage = () => {
           </button>
           <img src={'data:image/png;base64,' + elemnt.img} />
         </div>
-        <div className="preupload_description">
+        <div className="preupload-description">
           <span className="d-block">Image : {elemnt.info.title}</span>
           <span className="d-block">ID : {elemnt.info.id}</span>
           <span className="d-block">Date : {elemnt.info.create}</span>
           <span className="d-block">Path : {elemnt.info.path}</span>
         </div>
-      </React.Fragment>
+      </div>
     ));
-    return <div className="preupload_imgbox flex_box">{imgs}</div>;
+    return <div className="preupload-imgbox mb-10">{imgs}</div>;
   }, [preUploadImages]);
 
   return (
     <React.Fragment>
-      <label className="image_up_label">
+      <label className="image_up_label mb-5">
         ＋写真を選択
         <input
           className="d-none"

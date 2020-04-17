@@ -2,7 +2,7 @@ package images
 
 import (
 	"encoding/base64"
-	//"fmt"
+	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -58,7 +58,6 @@ func GetPreUploadImg(ginContext *gin.Context) {
 	form, _ := ginContext.MultipartForm()
 	files := form.File["images"]
 
-	// base64 string slice
 	jsonData := make([]map[string]interface{}, len(files))
 
 	// save images
@@ -83,6 +82,27 @@ func GetPreUploadImg(ginContext *gin.Context) {
 
 	// send to josn to front
 	ginContext.JSON(http.StatusOK, jsonData)
+}
+
+// DeletePreUploadImage delete preupload image and registed db data
+func DeletePreUploadImage(ginContext *gin.Context) {
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+
+	var deleteData preupload
+
+	if err := ginContext.BindJSON(&deleteData); err != nil {
+		ginContext.String(http.StatusBadRequest, "Request is failed: "+err.Error())
+	}
+
+	if err := os.Remove(deleteData.Path); err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(deleteData)
+
+	db.Delete(&deleteData)
+
 }
 
 // get save image and Encode to base64

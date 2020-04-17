@@ -2,8 +2,7 @@ import { useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { cloneDeep } from 'lodash';
-
-//import { push } from 'connected-react-router';
+import { LoadImage, ImageInfo } from '../reducers/imageListReducer';
 
 import HttpRequest from '../service/api/HttpRequest';
 // Actions
@@ -50,22 +49,22 @@ export const imageListActions = () => {
   //  preupload image
   const addPreUploadImages = useCallback(
     async (files: File[]) => {
-      const submitData = new FormData();
+      const postData = new FormData();
       files.forEach(element => {
-        submitData.append('images', element);
+        postData.append('images', element);
       });
 
       try {
         const response = await HttpRequest.postImg(
           '/image/pre_upload',
-          submitData,
+          postData,
         );
         dispatch({
           type: ActionTypes.UPDATE_PRE_UPLOAD,
           payload: response.data,
         });
       } finally {
-        // TODO
+        // TODOH
       }
     },
     [dispatch, preUploadImages],
@@ -74,12 +73,28 @@ export const imageListActions = () => {
   //  PreUpload delete image
   const deletePreImage = useCallback(
     async (id: number) => {
-      const copyImages = cloneDeep(preUploadImages);
-      const newState = copyImages.filter(elm => elm.info.id !== id);
-      dispatch({
-        type: ActionTypes.DELETE_PRE_UPLOAD,
-        payload: newState,
-      });
+      try {
+        const copyImages = cloneDeep(preUploadImages);
+        const newState: LoadImage[] = [];
+        let deleteImage: ImageInfo;
+
+        copyImages.forEach((elm: LoadImage) => {
+          if (elm.info.id === id) {
+            delete elm.img;
+            deleteImage = elm.info;
+          } else {
+            newState.push(elm);
+          }
+        });
+
+        await HttpRequest.deleteImage(`/image/pre_upload/delete`, deleteImage);
+        dispatch({
+          type: ActionTypes.DELETE_PRE_UPLOAD,
+          payload: newState,
+        });
+      } finally {
+        //TODO
+      }
     },
     [dispatch, preUploadImages],
   );

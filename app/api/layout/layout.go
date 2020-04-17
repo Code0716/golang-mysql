@@ -37,6 +37,8 @@ func Layout() {
 
 		api.POST("/image/pre_upload", images.GetPreUploadImg)
 
+		api.DELETE("/image/pre_upload/delete", images.DeletePreUploadImage)
+
 	}
 
 	router.Run(":8000")

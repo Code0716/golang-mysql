@@ -7,11 +7,12 @@ import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
 import { UploadImage } from './UploadImage';
 
+type SelectType = '' | 'upload' | 'list';
+
 export const ImageList = () => {
   const dispatch = useDispatch();
-  const [selectContainer, setSelectContainer] = useState('');
+  const [selectContainer, setSelectContainer] = useState<SelectType>('');
 
-  const [isHover, setIsHover] = useState(false);
   const {
     //state
     images,
@@ -25,7 +26,7 @@ export const ImageList = () => {
 
   return (
     <FormContainer>
-      <div className="flex_box">
+      <div className="flex-box mb-10 p-10">
         <button className="button" onClick={() => setSelectContainer('upload')}>
           Upload images
         </button>

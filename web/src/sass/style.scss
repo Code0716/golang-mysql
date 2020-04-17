@@ -144,13 +144,13 @@ table {
 /*共通部分---------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
 
-.flex_box {
+.flex-box {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.flex_box_center {
+.flex-box_center {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -182,6 +182,48 @@ table {
   padding: 6px;
   border-radius: 12px;
   cursor: pointer;
+}
+
+@for $i from 0 through 50 {
+  .m-#{$i} {
+    margin: #{$i}px;
+  }
+  .mt-#{$i} {
+    margin-top: #{$i}px;
+  }
+  .ml-#{$i} {
+    margin-left: #{$i}px;
+  }
+  .mr-#{$i} {
+    margin-right: #{$i}px;
+  }
+  .mx-#{$i} {
+    margin-left: #{$i}px;
+    margin-right: #{$i}px;
+  }
+  .mb-#{$i} {
+    margin-bottom: #{$i}px;
+  }
+
+  .p-#{$i} {
+    padding: #{$i}px;
+  }
+  .pt-#{$i} {
+    padding-top: #{$i}px;
+  }
+  .pl-#{$i} {
+    padding-left: #{$i}px;
+  }
+  .pr-#{$i} {
+    padding-right: #{$i}px;
+  }
+  .px-#{$i} {
+    padding-left: #{$i}px;
+    padding-right: #{$i}px;
+  }
+  .pb-#{$i} {
+    padding-bottom: #{$i}px;
+  }
 }
 
 input[type='text'],
