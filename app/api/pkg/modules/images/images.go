@@ -131,7 +131,7 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, jsonData)
 }
 
-// ↑共通化できるか？↓
+// ↑ 共通化できるか？ -----------------------------------------------------------------↓
 
 // GetAll preupload image and registed db data
 func (pre PreImageController) GetAll(ginContext *gin.Context) {

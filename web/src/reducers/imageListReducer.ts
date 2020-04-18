@@ -26,6 +26,9 @@ const initialState: State = {
 
 export function imageListReducer(state = initialState, { type, payload }) {
   switch (type) {
+    case ActionTypes.INITIALIZE:
+      return initialState;
+
     case ActionTypes.UPDATE_PRE_UPLOAD:
       return {
         ...state,

@@ -7,6 +7,7 @@ import { LoadImage, ImageInfo } from '../reducers/imageListReducer';
 import HttpRequest from '../service/api/HttpRequest';
 // Actions
 export const ActionTypes = {
+  INITIALIZE: 'IMAGE_LIST_INITIALIZE',
   GET_LIST: 'IMAGE_LIST_GET_LIST',
   GET_UPLOAD: 'IMAGE_LIST_GET_UPLOAD_IMAGES',
   UPDATE_PRE_UPLOAD: 'IMAGE_LIST_UPDATE_PRE_UPLOAD',
@@ -25,6 +26,15 @@ export type HttpRequestActionTypes = GetList;
 
 export const imageListActions = () => {
   const dispatch = useDispatch();
+
+  const initialize = useCallback(
+    () =>
+      dispatch({
+        type: ActionTypes.INITIALIZE,
+      }),
+    [dispatch],
+  );
+
   //store
   const imageList = useSelector(({ imageList }) => imageList);
 
@@ -55,7 +65,7 @@ export const imageListActions = () => {
         payload: response,
       });
     } finally {
-      // TODOH
+      // TODO
     }
   }, [dispatch]);
 
@@ -77,7 +87,7 @@ export const imageListActions = () => {
           payload: response.data,
         });
       } finally {
-        // TODOH
+        // TODO
       }
     },
     [dispatch, preUploadImages],
@@ -117,6 +127,7 @@ export const imageListActions = () => {
     images,
     preUploadImages,
     //action
+    initialize,
     getPreImages,
     getImages,
     addPreUploadImages,

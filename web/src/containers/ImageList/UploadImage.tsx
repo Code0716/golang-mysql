@@ -8,14 +8,18 @@ import { LoadImage } from '../../reducers/imageListReducer';
 
 export const UploadImage = () => {
   const {
-    getPreImages,
+    // state
     preUploadImages,
+    // action
+    initialize,
     addPreUploadImages,
     deletePreImage,
+    getPreImages,
   } = imageListActions();
 
   useEffect(() => {
     getPreImages();
+    return initialize;
   }, []);
 
   const handleChangeFile = useCallback(
