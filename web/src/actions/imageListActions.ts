@@ -46,7 +46,20 @@ export const imageListActions = () => {
     }
   }, [dispatch]);
 
-  //  preupload image
+  // load preupload image
+  const getPreImages = useCallback(async () => {
+    try {
+      const response = await HttpRequest.get('/image/pre_upload');
+      dispatch({
+        type: ActionTypes.UPDATE_PRE_UPLOAD,
+        payload: response,
+      });
+    } finally {
+      // TODOH
+    }
+  }, [dispatch]);
+
+  // add preupload image
   const addPreUploadImages = useCallback(
     async (files: File[]) => {
       const postData = new FormData();
@@ -104,6 +117,7 @@ export const imageListActions = () => {
     images,
     preUploadImages,
     //action
+    getPreImages,
     getImages,
     addPreUploadImages,
     deletePreImage,

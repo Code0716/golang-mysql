@@ -7,13 +7,16 @@ import { LoadImage } from '../../reducers/imageListReducer';
 //const createObjectURL = (window.URL || window.webkitURL).createObjectURL;
 
 export const UploadImage = () => {
-  useEffect(() => {}, []);
-
   const {
+    getPreImages,
     preUploadImages,
     addPreUploadImages,
     deletePreImage,
   } = imageListActions();
+
+  useEffect(() => {
+    getPreImages();
+  }, []);
 
   const handleChangeFile = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
