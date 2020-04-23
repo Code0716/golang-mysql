@@ -1,6 +1,8 @@
 # golang-mysql
 
-Golang and MySql and React
+use Golang and MySql and React
+
+image server on web or Raspberry Pi 
 
 Golang で MySql の table を取得するサンプル。
 （world.sql を利用）<br><br>
