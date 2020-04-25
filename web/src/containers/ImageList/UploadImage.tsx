@@ -43,7 +43,7 @@ export const UploadImage = () => {
           <button
             className="button"
             onClick={() => {
-              deletePreImage(elemnt.info.id);
+              deletePreImage(elemnt.info.ID);
             }}
           >
             削除
@@ -51,10 +51,10 @@ export const UploadImage = () => {
           <img src={'data:image/png;base64,' + elemnt.img} />
         </div>
         <div className="preupload-description">
-          <span className="d-block">Image : {elemnt.info.title}</span>
-          <span className="d-block">ID : {elemnt.info.id}</span>
-          <span className="d-block">Date : {elemnt.info.create}</span>
-          <span className="d-block">Path : {elemnt.info.path}</span>
+          <span className="d-block">Title : {elemnt.info.Title}</span>
+          <span className="d-block">ID : {elemnt.info.ID}</span>
+          <span className="d-block">Date : {elemnt.info.CreatedAt}</span>
+          <span className="d-block">Path : {elemnt.info.Path}</span>
         </div>
       </div>
     ));

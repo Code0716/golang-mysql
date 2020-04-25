@@ -7,15 +7,17 @@ import (
 	"net/http"
 	"os"
 	//"reflect"
-	"time"
 
 	"../../../constants"
 	"../../db"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
 
 const preImagePath = "../images/preupload/"
+
+//const imagePath = "../images/upload/"
 
 type (
 	operateFileData interface {
@@ -27,52 +29,50 @@ type (
 		GetAllFileInfo()
 	}
 
-	preupload struct {
-		ID     int       `json:"id"`
-		Title  string    `json:"title"`
-		Create time.Time `json:"create"`
-		Path   string    `json:"path"`
+	Preupload struct {
+		gorm.Model
+		Title string `json:"Title"`
+		Path  string `json:"Path"`
 	}
 
-	upload struct {
-		ID     int       `json:"id"`
-		Title  string    `json:"title"`
-		Create time.Time `json:"create"`
-		Path   string    `json:"path"`
+	Upload struct {
+		gorm.Model
+		Title string `json:"Title"`
+		Path  string `json:"Path"`
 	}
 
-	preuploads []preupload
-	uploads    []upload
+	preuploads []Preupload
+	uploads    []Upload
 	// PreImageController struct
 	PreImageController struct{}
 )
 
-// save  preupload info
-func (image *preupload) CreateFileInfo() {
+// save  Preupload info
+func (image *Preupload) CreateFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.Create(&image)
 }
 
 // save  upload info
-func (image *upload) CreateFileInfo() {
+func (image *Upload) CreateFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.Create(&image)
 }
 
-// delete preupload info
-func (image *preupload) DeleteFileInfo() {
+// delete Preupload info
+func (image *Preupload) DeleteFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.Delete(&image)
 }
 
-// read all preupload info
+// read all Preupload info
 func (images *preuploads) GetAllFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.Select("id,title,path").Find(&images)
+	db.Find(&images)
 }
 
 // read all upload info
@@ -83,7 +83,7 @@ func (images *uploads) GetAllFileInfo() {
 }
 
 // delete upload info
-func (image *upload) DeleteFileInfo() {
+func (image *Upload) DeleteFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.Delete(&image)
@@ -101,7 +101,7 @@ func getAllImageInfo(operate operateAllData) {
 	operateAllData.GetAllFileInfo(operate)
 }
 
-// Upload preupload image and regist db
+// Upload Preupload image and regist db
 func (pre PreImageController) Upload(ginContext *gin.Context) {
 	form, _ := ginContext.MultipartForm()
 	files := form.File["images"]
@@ -116,9 +116,8 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 			return
 		}
-		now := time.Now()
 		// regist to db file info
-		newImage := preupload{Title: file.Filename, Create: now, Path: preImagePath + file.Filename}
+		newImage := Preupload{Title: file.Filename, Path: preImagePath + file.Filename}
 		saveImageInfo(&newImage)
 
 		base64gify := encodeBase64(preImagePath, file.Filename)
@@ -133,7 +132,7 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 
 // ↑ 共通化できるか？ -----------------------------------------------------------------↓
 
-// GetAll preupload image and registed db data
+// GetAll Preupload image and registed db data
 func (pre PreImageController) GetAll(ginContext *gin.Context) {
 
 	var images preuploads
@@ -151,10 +150,10 @@ func (pre PreImageController) GetAll(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, jsonData)
 }
 
-// Delete preupload image and registed db data
+// Delete Preupload image and registed db data
 func (pre PreImageController) Delete(ginContext *gin.Context) {
 
-	var deleteData preupload
+	var deleteData Preupload
 
 	if err := ginContext.BindJSON(&deleteData); err != nil {
 		ginContext.JSON(http.StatusBadRequest, err.Error())

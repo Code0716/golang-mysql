@@ -5417,7 +5417,7 @@ INSERT INTO `countrylanguage` VALUES ('ZWE','Shona','F',72.1);
 commit;
 
 
-
+/*
 DROP TABLE IF EXISTS `preupload`;
 
 CREATE TABLE `preupload` (
@@ -5438,6 +5438,7 @@ CREATE TABLE `upload` (
   `Path` text NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+*/
 --
 -- Dumping events for database 'world'
 --

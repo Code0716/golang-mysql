@@ -102,7 +102,7 @@ export const imageListActions = () => {
         let deleteImage: ImageInfo;
 
         copyImages.forEach((elm: LoadImage) => {
-          if (elm.info.id === id) {
+          if (elm.info.ID === id) {
             delete elm.img;
             deleteImage = elm.info;
           } else {

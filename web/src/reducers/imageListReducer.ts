@@ -2,10 +2,10 @@ import { ActionTypes } from '../actions/imageListActions';
 
 // 型の定義
 export type ImageInfo = {
-  id: number;
-  title: string;
-  create: Date;
-  path: string;
+  ID: number;
+  Title: string;
+  CreatedAt: Date;
+  Path: string;
 };
 
 export interface LoadImage {
