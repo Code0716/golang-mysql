@@ -40,7 +40,7 @@ const SideMenu = () => {
   };
 
   return (
-    <aside className="fade-in">
+    <aside>
       <nav>
         <input
           type="checkbox"

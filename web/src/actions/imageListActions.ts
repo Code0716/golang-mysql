@@ -3,6 +3,7 @@ import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { cloneDeep } from 'lodash';
 import { LoadImage, ImageInfo } from '../reducers/imageListReducer';
+import { load, unload } from '../actions/loadingActions';
 
 import HttpRequest from '../service/api/HttpRequest';
 // Actions
@@ -58,6 +59,7 @@ export const imageListActions = () => {
 
   // load preupload image
   const getPreImages = useCallback(async () => {
+    dispatch(load());
     try {
       const response = await HttpRequest.get('/image/pre_upload');
       dispatch({
@@ -65,7 +67,7 @@ export const imageListActions = () => {
         payload: response,
       });
     } finally {
-      // TODO
+      dispatch(unload());
     }
   }, [dispatch]);
 

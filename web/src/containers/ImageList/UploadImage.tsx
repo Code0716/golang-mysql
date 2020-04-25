@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { Portal } from '../../components/Portal';
+import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
 import { LoadImage } from '../../reducers/imageListReducer';
 
@@ -73,16 +75,33 @@ export const UploadImage = () => {
           onChange={handleChangeFile}
         />
       </label>
-      {preUploadImagesRender}
       {preUploadImages.length !== 0 && (
-        <button
-          className="action_button"
-          onClick={() => {
-            // TODO
-          }}
-        >
-          <span>Commit Upload</span>
-        </button>
+        <Portal isApply={preUploadImages.length !== 0}>
+          <FormContainer>
+            {preUploadImagesRender}
+            <div className="flex-box-center">
+              <label className="image_up_label mb-5">
+                ＋写真を選択
+                <input
+                  className="d-none"
+                  type="file"
+                  accept=".png,.jpg,.gif"
+                  multiple
+                  onChange={handleChangeFile}
+                />
+              </label>
+
+              <button
+                className="action_button"
+                onClick={() => {
+                  // TODO
+                }}
+              >
+                <span>Commit Upload</span>
+              </button>
+            </div>
+          </FormContainer>
+        </Portal>
       )}
     </React.Fragment>
   );
