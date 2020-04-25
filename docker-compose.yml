@@ -47,7 +47,7 @@ services:
 
 networks:
   default:
-    name: wordpress-network
+    name: golang-mysql
 
 volumes:
   mysql_data:
