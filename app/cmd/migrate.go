@@ -14,5 +14,3 @@ func main() {
 		db.AutoMigrate(&images.Preupload{}, &images.Upload{})
 	}
 }
-
-//mysql -udbuser -pdbpassword world < docker-entrypoint-initdb.d/world.sql
