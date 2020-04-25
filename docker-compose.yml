@@ -6,8 +6,6 @@ services:
       - ./mysql_data:/var/lib/mysql
       - ./mysql:/docker-entrypoint-initdb.d
     container_name: golang_db
-    networks:
-      - container-link
     ports:
       - '3306:3306'
     environment:
@@ -23,8 +21,6 @@ services:
     working_dir: /app/cmd
     command: go run main.go
     container_name: golang_app
-    networks:
-      - container-link
     depends_on:
       - go_db
     ports:
@@ -39,8 +35,6 @@ services:
   go_react:
     image: node:slim
     container_name: golang_react
-    networks:
-      - container-link
     volumes:
       - ./web:/web
       - /web/node_modules/
@@ -50,15 +44,6 @@ services:
       - 8080:8080
     depends_on:
       - golang
-
-# ネットワーク定義
-networks:
-  # docker-composeで勝手にデフォルトネットワークが生成される予防。（自動で全コンテナが所属するbridgeを指定）
-  default:
-    external:
-      name: bridge
-  container-link:
-    name: golang-mysql
 
 volumes:
   mysql_data:

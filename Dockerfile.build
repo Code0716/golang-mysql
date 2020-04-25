@@ -1,8 +1,8 @@
 FROM golang:1.12-alpine as build
 
-WORKDIR /app
+WORKDIR /app/cmd
 
-COPY /app /app
+COPY  /mysql /mysql
 
 RUN apk update && \
     apk add --no-cache git && \
@@ -15,10 +15,10 @@ FROM alpine
 
 WORKDIR /app
 
-COPY --from=build /app .
+COPY --from=build /app/cmd .
 
 RUN addgroup go \
     && adduser -D -G go go \
-    && chown -R go:go /app
+    && chown -R go:go /app/cmd
 
-CMD ["./app"]
+CMD ["./app/cmd"]
