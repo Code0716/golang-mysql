@@ -45,5 +45,9 @@ services:
     depends_on:
       - golang
 
+networks:
+  default:
+    name: wordpress-network
+
 volumes:
   mysql_data:
