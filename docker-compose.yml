@@ -7,7 +7,7 @@ services:
       - ./mysql:/docker-entrypoint-initdb.d
     container_name: golang_db
     networks:
-      - container-link:
+      - container-link
     ports:
       - '3306:3306'
     environment:
@@ -24,7 +24,7 @@ services:
     command: go run main.go
     container_name: golang_app
     networks:
-      - container-link:
+      - container-link
     depends_on:
       - go_db
     ports:
@@ -40,7 +40,7 @@ services:
     image: node:slim
     container_name: golang_react
     networks:
-      - container-link:
+      - container-link
     volumes:
       - ./web:/web
       - /web/node_modules/
