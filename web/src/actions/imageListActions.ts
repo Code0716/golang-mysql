@@ -74,6 +74,8 @@ export const imageListActions = () => {
   // add preupload image
   const addPreUploadImages = useCallback(
     async (files: File[]) => {
+      dispatch(load());
+
       const postData = new FormData();
       files.forEach(element => {
         postData.append('images', element);
@@ -89,7 +91,7 @@ export const imageListActions = () => {
           payload: response.data,
         });
       } finally {
-        // TODO
+        dispatch(unload());
       }
     },
     [dispatch, preUploadImages],
@@ -118,7 +120,6 @@ export const imageListActions = () => {
           payload: newState,
         });
       } finally {
-        //TODO
       }
     },
     [dispatch, preUploadImages],

@@ -15,6 +15,7 @@ import TestGetPost from '../src/containers/TestGetPost';
 import NotFound from './containers/NotFound.js';
 import SideMenu from '../src/components/SideMenu';
 import './sass/style.scss';
+import { Loading } from './components/Loading';
 
 const store = configureStore();
 
@@ -22,6 +23,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <SideMenu />
+      <Loading />
       <Switch>
         <Route exact path={LinksPathnames.HOME.path} component={Home} />
         <Route exact path={LinksPathnames.SLIDE.path} component={SlideShow} />

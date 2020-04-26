@@ -1,17 +1,18 @@
 import { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-type PortalProps = { children: any };
+type PortalProps = { domId: string; children: any };
 
-export const Portal: FC<PortalProps> = ({ children }) => {
+export const Portal: FC<PortalProps> = ({ domId, children }) => {
   useEffect(() => {
     return () => document.body.removeChild(target);
   }, []);
+
   const target = document.createElement('div');
   target.setAttribute('class', 'portal');
-  target.setAttribute('id', 'portal');
+  target.setAttribute('id', domId);
 
-  const potalDom = document.getElementById('portal');
+  const potalDom = document.getElementById(domId);
 
   if (!potalDom) {
     // BODY直下に新しいdiv要素を作成する
