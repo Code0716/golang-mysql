@@ -76,7 +76,7 @@ export const UploadImage = () => {
         />
       </label>
       {preUploadImages.length !== 0 && (
-        <Portal isApply={preUploadImages.length !== 0}>
+        <Portal>
           <FormContainer>
             {preUploadImagesRender}
             <div className="flex-box-center">
