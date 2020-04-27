@@ -58,7 +58,7 @@ export const imageListActions = () => {
   }, [dispatch]);
 
   // load preupload image
-  const getPreImages = useCallback(async () => {
+  const getPreImagesInfo = useCallback(async () => {
     dispatch(load());
     try {
       const response = await HttpRequest.get('/image/pre_upload');
@@ -69,7 +69,24 @@ export const imageListActions = () => {
     } finally {
       dispatch(unload());
     }
-  }, [dispatch]);
+  }, [dispatch, images]);
+
+  const getImage = useCallback(
+    async (id: Number) => {
+      try {
+        //const response = await HttpRequest.get(`/image/pre_upload/${id}`);
+        console.log(preUploadImages);
+        /*const targetData = preUploadImages.find(val => {
+        return val.info.ID == id;
+      });
+      let _copyImage = cloneDeep(targetData);
+      _copyImage = response;
+      dispatch({ type: ActionTypes.UPDATE_PRE_UPLOAD, payload: _copyImage });*/
+      } finally {
+      }
+    },
+    [dispatch, preUploadImages],
+  );
 
   // add preupload image
   const addPreUploadImages = useCallback(
@@ -101,11 +118,11 @@ export const imageListActions = () => {
   const deletePreImage = useCallback(
     async (id: number) => {
       try {
-        const copyImages = cloneDeep(preUploadImages);
+        const _copyImages = cloneDeep(preUploadImages);
         const newState: LoadImage[] = [];
         let deleteImage: ImageInfo;
 
-        copyImages.forEach((elm: LoadImage) => {
+        _copyImages.forEach((elm: LoadImage) => {
           if (elm.info.ID === id) {
             delete elm.img;
             deleteImage = elm.info;
@@ -131,7 +148,7 @@ export const imageListActions = () => {
     preUploadImages,
     //action
     initialize,
-    getPreImages,
+    getPreImagesInfo,
     getImages,
     addPreUploadImages,
     deletePreImage,

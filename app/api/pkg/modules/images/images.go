@@ -22,6 +22,7 @@ const preImagePath = "../images/preupload/"
 type (
 	operateFileData interface {
 		CreateFileInfo()
+		GetFile(id string)
 		DeleteFileInfo()
 	}
 
@@ -29,12 +30,14 @@ type (
 		GetAllFileInfo()
 	}
 
+	// Preupload model
 	Preupload struct {
 		gorm.Model
 		Title string `json:"Title"`
 		Path  string `json:"Path"`
 	}
 
+	//Upload model
 	Upload struct {
 		gorm.Model
 		Title string `json:"Title"`
@@ -47,21 +50,33 @@ type (
 	PreImageController struct{}
 )
 
-// save  Preupload info
+// CreateFileInfo func Preupload info save
 func (image *Preupload) CreateFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.Create(&image)
 }
 
-// save  upload info
+// CreateFileInfo save  upload info
 func (image *Upload) CreateFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.Create(&image)
 }
 
-// delete Preupload info
+func (image *Preupload) GetFile(id string) {
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+	db.Where("id = ?", id).Find(&image)
+}
+
+func (image *Upload) GetFile(id string) {
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+	db.Where("id = ?", id).Find(&image)
+}
+
+// DeleteFileInfo func delete Preupload info
 func (image *Preupload) DeleteFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
@@ -82,7 +97,7 @@ func (images *uploads) GetAllFileInfo() {
 	db.Find(&images)
 }
 
-// delete upload info
+// DeleteFileInfo func delete upload info
 func (image *Upload) DeleteFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
@@ -95,6 +110,10 @@ func saveImageInfo(operate operateFileData) {
 
 func deleteImageInfo(operate operateFileData) {
 	operate.DeleteFileInfo()
+}
+
+func getImage(opreate operateFileData, id string) {
+	operateFileData.GetFile(opreate, id)
 }
 
 func getAllImageInfo(operate operateAllData) {
@@ -142,10 +161,26 @@ func (pre PreImageController) GetAll(ginContext *gin.Context) {
 	jsonData := make([]map[string]interface{}, len(images))
 
 	for index, file := range images {
-		base64gify := encodeBase64(preImagePath, file.Title)
-		jsonData[index] = map[string]interface{}{"img": base64gify, "info": file}
+		//画像は一つづつ読み込むようにする。
+		jsonData[index] = map[string]interface{}{"info": file}
 
 	}
+
+	ginContext.JSON(http.StatusOK, jsonData)
+}
+
+// GetFile single
+func (pre PreImageController) GetFile(ginContext *gin.Context) {
+	id := ginContext.Param("id")
+
+	var image Preupload
+
+	getImage(&image, id)
+
+	jsonData := make(map[string]string)
+	//画像は一つづつ読み込むようにする
+	base64gify := encodeBase64(preImagePath, image.Title)
+	jsonData = map[string]string{"img": base64gify}
 
 	ginContext.JSON(http.StatusOK, jsonData)
 }
@@ -162,8 +197,6 @@ func (pre PreImageController) Delete(ginContext *gin.Context) {
 	if err := os.Remove(deleteData.Path); err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Println(deleteData)
 
 	deleteImageInfo(&deleteData)
 

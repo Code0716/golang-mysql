@@ -5,6 +5,7 @@ import { Portal } from '../../components/Portal';
 import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
 import { LoadImage } from '../../reducers/imageListReducer';
+import { LoadingElm } from '../../components/LoadingElm';
 
 //const createObjectURL = (window.URL || window.webkitURL).createObjectURL;
 
@@ -16,11 +17,11 @@ export const UploadImage = () => {
     initialize,
     addPreUploadImages,
     deletePreImage,
-    getPreImages,
+    getPreImagesInfo,
   } = imageListActions();
 
   useEffect(() => {
-    getPreImages();
+    getPreImagesInfo();
     return initialize;
   }, []);
 
@@ -50,7 +51,11 @@ export const UploadImage = () => {
           >
             削除
           </button>
-          <img src={'data:image/png;base64,' + elemnt.img} />
+          {elemnt.img ? (
+            <img src={'data:image/png;base64,' + elemnt.img} />
+          ) : (
+            <LoadingElm className={'image_size_loading'} />
+          )}
         </div>
         <div className="preupload-description">
           <span className="d-block">Title : {elemnt.info.Title}</span>

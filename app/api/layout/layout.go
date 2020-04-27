@@ -36,8 +36,10 @@ func Layout() {
 		api.GET("/scraping", scraping.GetScrape)
 
 		preImg := images.PreImageController{}
+
 		api.GET("/image/pre_upload", preImg.GetAll)
 		api.POST("/image/pre_upload", preImg.Upload)
+		api.GET("/image/pre_upload/:id", preImg.GetFile)
 		api.DELETE("/image/pre_upload/delete", preImg.Delete)
 
 	}

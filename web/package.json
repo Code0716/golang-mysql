@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "classnames": "^2.2.6",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
