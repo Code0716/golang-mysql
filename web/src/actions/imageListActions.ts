@@ -67,12 +67,13 @@ export const imageListActions = () => {
         type: ActionTypes.UPDATE_PRE_UPLOAD,
         payload: response,
       });
-      response.forEach(item => getImage(item.info.ID));
+      response.forEach((item: LoadImage) => getImage(item.info.ID));
     } finally {
       dispatch(unload());
     }
   }, [dispatch, images]);
 
+  // 画像を一枚づつ取得する。
   const getImage = useCallback(
     async (id: Number) => {
       try {

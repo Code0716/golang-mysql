@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { Portal } from '../../components/Portal';
 import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
 import { LoadImage } from '../../reducers/imageListReducer';
 import { LoadingElm } from '../../components/LoadingElm';
-
-//const createObjectURL = (window.URL || window.webkitURL).createObjectURL;
 
 export const UploadImage = () => {
   const {
@@ -87,7 +84,7 @@ export const UploadImage = () => {
         <Portal domId={'preupload'}>
           <FormContainer>
             {preUploadImagesRender}
-            <div className="flex-box-center">
+            <div className="image_commit_box">
               <label className="image_up_label mb-5">
                 ＋写真を選択
                 <input
