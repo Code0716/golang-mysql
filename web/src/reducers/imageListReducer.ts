@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { ActionTypes } from '../actions/imageListActions';
 
 // 型の定義
@@ -32,6 +33,18 @@ export function imageListReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         preUploadImages: [...state.preUploadImages, ...payload],
+      };
+    case ActionTypes.UPDATE_PRE_UPLOAD_IMAGE:
+      const _copyData = cloneDeep(state.preUploadImages);
+
+      _copyData.find(item => {
+        if (item.info.ID === payload.id) {
+          item.img = payload.img;
+        }
+      });
+      return {
+        ...state,
+        preUploadImages: [..._copyData],
       };
     case ActionTypes.DELETE_PRE_UPLOAD:
       return {

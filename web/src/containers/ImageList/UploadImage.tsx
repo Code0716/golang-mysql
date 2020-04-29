@@ -52,7 +52,10 @@ export const UploadImage = () => {
             削除
           </button>
           {elemnt.img ? (
-            <img src={'data:image/png;base64,' + elemnt.img} />
+            <img
+              className="fade-in"
+              src={'data:image/png;base64,' + elemnt.img}
+            />
           ) : (
             <LoadingElm className={'image_size_loading'} />
           )}

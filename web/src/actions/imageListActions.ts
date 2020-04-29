@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { cloneDeep } from 'lodash';
@@ -12,6 +12,7 @@ export const ActionTypes = {
   GET_LIST: 'IMAGE_LIST_GET_LIST',
   GET_UPLOAD: 'IMAGE_LIST_GET_UPLOAD_IMAGES',
   UPDATE_PRE_UPLOAD: 'IMAGE_LIST_UPDATE_PRE_UPLOAD',
+  UPDATE_PRE_UPLOAD_IMAGE: 'IMAGE_LIST_UPDATE_PRE_UPLOAD_IMAGE',
   DELETE_PRE_UPLOAD: 'IMAGE_LIST_DELETE_PRE_UPLOAD',
   CHANGE_STATE: 'IMAGE_LIST_CHANGE_STATE',
 } as const;
@@ -66,6 +67,7 @@ export const imageListActions = () => {
         type: ActionTypes.UPDATE_PRE_UPLOAD,
         payload: response,
       });
+      response.forEach(item => getImage(item.info.ID));
     } finally {
       dispatch(unload());
     }
@@ -74,14 +76,12 @@ export const imageListActions = () => {
   const getImage = useCallback(
     async (id: Number) => {
       try {
-        //const response = await HttpRequest.get(`/image/pre_upload/${id}`);
-        console.log(preUploadImages);
-        /*const targetData = preUploadImages.find(val => {
-        return val.info.ID == id;
-      });
-      let _copyImage = cloneDeep(targetData);
-      _copyImage = response;
-      dispatch({ type: ActionTypes.UPDATE_PRE_UPLOAD, payload: _copyImage });*/
+        const response = await HttpRequest.get(`/image/pre_upload/${id}`);
+
+        dispatch({
+          type: ActionTypes.UPDATE_PRE_UPLOAD_IMAGE,
+          payload: { id: id, ...response },
+        });
       } finally {
       }
     },
