@@ -6,6 +6,7 @@ import { AutoSizer, Column, Table } from 'react-virtualized';
 import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
 import { UploadImage } from './UploadImage';
+import './style.scss';
 
 type SelectType = '' | 'upload' | 'list';
 

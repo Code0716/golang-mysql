@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC } from 'react';
-
 import classnames from 'classnames';
+import './style.scss';
 
 type LoadingElmProps = {
   className?: string;

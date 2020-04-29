@@ -13,9 +13,9 @@ import { SlideShow } from '../src/containers/SlideShow';
 import { ImageList } from './containers/ImageList/ImageList';
 import TestGetPost from '../src/containers/TestGetPost';
 import NotFound from './containers/NotFound.js';
-import SideMenu from '../src/components/SideMenu';
+import SideMenu from './components/SideMenu/SideMenu';
+import { Loading } from './components/Loading/Loading';
 import './sass/style.scss';
-import { Loading } from './components/Loading';
 
 const store = configureStore();
 

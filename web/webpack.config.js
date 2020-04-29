@@ -72,19 +72,6 @@ module.exports = [
             },
           ],
         },
-        {
-          test: /\.(css)$/,
-          loaders: [
-            'style-loader',
-            'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          ],
-          exclude: [/node_modules/],
-        },
-        {
-          test: /\.(css)$/,
-          loaders: ['style-loader', 'css-loader?modules'],
-          include: [/node_modules/],
-        },
       ],
     },
     // import 文で .ts や .tsx ファイルを解決するため

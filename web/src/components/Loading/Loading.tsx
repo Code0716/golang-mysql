@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Portal } from './Portal';
+import { Portal } from '../Portal';
 import { LoadingElm } from './LoadingElm';
 
 export const Loading = () => {

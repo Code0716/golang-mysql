@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { LinksPathnames } from '../constant/commonConstant';
+import { LinksPathnames } from '../../constant/commonConstant';
+import './style.scss';
 
 const SideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
