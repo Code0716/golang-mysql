@@ -5,6 +5,9 @@ import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
 import { LoadImage } from '../../reducers/imageListReducer';
 import { LoadingElm } from '../../components/LoadingElm';
+import { FormatUtil } from '../../util/FormatUtil';
+
+const FormattedUtil = new FormatUtil();
 
 export const UploadImage = () => {
   const {
@@ -60,7 +63,9 @@ export const UploadImage = () => {
         <div className="preupload-description">
           <span className="d-block">Title : {elemnt.info.Title}</span>
           <span className="d-block">ID : {elemnt.info.ID}</span>
-          <span className="d-block">Date : {elemnt.info.CreatedAt}</span>
+          <span className="d-block">
+            Date : {FormattedUtil.formatedDate(elemnt.info.CreatedAt)}
+          </span>
           <span className="d-block">Path : {elemnt.info.Path}</span>
         </div>
       </div>
