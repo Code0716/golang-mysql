@@ -178,7 +178,7 @@ func (pre PreImageController) GetFile(ginContext *gin.Context) {
 	getImage(&image, id)
 
 	jsonData := make(map[string]string)
-	//画像は一つづつ読み込むようにする
+
 	base64gify := encodeBase64(preImagePath, image.Title)
 	jsonData = map[string]string{"img": base64gify}
 
@@ -220,3 +220,29 @@ func encodeBase64(savePath string, fileNama string) string {
 
 	return base64.StdEncoding.EncodeToString(data)
 }
+
+// ComitUpload func
+/*func ComitUpload(ginContext *gin.Context) {
+	// TODO
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+
+	preuploadToUpload(db)
+}
+
+func preuploadToUpload(db *gorm.DB, iamges *preuploads) error {
+	return db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Delete().Error; err != nil {
+			// エラーを返した場合はロールバックされます
+			return err
+		}
+
+		if err := tx.Create(&Animal{Name: "Lion"}).Error; err != nil {
+			return err
+		}
+
+		// nilを返すとコミットされる
+		return nil
+	})
+}
+*/
