@@ -15,7 +15,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-const preImagePath = "../images/preupload/"
+const preImagePath = "../../images/preupload/"
 
 //const imagePath = "../images/upload/"
 

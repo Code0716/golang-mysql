@@ -21,6 +21,7 @@ services:
     build: .
     volumes:
       - ./app:/app
+      - ./images:/images
     working_dir: /app/cmd
     command: go run main.go
     container_name: golang_app
@@ -44,6 +45,7 @@ services:
       - container-link
     volumes:
       - ./web:/web
+      - ./images:/images
       - /web/node_modules/
     working_dir: /web
     command: bash -c 'yarn && yarn dev'
