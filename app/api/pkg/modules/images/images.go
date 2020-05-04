@@ -1,7 +1,6 @@
 package images
 
 import (
-	"encoding/base64"
 	"fmt"
 	//"mime/multipart"
 	"net/http"
@@ -10,14 +9,11 @@ import (
 
 	"../../../constants"
 	"../../db"
+	"../encoding"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
-
-const preImagePath = "../../images/preupload/"
-
-const imagePath = "../../images/upload/"
 
 type (
 	operateFileData interface {
@@ -131,14 +127,14 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 
 	// save images
 	for index, file := range files {
-		err := ginContext.SaveUploadedFile(file, preImagePath+file.Filename)
+		err := ginContext.SaveUploadedFile(file, constants.PreImagePath+file.Filename)
 
 		if err != nil {
 			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 			return
 		}
 		// regist to db file info
-		newImage := Preupload{Title: file.Filename, Path: preImagePath + file.Filename}
+		newImage := Preupload{Title: file.Filename, Path: constants.PreImagePath + file.Filename}
 		saveImageInfo(&newImage)
 
 		jsonData[index] = map[string]interface{}{"info": newImage}
@@ -178,7 +174,7 @@ func (pre PreImageController) GetFile(ginContext *gin.Context) {
 
 	jsonData := make(map[string]string)
 
-	base64gify := encodeBase64(preImagePath, image.Title)
+	base64gify := encoding.EncodeBase64(constants.PreImagePath, image.Title)
 	jsonData = map[string]string{"img": base64gify}
 
 	ginContext.JSON(http.StatusOK, jsonData)
@@ -201,24 +197,6 @@ func (pre PreImageController) Delete(ginContext *gin.Context) {
 
 }
 
-// image Encode to base64 NOT USE NOW
-func encodeBase64(savePath string, fileNama string) string {
-	file, err := os.Open(savePath + fileNama)
-	defer file.Close()
-
-	if err != nil {
-		return err.Error()
-	}
-
-	fi, _ := file.Stat() // interface
-	size := fi.Size()    // file size
-
-	data := make([]byte, size)
-	file.Read(data)
-
-	return base64.StdEncoding.EncodeToString(data)
-}
-
 // ComitUpload func
 func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 	db := db.ConnectMySQL(constants.DBWorld)
@@ -230,7 +208,7 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 
 	for _, image := range images {
 		if err := preuploadToUpload(db, image); err != nil {
-			ginContext.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		}
 	}
 
@@ -241,20 +219,17 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 func preuploadToUpload(db *gorm.DB, image Preupload) error {
 
 	return db.Transaction(func(tx *gorm.DB) error {
-
 		// 削除する。
 		if err := tx.Unscoped().Delete(&image).Error; err != nil {
 			// エラーを返した場合はロールバックされます
 			return err
 		}
-
 		// uploadに保存
 		if err := tx.Create(&Upload{Title: image.Title, Path: image.Path}).Error; err != nil {
 			return err
 		}
-
 		// ファイル移動
-		if err := os.Rename(image.Path, imagePath+image.Title); err != nil {
+		if err := os.Rename(image.Path, constants.ImagePath+image.Title); err != nil {
 			return err
 		}
 		// nilを返すとコミットされる

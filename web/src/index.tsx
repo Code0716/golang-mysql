@@ -32,6 +32,11 @@ ReactDOM.render(
           path={LinksPathnames.IMAGE_LIST.path}
           component={ImageList}
         />
+        <Route
+          exact
+          path={`${LinksPathnames.IMAGE_LIST.path}/:suffix`}
+          component={ImageList}
+        />
         <Route exact path={LinksPathnames.TEST.path} component={TestGetPost} />
         <Route component={NotFound} />
       </Switch>
