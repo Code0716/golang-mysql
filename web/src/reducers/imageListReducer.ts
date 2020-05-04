@@ -37,7 +37,7 @@ export function imageListReducer(state = initialState, { type, payload }) {
     case ActionTypes.UPDATE_PRE_UPLOAD_IMAGE:
       const _copyData = cloneDeep(state.preUploadImages);
 
-      _copyData.find(item => {
+      _copyData.find((item: LoadImage) => {
         if (item.info.ID === payload.id) {
           item.img = payload.img;
         }

@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+
 //import { push } from 'connected-react-router';
 
 import HttpRequest from '../service/api/HttpRequest';
@@ -28,7 +30,7 @@ export type HttpRequestActionTypes = GetCountryAction | GetCityAction;
 export const slideShowActions = () => {
   const dispatch = useDispatch();
   //store
-  const slideShow = useSelector(({ slideShow }) => slideShow);
+  const slideShow = useSelector(({ slideShow }: RootState) => slideShow);
 
   const {
     currentContinent,

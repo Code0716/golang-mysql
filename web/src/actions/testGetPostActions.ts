@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
-import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 //import { push } from 'connected-react-router';
-
 import HttpRequest from '../service/api/HttpRequest';
 // Actions
 export const ActionTypes = {
@@ -13,26 +12,15 @@ export const ActionTypes = {
 
 // Action Creators
 
-// Actionの型 Actionを継承 TODO
-interface GetAction extends Action {
-  type: typeof ActionTypes.GET;
-}
-
-interface PostAction extends Action {
-  type: typeof ActionTypes.POST;
-}
-
-export type HttpRequestActionTypes = GetAction | PostAction;
-
 export const testGetPostActions = () => {
   const dispatch = useDispatch();
   //store
-  const testGetPost = useSelector(({ testGetPost }) => testGetPost);
+  const testGetPost = useSelector(({ testGetPost }: RootState) => testGetPost);
 
   const { getData, postData, entity } = testGetPost;
 
   const get = useCallback(
-    async url => {
+    async (url: string) => {
       dispatch({ type: ActionTypes.GET, url });
       const data = await HttpRequest.get(url);
       // Asiaのみ取得

@@ -1,12 +1,15 @@
 import { ActionTypes } from '../actions/testGetPostActions';
 
-export interface State {
+export type State = {
   getData: { code: string; name: string }[];
   postData: { id: number; code: string; name: string }[];
-}
-const initialState: State = {
+  entity: {};
+};
+
+export const initialState: State = {
   getData: [],
   postData: [],
+  entity: {},
 };
 
 export function testGetPostReducer(state = initialState, { type, payload }) {

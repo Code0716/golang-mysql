@@ -2,6 +2,8 @@ import { useEffect, useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { cloneDeep } from 'lodash';
+import { RootState } from '../store/store';
+
 import { LoadImage, ImageInfo } from '../reducers/imageListReducer';
 import { load, unload } from '../actions/loadingActions';
 
@@ -29,6 +31,11 @@ export type HttpRequestActionTypes = GetList;
 export const imageListActions = () => {
   const dispatch = useDispatch();
 
+  //store
+  const imageList = useSelector(({ imageList }: RootState) => imageList);
+
+  const { images, preUploadImages } = imageList;
+
   const initialize = useCallback(
     () =>
       dispatch({
@@ -36,11 +43,6 @@ export const imageListActions = () => {
       }),
     [dispatch],
   );
-
-  //store
-  const imageList = useSelector(({ imageList }) => imageList);
-
-  const { images, preUploadImages } = imageList;
 
   //  画像一覧
   const getImages = useCallback(async () => {
