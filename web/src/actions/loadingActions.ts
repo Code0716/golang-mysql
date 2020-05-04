@@ -8,7 +8,7 @@ export const ActionTypes = {
 /**
  * 処理中
  */
-export function load() {
+export function loading() {
   return {
     type: ActionTypes.LOADING,
   };
@@ -17,7 +17,7 @@ export function load() {
 /**
  * 処理後
  */
-export function unload() {
+export function unloading() {
   return {
     type: ActionTypes.UNLOADING,
   };

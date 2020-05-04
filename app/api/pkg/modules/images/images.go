@@ -17,7 +17,7 @@ import (
 
 const preImagePath = "../../images/preupload/"
 
-//const imagePath = "../images/upload/"
+const imagePath = "../../images/upload/"
 
 type (
 	operateFileData interface {
@@ -64,12 +64,14 @@ func (image *Upload) CreateFileInfo() {
 	db.Create(&image)
 }
 
+// GetFile 個々のファイルを取得
 func (image *Preupload) GetFile(id string) {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
 	db.Where("id = ?", id).Find(&image)
 }
 
+// GetFile 個々のファイルを取得
 func (image *Upload) GetFile(id string) {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
@@ -161,13 +163,12 @@ func (pre PreImageController) GetAll(ginContext *gin.Context) {
 	for index, file := range images {
 		//画像は一つづつ読み込むようにする。
 		jsonData[index] = map[string]interface{}{"info": file}
-
 	}
 
 	ginContext.JSON(http.StatusOK, jsonData)
 }
 
-// GetFile single
+// GetFile single NOT USE NOW
 func (pre PreImageController) GetFile(ginContext *gin.Context) {
 	id := ginContext.Param("id")
 
@@ -200,15 +201,14 @@ func (pre PreImageController) Delete(ginContext *gin.Context) {
 
 }
 
-// get save image and Encode to base64
+// image Encode to base64 NOT USE NOW
 func encodeBase64(savePath string, fileNama string) string {
 	file, err := os.Open(savePath + fileNama)
+	defer file.Close()
 
 	if err != nil {
 		return err.Error()
 	}
-
-	defer file.Close()
 
 	fi, _ := file.Stat() // interface
 	size := fi.Size()    // file size
@@ -220,27 +220,46 @@ func encodeBase64(savePath string, fileNama string) string {
 }
 
 // ComitUpload func
-/*func ComitUpload(ginContext *gin.Context) {
-	// TODO
+func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
+	var images preuploads
 
-	preuploadToUpload(db)
+	//現在pre_uploadデータベースにあるものを取得
+	getAllImageInfo(&images)
+
+	for _, image := range images {
+		if err := preuploadToUpload(db, image); err != nil {
+			ginContext.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+			return
+		}
+	}
+
+	ginContext.JSON(http.StatusOK, gin.H{"message": "DONE"})
+
 }
 
-func preuploadToUpload(db *gorm.DB, iamges *preuploads) error {
+func preuploadToUpload(db *gorm.DB, image Preupload) error {
+
 	return db.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Delete().Error; err != nil {
+
+		// 削除する。
+		if err := tx.Unscoped().Delete(&image).Error; err != nil {
 			// エラーを返した場合はロールバックされます
 			return err
 		}
 
-		if err := tx.Create(&Animal{Name: "Lion"}).Error; err != nil {
+		// ファイル移動
+		if err := os.Rename(image.Path, imagePath+image.Title); err != nil {
+			return err
+		}
+
+		if err := tx.Create(&Upload{Title: image.Title, Path: image.Path}).Error; err != nil {
 			return err
 		}
 
 		// nilを返すとコミットされる
 		return nil
 	})
+
 }
-*/

@@ -17,6 +17,7 @@ export const UploadImage = () => {
     addPreUploadImages,
     deletePreImage,
     getPreImagesInfo,
+    commitUpload,
   } = imageListActions();
 
   useEffect(() => {
@@ -86,6 +87,7 @@ export const UploadImage = () => {
           <FormContainer>
             {preUploadImagesRender}
             <div className="image_commit_box">
+              <div>Upload confirm</div>
               <label className="image_up_label mb-5">
                 ＋写真を選択
                 <input
@@ -96,13 +98,7 @@ export const UploadImage = () => {
                   onChange={handleChangeFile}
                 />
               </label>
-
-              <button
-                className="action_button"
-                onClick={() => {
-                  // TODO
-                }}
-              >
+              <button className="action_button" onClick={commitUpload}>
                 <span>Commit Upload</span>
               </button>
             </div>

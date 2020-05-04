@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash';
 import { RootState } from '../store/store';
 
 import { LoadImage, ImageInfo } from '../reducers/imageListReducer';
-import { load, unload } from '../actions/loadingActions';
+import { loading, unloading } from '../actions/loadingActions';
 
 import HttpRequest from '../service/api/HttpRequest';
 // Actions
@@ -62,19 +62,20 @@ export const imageListActions = () => {
 
   // load preupload image
   const getPreImagesInfo = useCallback(async () => {
-    dispatch(load());
+    dispatch(loading());
     try {
       const response = await HttpRequest.get('/image/pre_upload');
       dispatch({
         type: ActionTypes.UPDATE_PRE_UPLOAD,
         payload: response,
       });
+      //  response.forEach((item: LoadImage) => getImage(item.info.ID));
     } finally {
-      dispatch(unload());
+      dispatch(unloading());
     }
   }, [dispatch, images]);
 
-  // 画像を一枚取得する。
+  // 画像を一枚づつ取得する。
   const getImage = useCallback(
     async (id: Number) => {
       try {
@@ -93,7 +94,7 @@ export const imageListActions = () => {
   // add preupload image
   const addPreUploadImages = useCallback(
     async (files: File[]) => {
-      dispatch(load());
+      dispatch(loading());
 
       const postData = new FormData();
       files.forEach(element => {
@@ -110,7 +111,7 @@ export const imageListActions = () => {
           payload: response.data,
         });
       } finally {
-        dispatch(unload());
+        dispatch(unloading());
       }
     },
     [dispatch, preUploadImages],
@@ -144,6 +145,16 @@ export const imageListActions = () => {
     [dispatch, preUploadImages],
   );
 
+  const commitUpload = useCallback(async () => {
+    dispatch(loading());
+    try {
+      const response = await HttpRequest.get('/image/upload');
+      console.log(response);
+    } finally {
+      dispatch(unloading());
+    }
+  }, [dispatch, preUploadImages]);
+
   return {
     //state
     images,
@@ -154,5 +165,6 @@ export const imageListActions = () => {
     getImages,
     addPreUploadImages,
     deletePreImage,
+    commitUpload,
   };
 };

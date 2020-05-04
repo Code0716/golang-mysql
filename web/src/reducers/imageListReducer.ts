@@ -34,7 +34,7 @@ export function imageListReducer(state = initialState, { type, payload }) {
         ...state,
         preUploadImages: [...state.preUploadImages, ...payload],
       };
-    case ActionTypes.UPDATE_PRE_UPLOAD_IMAGE:
+    /*  case ActionTypes.UPDATE_PRE_UPLOAD_IMAGE:
       const _copyData = cloneDeep(state.preUploadImages);
 
       _copyData.find((item: LoadImage) => {
@@ -45,7 +45,7 @@ export function imageListReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         preUploadImages: [..._copyData],
-      };
+      };*/
     case ActionTypes.DELETE_PRE_UPLOAD:
       return {
         ...state,

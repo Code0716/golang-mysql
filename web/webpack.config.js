@@ -81,14 +81,12 @@ module.exports = [
     //ソースマップはbuild時削除
     devtool: 'inline-source-map',
     // performance: { hints: false },
-    // ローカル開発用環境を立ち上げる
-    // 実行時にブラウザが自動的に localhost を開く
     devServer: {
       contentBase: rootDir,
       publicPath: '/js/',
       disableHostCheck: true,
       open: true,
-      watchContentBase: true,
+      // watchContentBase: true,
       port: 8080,
       host: '0.0.0.0',
     },
