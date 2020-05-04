@@ -69,11 +69,10 @@ export const imageListActions = () => {
         type: ActionTypes.UPDATE_PRE_UPLOAD,
         payload: response,
       });
-      //  response.forEach((item: LoadImage) => getImage(item.info.ID));
     } finally {
       dispatch(unloading());
     }
-  }, [dispatch, images]);
+  }, [dispatch]);
 
   // 画像を一枚づつ取得する。
   const getImage = useCallback(
@@ -150,6 +149,8 @@ export const imageListActions = () => {
     try {
       const response = await HttpRequest.get('/image/upload');
       console.log(response);
+      // 再読み込み
+      getPreImagesInfo();
     } finally {
       dispatch(unloading());
     }

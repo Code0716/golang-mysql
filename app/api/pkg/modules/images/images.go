@@ -231,7 +231,6 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 	for _, image := range images {
 		if err := preuploadToUpload(db, image); err != nil {
 			ginContext.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
-			return
 		}
 	}
 
@@ -249,15 +248,15 @@ func preuploadToUpload(db *gorm.DB, image Preupload) error {
 			return err
 		}
 
-		// ファイル移動
-		if err := os.Rename(image.Path, imagePath+image.Title); err != nil {
-			return err
-		}
-
+		// uploadに保存
 		if err := tx.Create(&Upload{Title: image.Title, Path: image.Path}).Error; err != nil {
 			return err
 		}
 
+		// ファイル移動
+		if err := os.Rename(image.Path, imagePath+image.Title); err != nil {
+			return err
+		}
 		// nilを返すとコミットされる
 		return nil
 	})
