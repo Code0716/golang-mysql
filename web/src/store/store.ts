@@ -10,6 +10,7 @@ const composeEnhancers =
 
 export const history = createBrowserHistory();
 /* Storeの実装 */
+
 export const rootReducer = combineReducers({
   ...reducers,
   router: connectRouter(history),

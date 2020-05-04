@@ -45,6 +45,7 @@ services:
       - container-link
     volumes:
       - ./web:/web
+      - ./images:/web/dist/images
       - /web/node_modules/
     working_dir: /web
     command: bash -c 'yarn && yarn dev'
