@@ -15,7 +15,7 @@ export interface LoadImage {
 }
 
 export interface State {
-  images: { continent: string }[];
+  images: { image: string }[];
   preUploadImages: LoadImage[];
 }
 

@@ -139,9 +139,7 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 		newImage := Preupload{Title: file.Filename, Path: preImagePath + file.Filename}
 		saveImageInfo(&newImage)
 
-		base64gify := encodeBase64(preImagePath, file.Filename)
-
-		jsonData[index] = map[string]interface{}{"img": base64gify, "info": newImage}
+		jsonData[index] = map[string]interface{}{"info": newImage}
 
 	}
 
