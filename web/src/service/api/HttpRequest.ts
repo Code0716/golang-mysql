@@ -29,6 +29,17 @@ class HttpRequest {
       });
   }
 
+  put(url: string) {
+    return axios
+      .put(config.API_SERVER_URL + url)
+      .then(response => {
+        const payload = response.data;
+        return payload;
+      })
+      .catch((error: Error) => {
+        return { error };
+      });
+  }
   // send images
   postImg(url: string, postData: FormData) {
     return axios.post(config.API_SERVER_URL + url, postData, {

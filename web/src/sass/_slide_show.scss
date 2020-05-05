@@ -9,12 +9,13 @@
 .virtualized_head {
   border-bottom: #ffffff 1px solid;
 }
-.colum_row {
+
+.virtualized_row {
   transition: all 0.3s;
   border-bottom: #ffffff 1px solid;
 }
 
-.colum_row:hover {
+.virtualized_row:hover {
   color: #00aeec;
   border-color: violet;
 }

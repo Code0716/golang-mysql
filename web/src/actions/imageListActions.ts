@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
+import { push } from 'connected-react-router';
 import { cloneDeep } from 'lodash';
 import { RootState } from '../store/store';
 
@@ -50,7 +51,7 @@ export const imageListActions = () => {
       type: ActionTypes.GET_LIST,
     });
     try {
-      const data = await HttpRequest.get(`/image/list`);
+      const data = await HttpRequest.get(`/image/upload`);
       dispatch({
         type: ActionTypes.CHANGE_STATE,
         payload: { images: data },
@@ -72,7 +73,7 @@ export const imageListActions = () => {
     } finally {
       dispatch(unloading());
     }
-  }, [dispatch]);
+  }, [dispatch, preUploadImages]);
 
   // 画像を一枚づつ取得する。
   const getImage = useCallback(
@@ -147,14 +148,17 @@ export const imageListActions = () => {
   const commitUpload = useCallback(async () => {
     dispatch(loading());
     try {
-      const response = await HttpRequest.get('/image/upload');
+      const response = await HttpRequest.put('/image/upload');
+      // TODO
       console.log(response);
-      // 再読み込み
-      getPreImagesInfo();
+      forwordToDirectory();
     } finally {
       dispatch(unloading());
     }
   }, [dispatch, preUploadImages]);
+
+  const forwordToDirectory = (path: string = '') =>
+    dispatch(push(`/images/${path}`));
 
   return {
     //state
@@ -167,5 +171,6 @@ export const imageListActions = () => {
     addPreUploadImages,
     deletePreImage,
     commitUpload,
+    forwordToDirectory,
   };
 };

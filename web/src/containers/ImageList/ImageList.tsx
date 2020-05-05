@@ -1,70 +1,36 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
-import { AutoSizer, Column, Table } from 'react-virtualized';
+import { useParams } from 'react-router-dom';
 import { FormContainer } from '../../components/FormContainer';
 import { imageListActions } from '../../actions/imageListActions';
 import { UploadImage } from './UploadImage';
+import { ListImages } from './ListImages';
+
 import './style.scss';
 
-type SelectType = '' | 'upload' | 'list';
-
+type RouteParams = {
+  directory?: string;
+};
 export const ImageList = () => {
-  const dispatch = useDispatch();
-  const [selectContainer, setSelectContainer] = useState<SelectType>('');
+  const params = useParams();
 
   const {
     //state
-    images,
     //action
-    getImages,
+    forwordToDirectory,
   } = imageListActions();
-
-  const makePath = continent => continent.replace(' ', '_').toLowerCase();
-
-  useEffect(() => {}, []);
 
   return (
     <FormContainer>
       <div className="flex-box mb-10 p-10">
-        <button className="button" onClick={() => setSelectContainer('upload')}>
+        <button className="button" onClick={() => forwordToDirectory('upload')}>
           Upload images
         </button>
-        <button className="button" onClick={() => setSelectContainer('list')}>
+        <button className="button" onClick={() => forwordToDirectory('list')}>
           Image list
         </button>
       </div>
-      {selectContainer === 'upload' && <UploadImage />}
-      {selectContainer === 'list' && (
-        <AutoSizer>
-          {({ width, height }) => (
-            <div className="d-flex">
-              <Table
-                data={images}
-                height={height}
-                width={width}
-                headerHeight={35}
-                rowHeight={35}
-                rowGetter={({ index }) => images[index]}
-                rowCount={images.length}
-                rowClassName="virtualized_row"
-                onRowClick={({ rowData }) =>
-                  dispatch(push(makePath(rowData.continent)))
-                }
-              >
-                <Column
-                  width={200}
-                  label="Images"
-                  dataKey="_"
-                  className="colum_row"
-                  cellRenderer={({ rowData }) => {}}
-                />
-              </Table>
-            </div>
-          )}
-        </AutoSizer>
-      )}
+      {params.directory === 'upload' && <UploadImage />}
+      {params.directory === 'list' && <ListImages />}
     </FormContainer>
   );
 };

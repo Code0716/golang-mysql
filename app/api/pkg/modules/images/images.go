@@ -42,9 +42,14 @@ type (
 
 	preuploads []Preupload
 	uploads    []Upload
+
 	// PreImageController struct
 	PreImageController struct{}
+	// ImageController struct
+	ImageController struct{}
 )
+
+// 色々試したくて冗長になっている。
 
 // CreateFileInfo func Preupload info save
 func (image *Preupload) CreateFileInfo() {
@@ -145,8 +150,6 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, jsonData)
 }
 
-// ↑ 共通化できるか？ -----------------------------------------------------------------↓
-
 // GetAll Preupload image and registed db data
 func (pre PreImageController) GetAll(ginContext *gin.Context) {
 
@@ -157,7 +160,6 @@ func (pre PreImageController) GetAll(ginContext *gin.Context) {
 	jsonData := make([]map[string]interface{}, len(images))
 
 	for index, file := range images {
-		//画像は一つづつ読み込むようにする。
 		jsonData[index] = map[string]interface{}{"info": file}
 	}
 
@@ -236,4 +238,20 @@ func preuploadToUpload(db *gorm.DB, image Preupload) error {
 		return nil
 	})
 
+}
+
+// GetAll upload image and registed db data
+func (pre ImageController) GetAll(ginContext *gin.Context) {
+
+	var images uploads
+
+	getAllImageInfo(&images)
+
+	jsonData := make([]map[string]interface{}, len(images))
+
+	for index, file := range images {
+		jsonData[index] = map[string]interface{}{"info": file}
+	}
+
+	ginContext.JSON(http.StatusOK, jsonData)
 }

@@ -46,7 +46,11 @@ func Layout() {
 		//　Preuploadのでデータを一枚削除
 		api.DELETE("/image/pre_upload/delete", preImg.Delete)
 		//　本アップロード
-		api.GET("/image/upload", preImg.ComitUpload)
+		api.PUT("/image/upload", preImg.ComitUpload)
+
+		upedImg := images.ImageController{}
+		api.GET("/image/upload", upedImg.GetAll)
+
 	}
 
 	router.Run(":8000")

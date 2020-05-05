@@ -15,7 +15,7 @@ export interface LoadImage {
 }
 
 export interface State {
-  images: { image: string }[];
+  images: LoadImage[];
   preUploadImages: LoadImage[];
 }
 
