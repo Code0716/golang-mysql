@@ -1,29 +1,39 @@
 import * as React from 'react';
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { imageListActions, RouteParams } from '../../actions/imageListActions';
+import { useDispatch } from 'react-redux';
+import {
+  ActionTypes,
+  imageListActions,
+  RouteParams,
+} from '../../actions/imageListActions';
 import { LoadImage } from '../../reducers/imageListReducer';
 import { LoadingElm } from '../../components/Loading/LoadingElm';
 import './style.scss';
 
 export const ImageDetaile: React.FC = () => {
+  const dispatch = useDispatch();
   const params: RouteParams = useParams();
   const paramsID = Number(params.id);
-  const { getImage, images, forwordToDetaile } = imageListActions();
+  const {
+    // store
+    getImage,
+    images,
+    currentBase64,
+    // actions
+    forwordToDetaile,
+  } = imageListActions();
 
   useEffect(() => {
     getImage();
+    return () =>
+      dispatch({
+        type: ActionTypes.CHANGE_STATE,
+        payload: { currentBase64: undefined },
+      });
   }, [params.id]);
 
-  // 現在の画像を返す
-  const currnetImage = useMemo<string | undefined>(() => {
-    const data = images.find((item: LoadImage) => {
-      if (item.image && item.image.id === paramsID) return item;
-    });
-    if (!data) return;
-    return data.image.img;
-  }, [images, paramsID]);
-
+  // check exist prev or next
   const searchPrevNext = (num: number) =>
     images.some((item: LoadImage, index: number) => {
       // スマートじゃないよねー。
@@ -53,9 +63,9 @@ export const ImageDetaile: React.FC = () => {
         </button>
       )}
       <div className="image_box">
-        {currnetImage ? (
+        {currentBase64 ? (
           <div className="inner_box">
-            <img src={`data:image/png;base64,${currnetImage}`} />
+            <img src={`data:image/png;base64,${currentBase64}`} />
           </div>
         ) : (
           <LoadingElm className="loading_height" />

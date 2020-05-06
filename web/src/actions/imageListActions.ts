@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -44,7 +44,7 @@ export const imageListActions = () => {
   //store
   const imageList = useSelector(({ imageList }: RootState) => imageList);
 
-  const { images, preUploadImages } = imageList;
+  const { images, preUploadImages, currentBase64 } = imageList;
 
   const initialize = useCallback(
     () =>
@@ -86,19 +86,13 @@ export const imageListActions = () => {
 
   // 画像を一枚づつ取得する。
   const getImage = useCallback(async () => {
-    const isAlreadyLoad = images.some((item: LoadImage) => {
-      if (item.image) return item.image.id === Number(params.id);
-    });
-
-    if (isAlreadyLoad) return;
-
     try {
       const response: { img: string } = await HttpRequest.get(
         `/image/upload/${params.id}`,
       );
       dispatch({
         type: ActionTypes.UPDATE_UPLOAD_IMAGE,
-        payload: { id: Number(params.id), ...response },
+        payload: { ...response },
       });
     } finally {
     }
@@ -186,6 +180,7 @@ export const imageListActions = () => {
     //state
     images,
     preUploadImages,
+    currentBase64,
     //action
     initialize,
     getPreImagesInfo,

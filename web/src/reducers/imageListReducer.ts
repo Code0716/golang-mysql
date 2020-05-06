@@ -9,25 +9,21 @@ export type ImageInfo = {
   Path: string;
 };
 
-export type EachImage = {
-  id: number;
-  img: string;
-};
-
 export interface LoadImage {
-  image: EachImage;
   info: ImageInfo;
 }
 
 export interface State {
   images: LoadImage[];
   preUploadImages: LoadImage[];
+  currentBase64: string | undefined;
 }
 
 // 初期値
 const initialState: State = {
   images: [],
   preUploadImages: [],
+  currentBase64: undefined,
 };
 
 export function imageListReducer(state = initialState, { type, payload }) {
@@ -45,17 +41,11 @@ export function imageListReducer(state = initialState, { type, payload }) {
         preUploadImages: [...state.preUploadImages, ...payload],
       };
     case ActionTypes.UPDATE_UPLOAD_IMAGE:
-      // imagesに保存するようにする。
-      const _copyData = cloneDeep(state.images);
-      _copyData.find((item: LoadImage) => {
-        if (item.info.ID === payload.id) {
-          item.image = payload;
-        }
-      });
+      // 重くなるので都度取得するようにした。
 
       return {
         ...state,
-        images: [..._copyData],
+        currentBase64: payload.img,
       };
     case ActionTypes.DELETE_PRE_UPLOAD:
       return {
