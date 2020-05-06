@@ -2,15 +2,23 @@ import * as React from 'react';
 import { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-type PortalProps = { domId: string; children: React.ReactNode };
+type PortalProps = {
+  domId: string;
+  className?: string;
+  children: React.ReactNode;
+};
 
-export const Portal: FC<PortalProps> = ({ domId, children }) => {
+export const Portal: FC<PortalProps> = ({
+  domId,
+  className = 'portal',
+  children,
+}) => {
   useEffect(() => {
     return () => document.body.removeChild(target);
   }, []);
 
   const target = document.createElement('div');
-  target.setAttribute('class', 'portal');
+  target.setAttribute('class', className);
   target.setAttribute('id', domId);
 
   const potalDom = document.getElementById(domId);

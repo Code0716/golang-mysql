@@ -1,0 +1,24 @@
+.shot_message_box {
+  position: fixed;
+  top: 20px;
+  right: -100%;
+  z-index: 6;
+  transition: all 0.3;
+  .massage_box {
+    color: #ffffff;
+    box-sizing: border-box;
+    padding: 8px 25px;
+    background-color: #61befb;
+    border: 1px #ffffff solid;
+    border-radius: 15px;
+    font-size: 12px;
+  }
+}
+
+.show_mess {
+  right: 20%;
+}
+
+.hide_mess {
+  left: 100%;
+}
