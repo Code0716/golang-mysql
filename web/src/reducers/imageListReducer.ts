@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash';
 import { ActionTypes } from '../actions/imageListActions';
 
 // 型の定義 imageと
