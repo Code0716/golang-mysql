@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { Action } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { cloneDeep } from 'lodash';
 import { RootState } from '../store/store';
@@ -15,7 +16,7 @@ export const ActionTypes = {
   GET_LIST: 'IMAGE_LIST_GET_LIST',
   GET_UPLOAD: 'IMAGE_LIST_GET_UPLOAD_IMAGES',
   UPDATE_PRE_UPLOAD: 'IMAGE_LIST_UPDATE_PRE_UPLOAD',
-  UPDATE_PRE_UPLOAD_IMAGE: 'IMAGE_LIST_UPDATE_PRE_UPLOAD_IMAGE',
+  UPDATE_UPLOAD_IMAGE: 'IMAGE_LIST_UPDATE_UPLOAD_IMAGE',
   DELETE_PRE_UPLOAD: 'IMAGE_LIST_DELETE_PRE_UPLOAD',
   CHANGE_STATE: 'IMAGE_LIST_CHANGE_STATE',
 } as const;
@@ -29,13 +30,21 @@ interface GetList extends Action {
 
 export type HttpRequestActionTypes = GetList;
 
+export type RouteParams = {
+  directory?: string;
+  id?: string;
+};
+
 export const imageListActions = () => {
   const dispatch = useDispatch();
+
+  // location params
+  const params: RouteParams = useParams();
 
   //store
   const imageList = useSelector(({ imageList }: RootState) => imageList);
 
-  const { images, preUploadImages } = imageList;
+  const { images, preUploadImages, imgBase64 } = imageList;
 
   const initialize = useCallback(
     () =>
@@ -76,26 +85,22 @@ export const imageListActions = () => {
   }, [dispatch, preUploadImages]);
 
   // 画像を一枚づつ取得する。
-  const getImage = useCallback(
-    async (id: Number) => {
-      try {
-        const response = await HttpRequest.get(`/image/pre_upload/${id}`);
+  const getImage = useCallback(async () => {
+    try {
+      const response = await HttpRequest.get(`/image/upload/${params.id}`);
 
-        dispatch({
-          type: ActionTypes.UPDATE_PRE_UPLOAD_IMAGE,
-          payload: { id: id, ...response },
-        });
-      } finally {
-      }
-    },
-    [dispatch, preUploadImages],
-  );
+      dispatch({
+        type: ActionTypes.UPDATE_UPLOAD_IMAGE,
+        payload: { id: Number(params.id), ...response },
+      });
+    } finally {
+    }
+  }, [dispatch, images, params.id]);
 
   // add preupload image
   const addPreUploadImages = useCallback(
     async (files: File[]) => {
       dispatch(loading());
-
       const postData = new FormData();
       files.forEach(element => {
         postData.append('images', element);
@@ -127,7 +132,6 @@ export const imageListActions = () => {
 
         _copyImages.forEach((elm: LoadImage) => {
           if (elm.info.ID === id) {
-            delete elm.img;
             deleteImage = elm.info;
           } else {
             newState.push(elm);
@@ -145,32 +149,46 @@ export const imageListActions = () => {
     [dispatch, preUploadImages],
   );
 
+  //　preupload to upload commit
   const commitUpload = useCallback(async () => {
     dispatch(loading());
     try {
       const response = await HttpRequest.put('/image/upload');
       // TODO
+      // show some message
       console.log(response);
-      forwordToDirectory();
+      forwordToImages();
     } finally {
       dispatch(unloading());
     }
   }, [dispatch, preUploadImages]);
 
-  const forwordToDirectory = (path: string = '') =>
-    dispatch(push(`/images/${path}`));
+  // forword to /list or /upload or /
+  const forwordToImages = useCallback(
+    (path: string = '') => dispatch(push(`/images/${path}`)),
+    [params.directory, params.id],
+  );
+
+  // forword to detaile
+  const forwordToDetaile = useCallback(
+    (id: number) => dispatch(push(`/images/list/${id}`)),
+    [params.directory, params.id],
+  );
 
   return {
     //state
     images,
     preUploadImages,
+    imgBase64,
     //action
     initialize,
     getPreImagesInfo,
     getImages,
+    getImage,
     addPreUploadImages,
     deletePreImage,
     commitUpload,
-    forwordToDirectory,
+    forwordToImages,
+    forwordToDetaile,
   };
 };

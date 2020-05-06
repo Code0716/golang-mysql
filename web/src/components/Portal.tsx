@@ -1,7 +1,8 @@
+import * as React from 'react';
 import { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-type PortalProps = { domId: string; children: any };
+type PortalProps = { domId: string; children: React.ReactNode };
 
 export const Portal: FC<PortalProps> = ({ domId, children }) => {
   useEffect(() => {

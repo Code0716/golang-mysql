@@ -17,8 +17,8 @@ const SideMenu = () => {
       url: LinksPathnames.HOME.path,
     },
     {
-      label: LinksPathnames.IMAGE_LIST.name,
-      url: LinksPathnames.IMAGE_LIST.path,
+      label: LinksPathnames.IMAGE.name,
+      url: LinksPathnames.IMAGE.path,
     },
     /*   {
       label: LinksPathnames.SLIDE.name,

@@ -8,7 +8,7 @@ import { LoadingElm } from '../../components/Loading/LoadingElm';
 import { FormatUtil } from '../../util/FormatUtil';
 import './style.scss';
 
-export const UploadImage = () => {
+export const UploadImage: React.FC = () => {
   const {
     // state
     preUploadImages,
@@ -22,7 +22,6 @@ export const UploadImage = () => {
 
   useEffect(() => {
     getPreImagesInfo();
-    return initialize;
   }, []);
 
   const handleChangeFile = useCallback(

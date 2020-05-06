@@ -1,4 +1,4 @@
-package layout
+package router
 
 import (
 	"../pkg/modules"
@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Layout func
-func Layout() {
+// APIRouter func
+func APIRouter() {
 
 	router := gin.Default()
 
@@ -41,14 +41,14 @@ func Layout() {
 		api.GET("/image/pre_upload", preImg.GetAll)
 		// Preuploadする
 		api.POST("/image/pre_upload", preImg.Upload)
-		// 画像一枚だけ取得して、Base64で返す。
-		api.GET("/image/pre_upload/:id", preImg.GetFile)
+
 		//　Preuploadのでデータを一枚削除
 		api.DELETE("/image/pre_upload/delete", preImg.Delete)
 		//　本アップロード
 		api.PUT("/image/upload", preImg.ComitUpload)
 
-		upedImg := images.ImageController{}
+		upedImg := images.ImageController{} // 画像一枚だけ取得して、Base64で返す。
+		api.GET("/image/upload/:id", upedImg.GetFile)
 		api.GET("/image/upload", upedImg.GetAll)
 
 	}

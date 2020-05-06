@@ -11,9 +11,16 @@ export namespace LinksPathnames {
     path: '/slide',
   };
 
-  export const IMAGE_LIST: { name: string; path: string } = {
+  export const IMAGE: { name: string; path: string } = {
     name: 'IMAGE LIST',
     path: '/images',
+  };
+
+  export const IMAGE_LIST_UPLOAD: { path: string } = {
+    path: '/images/:directory',
+  };
+  export const IMAGE_DETAILE: { path: string } = {
+    path: '/images/list/:id',
   };
 
   export const TEST: { name: string; path: string } = {

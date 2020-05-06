@@ -1,12 +1,12 @@
 package main
 
 import (
-	"../api/layout"
+	"../api/router"
 )
 
 func main() {
 	// Routing
-	layout.Layout()
+	router.APIRouter()
 }
 
 //curl http://localhost:8000/

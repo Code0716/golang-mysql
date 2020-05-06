@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 import { imageListActions } from '../../actions/imageListActions';
 import './style.scss';
@@ -10,15 +9,9 @@ export const ListImages = () => {
     //state
     images,
     //action
-    getImages,
+    forwordToDetaile,
   } = imageListActions();
 
-  const makePath = (continent: string) =>
-    continent.replace(' ', '_').toLowerCase();
-
-  useEffect(() => {
-    getImages();
-  }, []);
   return (
     <AutoSizer>
       {({ width }) => (
@@ -32,9 +25,7 @@ export const ListImages = () => {
             rowGetter={({ index }) => images[index]}
             rowCount={images.length}
             rowClassName="virtualized_row"
-            onRowClick={({ rowData }) => {
-              //TODO
-            }}
+            onRowClick={({ rowData }) => forwordToDetaile(rowData.info.ID)}
           >
             <Column
               width={100}

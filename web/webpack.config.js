@@ -45,9 +45,10 @@ module.exports = [
         },
         {
           // 拡張子 .ts もしくは .tsx の場合
-          test: /\.tsx?$/,
+          test: /\.(ts|tsx)$/,
           // TypeScript をコンパイルする
           use: 'ts-loader',
+          exclude: '/node_modules/',
         },
         {
           test: /\.(scss)$/,
@@ -76,7 +77,7 @@ module.exports = [
     },
     // import 文で .ts や .tsx ファイルを解決するため
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.json'],
+      extensions: ['.ts', '.tsx', '.js', 'jsx', '.json'],
     },
     //ソースマップはbuild時削除
     devtool: 'inline-source-map',

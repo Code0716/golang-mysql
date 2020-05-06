@@ -166,22 +166,6 @@ func (pre PreImageController) GetAll(ginContext *gin.Context) {
 	ginContext.JSON(http.StatusOK, jsonData)
 }
 
-// GetFile single NOT USE NOW
-func (pre PreImageController) GetFile(ginContext *gin.Context) {
-	id := ginContext.Param("id")
-
-	var image Preupload
-
-	getImage(&image, id)
-
-	jsonData := make(map[string]string)
-
-	base64gify := encoding.EncodeBase64(constants.PreImagePath, image.Title)
-	jsonData = map[string]string{"img": base64gify}
-
-	ginContext.JSON(http.StatusOK, jsonData)
-}
-
 // Delete Preupload image and registed db data
 func (pre PreImageController) Delete(ginContext *gin.Context) {
 
@@ -241,7 +225,7 @@ func preuploadToUpload(db *gorm.DB, image Preupload) error {
 }
 
 // GetAll upload image and registed db data
-func (pre ImageController) GetAll(ginContext *gin.Context) {
+func (upload ImageController) GetAll(ginContext *gin.Context) {
 
 	var images uploads
 
@@ -252,6 +236,22 @@ func (pre ImageController) GetAll(ginContext *gin.Context) {
 	for index, file := range images {
 		jsonData[index] = map[string]interface{}{"info": file}
 	}
+
+	ginContext.JSON(http.StatusOK, jsonData)
+}
+
+// GetFile single
+func (upload ImageController) GetFile(ginContext *gin.Context) {
+	id := ginContext.Param("id")
+
+	var image Upload
+
+	getImage(&image, id)
+
+	jsonData := make(map[string]string)
+
+	base64gify := encoding.EncodeBase64(constants.ImagePath, image.Title)
+	jsonData = map[string]string{"img": base64gify}
 
 	ginContext.JSON(http.StatusOK, jsonData)
 }
