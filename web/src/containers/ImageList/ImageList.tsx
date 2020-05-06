@@ -23,7 +23,7 @@ export const ImageList: React.FC = () => {
   useEffect(() => {
     getImages();
     return initialize;
-  }, []);
+  }, [params]);
 
   return (
     <FormContainer>

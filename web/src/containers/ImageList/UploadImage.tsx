@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { Portal } from '../../components/Portal';
 import { FormContainer } from '../../components/FormContainer';
-import { imageListActions } from '../../actions/imageListActions';
+import { imageListActions, ActionTypes } from '../../actions/imageListActions';
 import { LoadImage } from '../../reducers/imageListReducer';
 import { LoadingElm } from '../../components/Loading/LoadingElm';
 import { FormatUtil } from '../../util/FormatUtil';
 import './style.scss';
 
 export const UploadImage: React.FC = () => {
+  const dispatch = useDispatch();
+
   const {
     // state
     preUploadImages,
@@ -21,6 +24,11 @@ export const UploadImage: React.FC = () => {
 
   useEffect(() => {
     getPreImagesInfo();
+    return () =>
+      dispatch({
+        type: ActionTypes.CHANGE_STATE,
+        payload: { preUploadImagesRender: [] },
+      });
   }, []);
 
   const handleChangeFile = useCallback(
