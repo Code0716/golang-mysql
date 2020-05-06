@@ -22,7 +22,7 @@ export const ImageDetaile: React.FC = () => {
     });
     if (!data) return;
     return data.image.img;
-  }, [images]);
+  }, [images, params.id]);
 
   return (
     <div className="flex-box-center">

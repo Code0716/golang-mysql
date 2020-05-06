@@ -86,6 +86,12 @@ export const imageListActions = () => {
 
   // 画像を一枚づつ取得する。
   const getImage = useCallback(async () => {
+    const isAlreadyLoad = images.some(item => {
+      if (item.image) return item.image.id === Number(params.id);
+    });
+
+    if (isAlreadyLoad) return;
+
     try {
       const response = await HttpRequest.get(`/image/upload/${params.id}`);
 
