@@ -10,7 +10,6 @@ import { configureStore, history } from './store/store';
 import { LinksPathnames } from './constant/commonConstant';
 
 import { Home } from '../src/containers/Home';
-import { SlideShow } from '../src/containers/SlideShow';
 import { ImageList } from './containers/ImageList/ImageList';
 import TestGetPost from '../src/containers/TestGetPost';
 import NotFound from './containers/NotFound.jsx';
@@ -27,7 +26,6 @@ ReactDOM.render(
       <Loading />
       <Switch>
         <Route exact path={LinksPathnames.HOME.path} component={Home} />
-        <Route exact path={LinksPathnames.SLIDE.path} component={SlideShow} />
         <Route exact path={LinksPathnames.IMAGE.path} component={ImageList} />
         <Route
           exact

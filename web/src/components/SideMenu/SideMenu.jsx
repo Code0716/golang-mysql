@@ -20,11 +20,6 @@ const SideMenu = () => {
       label: LinksPathnames.IMAGE.name,
       url: LinksPathnames.IMAGE.path,
     },
-    /*   {
-      label: LinksPathnames.SLIDE.name,
-      url: LinksPathnames.SLIDE.path,
-    },
-  */
     {
       label: LinksPathnames.TEST.name,
       url: LinksPathnames.TEST.path,

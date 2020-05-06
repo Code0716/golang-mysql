@@ -6,11 +6,6 @@ export namespace LinksPathnames {
     path: '/',
   };
 
-  export const SLIDE: { name: string; path: string } = {
-    name: 'SLIDE SHOW',
-    path: '/slide',
-  };
-
   export const IMAGE: { name: string; path: string } = {
     name: 'IMAGE LIST',
     path: '/images',
