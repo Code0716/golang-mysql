@@ -44,7 +44,7 @@ export const imageListActions = () => {
   //store
   const imageList = useSelector(({ imageList }: RootState) => imageList);
 
-  const { images, preUploadImages, imgBase64 } = imageList;
+  const { images, preUploadImages } = imageList;
 
   const initialize = useCallback(
     () =>
@@ -179,7 +179,6 @@ export const imageListActions = () => {
     //state
     images,
     preUploadImages,
-    imgBase64,
     //action
     initialize,
     getPreImagesInfo,

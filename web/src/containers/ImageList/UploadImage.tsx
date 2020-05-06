@@ -13,7 +13,6 @@ export const UploadImage: React.FC = () => {
     // state
     preUploadImages,
     // action
-    initialize,
     addPreUploadImages,
     deletePreImage,
     getPreImagesInfo,

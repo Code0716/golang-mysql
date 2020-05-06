@@ -22,18 +22,21 @@ export interface LoadImage {
 export interface State {
   images: LoadImage[];
   preUploadImages: LoadImage[];
-  imgBase64: null | string;
 }
 
 // 初期値
 const initialState: State = {
   images: [],
   preUploadImages: [],
-  imgBase64: null,
 };
 
 export function imageListReducer(state = initialState, { type, payload }) {
   switch (type) {
+    case ActionTypes.CHANGE_STATE:
+      return {
+        ...state,
+        ...payload,
+      };
     case ActionTypes.INITIALIZE:
       return initialState;
     case ActionTypes.UPDATE_PRE_UPLOAD:
@@ -42,8 +45,8 @@ export function imageListReducer(state = initialState, { type, payload }) {
         preUploadImages: [...state.preUploadImages, ...payload],
       };
     case ActionTypes.UPDATE_UPLOAD_IMAGE:
+      // imagesに保存するようにする。
       const _copyData = cloneDeep(state.images);
-
       _copyData.find((item: LoadImage) => {
         if (item.info.ID === payload.id) {
           item.image = payload;
@@ -53,17 +56,11 @@ export function imageListReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         images: [..._copyData],
-        imgBase64: payload.img,
       };
     case ActionTypes.DELETE_PRE_UPLOAD:
       return {
         ...state,
         preUploadImages: [...payload],
-      };
-    case ActionTypes.CHANGE_STATE:
-      return {
-        ...state,
-        ...payload,
       };
 
     default:
