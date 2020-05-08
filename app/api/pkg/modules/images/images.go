@@ -83,7 +83,7 @@ func (image *Upload) GetFile(id string) {
 func (image *Preupload) DeleteFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.Delete(&image)
+	db.Unscoped().Delete(&image)
 }
 
 // read all Preupload info

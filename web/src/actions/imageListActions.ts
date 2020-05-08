@@ -156,8 +156,9 @@ export const imageListActions = () => {
     dispatch(loading());
     try {
       const response = await HttpRequest.put('/image/upload');
-      console.log(response);
+
       dispatch({ type: shotMessageAT.SHOW, message: response.message });
+
       forwordToImages();
     } finally {
       dispatch(unloading());
