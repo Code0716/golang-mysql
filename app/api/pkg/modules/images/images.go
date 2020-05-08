@@ -5,7 +5,7 @@ import (
 	//"mime/multipart"
 	"net/http"
 	"os"
-	//"sync"
+	"sync"
 	//"reflect"
 
 	"../../../constants"
@@ -207,11 +207,24 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 	//現在pre_uploadデータベースにあるものを取得
 	getAllImageInfo(&images)
 
+	wg := new(sync.WaitGroup)
+	isFin := make(chan bool, len(images))
+
 	for _, image := range images {
-		if err := preuploadToUpload(db, image); err != nil {
-			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
-		}
+		wg.Add(1)
+		go func(img Preupload) {
+			defer wg.Done()
+
+			if err := preuploadToUpload(db, img); err != nil {
+				ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+			}
+
+			isFin <- true
+		}(image)
 	}
+
+	wg.Wait()
+	close(isFin)
 
 	ginContext.JSON(http.StatusOK, gin.H{"message": "Upload Complet"})
 
