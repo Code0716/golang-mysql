@@ -15,7 +15,7 @@ import TestGetPost from '../src/containers/TestGetPost';
 import NotFound from './containers/NotFound.jsx';
 import SideMenu from './components/SideMenu/SideMenu.jsx';
 import { Loading } from './components/Loading/Loading';
-import { ShotMessage } from './components/ShotMessage/ShotMessage';
+import { ShotMessage } from './util/ShotMessage/ShotMessage';
 import './sass/style.scss';
 
 const store = configureStore();

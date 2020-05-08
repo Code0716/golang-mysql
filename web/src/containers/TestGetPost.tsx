@@ -3,6 +3,7 @@ import { AutoSizer, Column, Table } from 'react-virtualized';
 import { Select } from '../components/Select';
 import { FormContainer } from '../components/FormContainer';
 import { testGetPostActions } from '../actions/testGetPostActions';
+import { shotMessageAction } from '../actions/shotMessageActions';
 
 const TestGetPost = () => {
   const [getInput, setGetInput] = useState('/city');
@@ -10,6 +11,7 @@ const TestGetPost = () => {
   const [textArea, setTextArea] = useState('');
 
   const { getData, postData, get, post } = testGetPostActions();
+  const { showMessage } = shotMessageAction();
 
   const selctData: { value: string }[] = [
     { value: '/country' },
@@ -57,7 +59,8 @@ const TestGetPost = () => {
           <span>POST button</span>
         </button>
       </div>
-
+      <button onClick={() => showMessage('test')}>test</button>
+      <button onClick={() => showMessage('rest')}>rest</button>
       <AutoSizer>
         {({ width, height }) => (
           <Table

@@ -3,21 +3,19 @@ import { ActionTypes } from '../actions/shotMessageActions';
 // 型の定義
 export type shotMessProps = {
   show: boolean;
-  hide: boolean;
+  message: string | undefined;
 };
 
 const initialState: shotMessProps = {
   show: false,
-  hide: true,
+  message: undefined,
 };
 
 // reducer
-export function reducer(state = initialState, { type }) {
+export function reducer(state = initialState, { type, message }) {
   switch (type) {
     case ActionTypes.SHOW:
-      return { ...state, show: true, hide: false };
-    case ActionTypes.HIDE:
-      return { ...state, hide: true };
+      return { ...state, show: true, message: message };
     case ActionTypes.DISAPPEAR:
       return { ...state, show: false };
     default:

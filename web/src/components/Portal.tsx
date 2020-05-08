@@ -18,7 +18,7 @@ export const Portal: FC<PortalProps> = ({
   }, []);
 
   const target = document.createElement('div');
-  target.setAttribute('class', className);
+  if (className) target.setAttribute('class', className);
   target.setAttribute('id', domId);
 
   const potalDom = document.getElementById(domId);
