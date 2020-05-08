@@ -17,16 +17,20 @@ export const ShotMessage: React.FC = () => {
     show,
     message,
     // action
+    initShotMess,
     disappear,
   } = shotMessageAction();
 
   useMemo(async () => {
-    await _sleep(500);
-    setPortalStyle('shot_message_box show_mess');
-    await _sleep(3500);
-    setPortalStyle('shot_message_box hide_mess');
-    await _sleep(1000);
-    disappear();
+    if (message !== undefined) {
+      await _sleep(500);
+      setPortalStyle('shot_message_box show_mess');
+      await _sleep(3500);
+      setPortalStyle('shot_message_box hide_mess');
+      await _sleep(1000);
+      disappear();
+      initShotMess();
+    }
   }, [message]);
 
   return (

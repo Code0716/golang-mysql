@@ -8,6 +8,7 @@ import { RootState } from '../store/store';
 
 import { LoadImage, ImageInfo } from '../reducers/imageListReducer';
 import { loading, unloading } from '../actions/loadingActions';
+import { ActionTypes as shotMessageAT } from './shotMessageActions';
 
 import HttpRequest from '../service/api/HttpRequest';
 // Actions
@@ -155,9 +156,8 @@ export const imageListActions = () => {
     dispatch(loading());
     try {
       const response = await HttpRequest.put('/image/upload');
-      // TODO
-      // show some message
       console.log(response);
+      dispatch({ type: shotMessageAT.SHOW, message: response.message });
       forwordToImages();
     } finally {
       dispatch(unloading());

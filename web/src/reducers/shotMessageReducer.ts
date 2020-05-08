@@ -14,6 +14,8 @@ const initialState: shotMessProps = {
 // reducer
 export function reducer(state = initialState, { type, message }) {
   switch (type) {
+    case ActionTypes.INIT:
+      return initialState;
     case ActionTypes.SHOW:
       return { ...state, show: true, message: message };
     case ActionTypes.DISAPPEAR:

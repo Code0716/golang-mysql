@@ -4,6 +4,7 @@ import { RootState } from '../store/store';
 
 // action type
 export const ActionTypes = {
+  INIT: 'INITIALIZE_SHOT_MESSAGE',
   SHOW: 'SHOW_SHOT_MESSAGE',
   DISAPPEAR: 'SHOT_MESSAGE_DISAPPEAR',
 } as const;
@@ -14,7 +15,7 @@ export const shotMessageAction = () => {
   const dispatch = useDispatch();
 
   const { show, message } = useSelector(({ shotMess }: RootState) => shotMess);
-
+  const initShotMess = () => dispatch({ type: ActionTypes.INIT });
   const showMessage = useCallback(
     (message: string) =>
       dispatch({
@@ -34,6 +35,7 @@ export const shotMessageAction = () => {
     show,
     message,
     // action
+    initShotMess,
     showMessage,
     disappear,
   };
