@@ -5,6 +5,7 @@ import (
 	//"mime/multipart"
 	"net/http"
 	"os"
+	//"sync"
 	//"reflect"
 
 	"../../../constants"
@@ -132,17 +133,31 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 
 	// save images
 	for index, file := range files {
-		err := ginContext.SaveUploadedFile(file, constants.PreImagePath+file.Filename)
+		isFinSaveFile := make(chan bool)
+		isFinSaveInfo := make(chan bool)
 
-		if err != nil {
-			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
-			return
-		}
-		// regist to db file info
-		newImage := Preupload{Title: file.Filename, Path: constants.PreImagePath + file.Filename}
-		saveImageInfo(&newImage)
+		go func() {
+			err := ginContext.SaveUploadedFile(file, constants.PreImagePath+file.Filename)
 
-		jsonData[index] = map[string]interface{}{"info": newImage}
+			if err != nil {
+				ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+				return
+			}
+			isFinSaveFile <- true
+		}()
+
+		go func() {
+			// regist to db file info
+			newImage := Preupload{Title: file.Filename, Path: constants.PreImagePath + file.Filename}
+
+			saveImageInfo(&newImage)
+
+			jsonData[index] = map[string]interface{}{"info": newImage}
+			isFinSaveInfo <- true
+		}()
+
+		<-isFinSaveFile
+		<-isFinSaveInfo
 
 	}
 
