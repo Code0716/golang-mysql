@@ -19,7 +19,7 @@ export namespace LinksPathnames {
   };
 
   export const TEST: { name: string; path: string } = {
-    name: '非同期通信の確認画面',
+    name: 'テスト用画面',
     path: '/test',
   };
 

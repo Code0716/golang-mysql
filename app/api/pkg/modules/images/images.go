@@ -198,7 +198,7 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 		}
 	}
 
-	ginContext.JSON(http.StatusOK, gin.H{"message": "upload complet"})
+	ginContext.JSON(http.StatusOK, gin.H{"message": "Upload Complet"})
 
 }
 

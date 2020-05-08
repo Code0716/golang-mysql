@@ -25,7 +25,7 @@ export const ShotMessage: React.FC = () => {
     if (message !== undefined) {
       await _sleep(500);
       setPortalStyle('shot_message_box show_mess');
-      await _sleep(3500);
+      await _sleep(3200);
       setPortalStyle('shot_message_box hide_mess');
       await _sleep(1000);
       disappear();
@@ -39,9 +39,8 @@ export const ShotMessage: React.FC = () => {
         <Portal domId="shot_message" className="shot_message_portal">
           <div className={portalStyle}>
             <div className="massage_box">
-              {'Message :'}
-              <br />
-              {message}
+              {'Message : '}
+              <span>{message}</span>
             </div>
           </div>
         </Portal>
