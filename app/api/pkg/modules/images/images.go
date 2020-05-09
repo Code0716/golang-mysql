@@ -208,7 +208,6 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 	getAllImageInfo(&images)
 
 	wg := new(sync.WaitGroup)
-	isFin := make(chan bool, len(images))
 
 	for _, image := range images {
 		wg.Add(1)
@@ -219,12 +218,10 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 				ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 			}
 
-			isFin <- true
 		}(image)
 	}
 
 	wg.Wait()
-	close(isFin)
 
 	ginContext.JSON(http.StatusOK, gin.H{"message": "Upload Complet"})
 
