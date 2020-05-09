@@ -2,7 +2,7 @@ package images
 
 import (
 	"fmt"
-	//"mime/multipart"
+	"mime/multipart"
 	"net/http"
 	"os"
 	"sync"
@@ -130,37 +130,31 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	files := form.File["images"]
 
 	jsonData := make([]map[string]interface{}, len(files))
-
+	wg := new(sync.WaitGroup)
 	// save images
 	for index, file := range files {
-		isFinSaveFile := make(chan bool)
-		isFinSaveInfo := make(chan bool)
-
-		go func() {
-			err := ginContext.SaveUploadedFile(file, constants.PreImagePath+file.Filename)
+		wg.Add(2)
+		go func(f *multipart.FileHeader) {
+			defer wg.Done()
+			err := ginContext.SaveUploadedFile(f, constants.PreImagePath+f.Filename)
 
 			if err != nil {
 				ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 				return
 			}
-			isFinSaveFile <- true
-		}()
+		}(file)
 
-		go func() {
+		go func(i int, f *multipart.FileHeader) {
+			defer wg.Done()
 			// regist to db file info
-			newImage := Preupload{Title: file.Filename, Path: constants.PreImagePath + file.Filename}
-
+			newImage := Preupload{Title: f.Filename, Path: constants.PreImagePath + f.Filename}
 			saveImageInfo(&newImage)
-
-			jsonData[index] = map[string]interface{}{"info": newImage}
-			isFinSaveInfo <- true
-		}()
-
-		<-isFinSaveFile
-		<-isFinSaveInfo
+			jsonData[i] = map[string]interface{}{"info": newImage}
+		}(index, file)
 
 	}
 
+	wg.Wait()
 	// send to josn to front
 	ginContext.JSON(http.StatusOK, jsonData)
 }
@@ -207,21 +201,19 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 	//現在pre_uploadデータベースにあるものを取得
 	getAllImageInfo(&images)
 
-	wg := new(sync.WaitGroup)
+	finPreUpload := make(chan bool)
 
 	for _, image := range images {
-		wg.Add(1)
 		go func(img Preupload) {
-			defer wg.Done()
 
 			if err := preuploadToUpload(db, img); err != nil {
 				ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 			}
-
+			finPreUpload <- true
 		}(image)
 	}
 
-	wg.Wait()
+	<-finPreUpload
 
 	ginContext.JSON(http.StatusOK, gin.H{"message": "Upload Complet"})
 
