@@ -5,8 +5,10 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
-	"sync"
 	//"reflect"
+	"encoding/json"
+	"sync"
+	"time"
 
 	"../../../constants"
 	"../../db"
@@ -14,6 +16,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	// "github.com/rwcarlsen/goexif/exif"
 )
 
 type (
@@ -30,15 +33,17 @@ type (
 	// Preupload model
 	Preupload struct {
 		gorm.Model
-		Title string `json:"Title"`
-		Path  string `json:"Path"`
+		Title    string     `json:"Title"`
+		Path     string     `json:"Path"`
+		ShotDate *time.Time `gorm:"column:ShotDate"`
 	}
 
 	//Upload model
 	Upload struct {
 		gorm.Model
-		Title string `json:"Title"`
-		Path  string `json:"Path"`
+		Title    string     `json:"Title"`
+		Path     string     `json:"Path"`
+		ShotDate *time.Time `gorm:"column:ShotDate"`
 	}
 
 	preuploads []Preupload
@@ -108,6 +113,7 @@ func (image *Upload) DeleteFileInfo() {
 	db.Delete(&image)
 }
 
+//------------------------------------------------------
 func saveImageInfo(operate operateFileData) {
 	operate.CreateFileInfo()
 }
@@ -129,25 +135,36 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	form, _ := ginContext.MultipartForm()
 	files := form.File["images"]
 
+	//lastMod := ginContext.Request.FormValue("date")
+	lastMod := ginContext.PostForm("date")
+	lastModBytes := []byte(lastMod)
+	lastModArr := make([]*time.Time, len(lastMod))
+
+	if err := json.Unmarshal(lastModBytes, &lastModArr); err != nil {
+		ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+	}
+	// return json
 	jsonData := make([]map[string]interface{}, len(files))
+
 	wg := new(sync.WaitGroup)
 	// save images
 	for index, file := range files {
 		wg.Add(2)
+
 		go func(f *multipart.FileHeader) {
 			defer wg.Done()
-			err := ginContext.SaveUploadedFile(f, constants.PreImagePath+f.Filename)
 
-			if err != nil {
+			if err := ginContext.SaveUploadedFile(f, constants.PreImagePath+f.Filename); err != nil {
 				ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 				return
 			}
+
 		}(file)
 
 		go func(i int, f *multipart.FileHeader) {
 			defer wg.Done()
 			// regist to db file info
-			newImage := Preupload{Title: f.Filename, Path: constants.PreImagePath + f.Filename}
+			newImage := Preupload{Title: f.Filename, Path: constants.PreImagePath + f.Filename, ShotDate: lastModArr[i]}
 			saveImageInfo(&newImage)
 			jsonData[i] = map[string]interface{}{"info": newImage}
 		}(index, file)
@@ -201,6 +218,7 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 	//現在pre_uploadデータベースにあるものを取得
 	getAllImageInfo(&images)
 
+	// goroutine で記述する意味がないかも。
 	finPreUpload := make(chan bool)
 
 	for _, image := range images {
@@ -228,7 +246,7 @@ func preuploadToUpload(db *gorm.DB, image Preupload) error {
 			return err
 		}
 		// uploadに保存
-		if err := tx.Create(&Upload{Title: image.Title, Path: image.Path}).Error; err != nil {
+		if err := tx.Create(&Upload{Title: image.Title, Path: image.Path, ShotDate: image.ShotDate}).Error; err != nil {
 			return err
 		}
 		// ファイル移動

@@ -104,10 +104,15 @@ export const imageListActions = () => {
     async (files: File[]) => {
       dispatch(loading());
       const postData = new FormData();
+      const dateArr = [];
+
       files.forEach(element => {
+        // lastModifiedが空のときの処理を入れる
+        dateArr.push(new Date(element.lastModified));
         postData.append('images', element);
       });
 
+      postData.append('date', JSON.stringify(dateArr));
       try {
         const response = await HttpRequest.postImg(
           '/image/pre_upload',

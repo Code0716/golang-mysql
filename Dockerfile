@@ -9,4 +9,6 @@ RUN apk update && \
     go get github.com/go-sql-driver/mysql && \
     go get github.com/gin-gonic/gin && \
     go get github.com/jinzhu/gorm && \
-    go get github.com/gin-contrib/cors
+    go get github.com/gin-contrib/cors 
+# && \
+# go get github.com/rwcarlsen/goexif/exif

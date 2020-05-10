@@ -4,7 +4,7 @@ import { ActionTypes } from '../actions/imageListActions';
 export type ImageInfo = {
   ID: number;
   Title: string;
-  CreatedAt: Date;
+  ShotDate: Date;
   Path: string;
 };
 

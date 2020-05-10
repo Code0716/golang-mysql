@@ -67,7 +67,7 @@ export const UploadImage: React.FC = () => {
           <span className="d-block">Title : {elemnt.info.Title}</span>
           <span className="d-block">ID : {elemnt.info.ID}</span>
           <span className="d-block">
-            Date : {FormatUtil.formatedDate(elemnt.info.CreatedAt)}
+            Date : {FormatUtil.formatedDate(elemnt.info.ShotDate)}
           </span>
           <span className="d-block">Path : {elemnt.info.Path}</span>
         </div>
