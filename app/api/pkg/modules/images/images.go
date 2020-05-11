@@ -143,6 +143,7 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	if err := json.Unmarshal(lastModBytes, &lastModArr); err != nil {
 		ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 	}
+
 	// return json
 	jsonData := make([]map[string]interface{}, len(files))
 
@@ -183,13 +184,7 @@ func (pre PreImageController) GetAll(ginContext *gin.Context) {
 
 	getAllImageInfo(&images)
 
-	jsonData := make([]map[string]interface{}, len(images))
-
-	for index, file := range images {
-		jsonData[index] = map[string]interface{}{"info": file}
-	}
-
-	ginContext.JSON(http.StatusOK, jsonData)
+	ginContext.JSON(http.StatusOK, images)
 }
 
 // Delete Preupload image and registed db data
