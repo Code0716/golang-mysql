@@ -188,8 +188,9 @@ func (pre PreImageController) GetAll(ginContext *gin.Context) {
 
 	for index, file := range images {
 		jsonData[index] = map[string]interface{}{"info": file}
-	}
+		fmt.Println(file)
 
+	}
 	ginContext.JSON(http.StatusOK, jsonData)
 }
 
