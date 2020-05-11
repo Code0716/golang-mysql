@@ -173,7 +173,7 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	}
 
 	wg.Wait()
-	// send to josn to front
+	// send josn to front
 	ginContext.JSON(http.StatusOK, jsonData)
 }
 

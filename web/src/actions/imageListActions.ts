@@ -111,7 +111,7 @@ export const imageListActions = () => {
         dateArr.push(new Date(element.lastModified));
         postData.append('images', element);
       });
-
+      // 撮影日の配列
       postData.append('date', JSON.stringify(dateArr));
       try {
         const response = await HttpRequest.postImg(
