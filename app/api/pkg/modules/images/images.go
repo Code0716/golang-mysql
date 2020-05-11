@@ -184,7 +184,13 @@ func (pre PreImageController) GetAll(ginContext *gin.Context) {
 
 	getAllImageInfo(&images)
 
-	ginContext.JSON(http.StatusOK, images)
+	jsonData := make([]map[string]interface{}, len(images))
+
+	for index, file := range images {
+		jsonData[index] = map[string]interface{}{"info": file}
+	}
+
+	ginContext.JSON(http.StatusOK, jsonData)
 }
 
 // Delete Preupload image and registed db data
