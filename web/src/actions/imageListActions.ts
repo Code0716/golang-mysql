@@ -156,6 +156,20 @@ export const imageListActions = () => {
     [dispatch, preUploadImages],
   );
 
+  //　delete all preupload images
+  const deletePreupload = useCallback(async () => {
+    dispatch(loading());
+    try {
+      const response = await HttpRequest.put('/image/delete/preupload');
+
+      dispatch({ type: shotMessageAT.SHOW, message: response.message });
+
+      forwordToImages();
+    } finally {
+      dispatch(unloading());
+    }
+  }, [dispatch, preUploadImages]);
+
   //　preupload to upload commit
   const commitUpload = useCallback(async () => {
     dispatch(loading());
@@ -195,6 +209,7 @@ export const imageListActions = () => {
     addPreUploadImages,
     deletePreImage,
     commitUpload,
+    deletePreupload,
     forwordToImages,
     forwordToDetaile,
   };

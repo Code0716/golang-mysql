@@ -28,6 +28,7 @@ type (
 
 	operateAllData interface {
 		GetAllFileInfo()
+		//	DeleteAllFileInfo()
 	}
 
 	// Preupload model
@@ -37,6 +38,8 @@ type (
 		Path     string     `json:"Path"`
 		ShotDate *time.Time `gorm:"column:ShotDate"`
 	}
+
+	// ↑↓共通化することを検討する。
 
 	//Upload model
 	Upload struct {
@@ -85,13 +88,6 @@ func (image *Upload) GetFile(id string) {
 	db.Where("id = ?", id).Find(&image)
 }
 
-// DeleteFileInfo func delete Preupload info
-func (image *Preupload) DeleteFileInfo() {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Unscoped().Delete(&image)
-}
-
 // read all Preupload info
 func (images *preuploads) GetAllFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
@@ -106,13 +102,27 @@ func (images *uploads) GetAllFileInfo() {
 	db.Find(&images)
 }
 
+// DeleteFileInfo func delete Preupload info
+func (image *Preupload) DeleteFileInfo() {
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+	db.Unscoped().Delete(&image)
+}
+
 // DeleteFileInfo func delete upload info
 func (image *Upload) DeleteFileInfo() {
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.Delete(&image)
+	db.Unscoped().Delete(&image)
 }
 
+/*// DeleteAllFileInfo func delete Preupload info
+func DeleteAllFileInfo(images interface{}) {
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+	db.Unscoped().Delete(images)
+}
+*/
 //------------------------------------------------------
 func saveImageInfo(operate operateFileData) {
 	operate.CreateFileInfo()

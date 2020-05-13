@@ -20,6 +20,7 @@ export const UploadImage: React.FC = () => {
     deletePreImage,
     getPreImagesInfo,
     commitUpload,
+    deletePreupload,
   } = imageListActions();
 
   useEffect(() => {
@@ -106,6 +107,9 @@ export const UploadImage: React.FC = () => {
               </label>
               <button className="action_button" onClick={commitUpload}>
                 <span>Commit Upload</span>
+              </button>
+              <button className="action_button" onClick={deletePreupload}>
+                <span>Delete all images</span>
               </button>
             </div>
           </FormContainer>
