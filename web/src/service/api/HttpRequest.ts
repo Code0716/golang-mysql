@@ -40,6 +40,19 @@ class HttpRequest {
         return { error };
       });
   }
+
+  delete(url: string) {
+    return axios
+      .delete(config.API_SERVER_URL + url)
+      .then(response => {
+        const payload = response.data;
+        return payload;
+      })
+      .catch((error: Error) => {
+        return { error };
+      });
+  }
+  // se
   // send images
   postImg(url: string, postData: FormData) {
     return axios.post(config.API_SERVER_URL + url, postData, {

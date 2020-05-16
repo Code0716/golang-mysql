@@ -252,7 +252,7 @@ func preuploadToUpload(db *gorm.DB, image Preupload) error {
 			return err
 		}
 		// uploadに保存
-		if err := tx.Create(&Upload{Title: image.Title, Path: image.Path, ShotDate: image.ShotDate}).Error; err != nil {
+		if err := tx.Create(&Upload{Title: image.Title, Path: constants.ImagePath + image.Title, ShotDate: image.ShotDate}).Error; err != nil {
 			return err
 		}
 		// ファイル移動
@@ -295,4 +295,40 @@ func (upload ImageController) GetFile(ginContext *gin.Context) {
 	jsonData = map[string]string{"img": base64gify}
 
 	ginContext.JSON(http.StatusOK, jsonData)
+}
+
+// DeleteAllImages images and info
+func DeleteAllImages(ginContext *gin.Context) {
+	flag := ginContext.Param("flag")
+	db := db.ConnectMySQL(constants.DBWorld)
+	defer db.Close()
+
+	var images uploads
+
+	db.Table(flag).Find(&images)
+
+	for _, image := range images {
+		if err := deleteImageAndInfo(db, image, flag); err != nil {
+			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error(), "path": image})
+		}
+	}
+
+	ginContext.JSON(http.StatusOK, gin.H{"message": "Deleted All " + flag + " images"})
+}
+
+func deleteImageAndInfo(db *gorm.DB, image Upload, flag string) error {
+
+	return db.Transaction(func(tx *gorm.DB) error {
+		// 削除する。
+		if err := tx.Table(flag).Unscoped().Delete(&image).Error; err != nil {
+			return err
+		}
+
+		// ファイル削除
+		if err := os.Remove(image.Path); err != nil {
+			return err
+		}
+		return nil
+	})
+
 }

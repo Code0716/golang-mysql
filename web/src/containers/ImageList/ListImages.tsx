@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 import { imageListActions } from '../../actions/imageListActions';
+import { Portal } from '../../components/Portal';
+import { FormContainer } from '../../components/FormContainer';
 import './style.scss';
 
 export const ListImages = () => {
@@ -10,6 +12,7 @@ export const ListImages = () => {
     images,
     //action
     forwordToDetaile,
+    deletePreupload,
   } = imageListActions();
 
   return (
@@ -51,6 +54,17 @@ export const ListImages = () => {
               cellDataGetter={({ rowData }) => rowData.info.Path}
             />
           </Table>
+          <Portal domId={'upload'} className="">
+            <div className="image_commit_box">
+              <div>Upload</div>
+              <button
+                className="action_button"
+                onClick={() => deletePreupload('upload')}
+              >
+                <span>Delete all images</span>
+              </button>
+            </div>
+          </Portal>
         </React.Fragment>
       )}
     </AutoSizer>

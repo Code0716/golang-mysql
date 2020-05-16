@@ -108,7 +108,10 @@ export const UploadImage: React.FC = () => {
               <button className="action_button" onClick={commitUpload}>
                 <span>Commit Upload</span>
               </button>
-              <button className="action_button" onClick={deletePreupload}>
+              <button
+                className="action_button"
+                onClick={() => deletePreupload('preupload')}
+              >
                 <span>Delete all images</span>
               </button>
             </div>

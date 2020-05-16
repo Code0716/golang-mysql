@@ -52,7 +52,7 @@ func APIRouter() {
 		api.GET("/image/upload", upedImg.GetAll)
 
 		// Delete All images
-		//	api.DELETE("/image/delete/:flag", images.DeleteAllImages)
+		api.DELETE("/image/delete/:flag", images.DeleteAllImages)
 
 	}
 
