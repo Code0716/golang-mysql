@@ -21,7 +21,7 @@ type (
 	preuploads []Preupload
 
 	// ↑↓共通化することを検討する。
-	// db.Table("table name")でtableを指定できるようだ。 5/15
+	// db.Table("table name")でtableを指定でき、共通化できる.
 
 	//Upload model
 	Upload struct {
