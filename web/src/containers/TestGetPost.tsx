@@ -25,7 +25,7 @@ const TestGetPost = () => {
 
   return (
     <FormContainer>
-      <div className="test_center">
+      <div className="test_center mb-30">
         <div>非同期通信の確認画面</div>
         {postData}
         <h1>inputサンプル</h1>
@@ -60,22 +60,26 @@ const TestGetPost = () => {
           <span>POST button</span>
         </button>*/}
       </div>
-      <label>Notification</label>
-      <div className="d-flex mb-15">
-        <button
-          className="action_button mr-5"
-          onClick={() => showMessage('test')}
-        >
-          test
-        </button>
-        <button className="action_button" onClick={() => showMessage('rest')}>
-          rest
+      <div className="test_center mb-30">
+        <label>Notification</label>
+        <div className="d-flex mb-15">
+          <button
+            className="action_button mr-5"
+            onClick={() => showMessage('test')}
+          >
+            test
+          </button>
+          <button className="action_button" onClick={() => showMessage('rest')}>
+            rest
+          </button>
+        </div>
+      </div>
+      <div className="test_center mb-30">
+        <label>migration</label>
+        <button className="action_button" onClick={migrate}>
+          migrate
         </button>
       </div>
-      <label>migration</label>
-      <button className="action_button" onClick={migrate}>
-        migrate
-      </button>
       <AutoSizer>
         {({ width, height }) => (
           <Table
