@@ -11,7 +11,6 @@ import './style.scss';
 
 export const ImageList: React.FC = () => {
   const params: RouteParams = useParams();
-
   const {
     //state
     //action
@@ -23,7 +22,7 @@ export const ImageList: React.FC = () => {
   useEffect(() => {
     getImages();
     return initialize;
-  }, [params]);
+  }, [params.directory]);
 
   return (
     <FormContainer>

@@ -19,123 +19,6 @@ import (
 	// "github.com/rwcarlsen/goexif/exif"
 )
 
-type (
-
-	// Preupload model
-	Preupload struct {
-		gorm.Model
-		Title    string     `json:"Title"`
-		Path     string     `json:"Path"`
-		ShotDate *time.Time `gorm:"column:ShotDate" json:"ShotDate"`
-	}
-
-	preuploads []Preupload
-
-	// ↑↓共通化することを検討する。
-	// db.Table("table name")でtableを指定できるようだ。 5/15
-
-	//Upload model
-	Upload struct {
-		gorm.Model
-		Title    string     `json:"Title"`
-		Path     string     `json:"Path"`
-		ShotDate *time.Time `gorm:"column:ShotDate" json:"ShotDate"`
-	}
-
-	uploads []Upload
-
-	// PreImageController struct
-	PreImageController struct{}
-	// ImageController struct
-	ImageController struct{}
-
-	operateFileData interface {
-		CreateFileInfo()
-		GetFile(id string)
-		DeleteFileInfo()
-	}
-
-	operateAllData interface {
-		GetAllFileInfo()
-		//	DeleteAllFileInfo()
-	}
-)
-
-// 色々試したくて冗長になっている。
-
-// CreateFileInfo func Preupload info save
-func (image *Preupload) CreateFileInfo() {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Create(&image)
-}
-
-// CreateFileInfo save  upload info
-func (image *Upload) CreateFileInfo() {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Create(&image)
-}
-
-// GetFile 個々のファイルを取得
-func (image *Preupload) GetFile(id string) {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Where("id = ?", id).Find(&image)
-}
-
-// GetFile 個々のファイルを取得
-func (image *Upload) GetFile(id string) {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Where("id = ?", id).Find(&image)
-}
-
-// read all Preupload info
-func (images *preuploads) GetAllFileInfo() {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Find(&images)
-}
-
-// read all upload info
-func (images *uploads) GetAllFileInfo() {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Find(&images)
-}
-
-// DeleteFileInfo func delete Preupload info
-func (image *Preupload) DeleteFileInfo() {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Unscoped().Delete(&image)
-}
-
-// DeleteFileInfo func delete upload info
-func (image *Upload) DeleteFileInfo() {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Unscoped().Delete(&image)
-}
-
-//------------------------------------------------------
-func saveImageInfo(operate operateFileData) {
-	operate.CreateFileInfo()
-}
-
-func deleteImageInfo(operate operateFileData) {
-	operate.DeleteFileInfo()
-}
-
-func getImage(opreate operateFileData, id string) {
-	operateFileData.GetFile(opreate, id)
-}
-
-func getAllImageInfo(operate operateAllData) {
-	operateAllData.GetAllFileInfo(operate)
-}
-
 // Upload Preupload image and regist db
 func (pre PreImageController) Upload(ginContext *gin.Context) {
 	form, _ := ginContext.MultipartForm()
@@ -180,21 +63,6 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 
 	wg.Wait()
 	// send josn to front
-	ginContext.JSON(http.StatusOK, jsonData)
-}
-
-// GetAll Preupload image and registed db data
-func (pre PreImageController) GetAll(ginContext *gin.Context) {
-
-	var images preuploads
-
-	getAllImageInfo(&images)
-
-	jsonData := make([]map[string]interface{}, len(images))
-
-	for index, file := range images {
-		jsonData[index] = map[string]interface{}{"info": file}
-	}
 	ginContext.JSON(http.StatusOK, jsonData)
 }
 
@@ -263,6 +131,21 @@ func preuploadToUpload(db *gorm.DB, image Preupload) error {
 		return nil
 	})
 
+}
+
+// GetAll Preupload image and registed db data
+func (pre PreImageController) GetAll(ginContext *gin.Context) {
+
+	var images preuploads
+
+	getAllImageInfo(&images)
+
+	jsonData := make([]map[string]interface{}, len(images))
+
+	for index, file := range images {
+		jsonData[index] = map[string]interface{}{"info": file}
+	}
+	ginContext.JSON(http.StatusOK, jsonData)
 }
 
 // GetAll upload image and registed db data
