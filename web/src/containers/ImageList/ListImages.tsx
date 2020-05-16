@@ -54,17 +54,19 @@ export const ListImages = () => {
               cellDataGetter={({ rowData }) => rowData.info.Path}
             />
           </Table>
-          <Portal domId={'upload'} className="">
-            <div className="image_commit_box">
-              <div>Upload</div>
-              <button
-                className="action_button"
-                onClick={() => deletePreupload('upload')}
-              >
-                <span>Delete all images</span>
-              </button>
-            </div>
-          </Portal>
+          {images.length !== 0 && (
+            <Portal domId={'upload'} className="">
+              <div className="image_commit_box">
+                <div>Upload</div>
+                <button
+                  className="action_button"
+                  onClick={() => deletePreupload('upload')}
+                >
+                  <span>Delete all images</span>
+                </button>
+              </div>
+            </Portal>
+          )}
         </React.Fragment>
       )}
     </AutoSizer>
