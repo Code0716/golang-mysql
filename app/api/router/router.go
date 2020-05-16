@@ -51,6 +51,9 @@ func APIRouter() {
 		api.GET("/image/upload/:id", upedImg.GetFile)
 		api.GET("/image/upload", upedImg.GetAll)
 
+		// Delete All images
+		//	api.DELETE("/image/delete/:flag", images.DeleteAllImages)
+
 	}
 
 	router.Run(":8000")

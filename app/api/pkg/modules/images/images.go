@@ -20,6 +20,35 @@ import (
 )
 
 type (
+
+	// Preupload model
+	Preupload struct {
+		gorm.Model
+		Title    string     `json:"Title"`
+		Path     string     `json:"Path"`
+		ShotDate *time.Time `gorm:"column:ShotDate" json:"ShotDate"`
+	}
+
+	preuploads []Preupload
+
+	// ↑↓共通化することを検討する。
+	// db.Table("table name")でtableを指定できるようだ。 5/15
+
+	//Upload model
+	Upload struct {
+		gorm.Model
+		Title    string     `json:"Title"`
+		Path     string     `json:"Path"`
+		ShotDate *time.Time `gorm:"column:ShotDate" json:"ShotDate"`
+	}
+
+	uploads []Upload
+
+	// PreImageController struct
+	PreImageController struct{}
+	// ImageController struct
+	ImageController struct{}
+
 	operateFileData interface {
 		CreateFileInfo()
 		GetFile(id string)
@@ -30,32 +59,6 @@ type (
 		GetAllFileInfo()
 		//	DeleteAllFileInfo()
 	}
-
-	// Preupload model
-	Preupload struct {
-		gorm.Model
-		Title    string     `json:"Title"`
-		Path     string     `json:"Path"`
-		ShotDate *time.Time `gorm:"column:ShotDate"`
-	}
-
-	// ↑↓共通化することを検討する。
-
-	//Upload model
-	Upload struct {
-		gorm.Model
-		Title    string     `json:"Title"`
-		Path     string     `json:"Path"`
-		ShotDate *time.Time `gorm:"column:ShotDate"`
-	}
-
-	preuploads []Preupload
-	uploads    []Upload
-
-	// PreImageController struct
-	PreImageController struct{}
-	// ImageController struct
-	ImageController struct{}
 )
 
 // 色々試したくて冗長になっている。
@@ -116,13 +119,6 @@ func (image *Upload) DeleteFileInfo() {
 	db.Unscoped().Delete(&image)
 }
 
-/*// DeleteAllFileInfo func delete Preupload info
-func DeleteAllFileInfo(images interface{}) {
-	db := db.ConnectMySQL(constants.DBWorld)
-	defer db.Close()
-	db.Unscoped().Delete(images)
-}
-*/
 //------------------------------------------------------
 func saveImageInfo(operate operateFileData) {
 	operate.CreateFileInfo()
