@@ -2,9 +2,9 @@ package images
 
 import (
 	"../../../constants"
-	"testing"
-
 	"../../db"
+
+	"testing"
 )
 
 func TestImages(t *testing.T) {
