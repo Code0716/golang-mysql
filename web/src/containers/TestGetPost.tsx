@@ -10,7 +10,7 @@ const TestGetPost = () => {
   const [postInput, setPostInput] = useState('');
   const [textArea, setTextArea] = useState('');
 
-  const { getData, postData, get, post } = testGetPostActions();
+  const { getData, postData, get, post, migrate } = testGetPostActions();
   const { showMessage } = shotMessageAction();
 
   const selctData: { value: string }[] = [
@@ -38,6 +38,7 @@ const TestGetPost = () => {
         <button className="action_button" onClick={() => get(getInput)}>
           <span>GET button</span>
         </button>
+        {/*
         <label>POST(TODO)</label>
         <input
           value={postInput}
@@ -57,10 +58,24 @@ const TestGetPost = () => {
           disabled={disabled}
         >
           <span>POST button</span>
+        </button>*/}
+      </div>
+      <label>Notification</label>
+      <div className="d-flex mb-15">
+        <button
+          className="action_button mr-5"
+          onClick={() => showMessage('test')}
+        >
+          test
+        </button>
+        <button className="action_button" onClick={() => showMessage('rest')}>
+          rest
         </button>
       </div>
-      <button onClick={() => showMessage('test')}>test</button>
-      <button onClick={() => showMessage('rest')}>rest</button>
+      <label>migration</label>
+      <button className="action_button" onClick={migrate}>
+        migrate
+      </button>
       <AutoSizer>
         {({ width, height }) => (
           <Table

@@ -3,6 +3,7 @@ package router
 import (
 	"../pkg/modules"
 	"../pkg/modules/images"
+	"../pkg/modules/migrate"
 	"../pkg/scraping"
 
 	"github.com/gin-contrib/cors"
@@ -55,6 +56,8 @@ func APIRouter() {
 		api.DELETE("/image/delete/:flag", images.DeleteAllImages)
 
 	}
+
+	router.GET("/migrate", migrate.Migrate)
 
 	router.Run(":8000")
 }

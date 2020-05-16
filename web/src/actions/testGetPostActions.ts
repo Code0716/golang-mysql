@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 //import { push } from 'connected-react-router';
 import HttpRequest from '../service/api/HttpRequest';
+import { OtherHttpRequest } from '../service/otherRequest';
+import { ActionTypes as shotMessageAT } from './shotMessageActions';
+
 // Actions
 export const ActionTypes = {
   GET: 'HOME_GET',
@@ -35,6 +38,14 @@ export const testGetPostActions = () => {
     [dispatch],
   );
 
+  const migrate = useCallback(async () => {
+    try {
+      const response = await OtherHttpRequest.get('/migrate');
+      dispatch({ type: shotMessageAT.SHOW, message: response.message });
+    } finally {
+    }
+  }, [dispatch]);
+
   return {
     //state
     getData,
@@ -43,5 +54,6 @@ export const testGetPostActions = () => {
     //action
     get,
     post,
+    migrate,
   };
 };
