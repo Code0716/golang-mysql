@@ -90,7 +90,7 @@ export const UploadImage: React.FC = () => {
         />
       </label>
       {preUploadImages.length !== 0 && (
-        <Portal domId={'preupload'}>
+        <Portal domId={'preupload'} className="modal">
           <FormContainer>
             {preUploadImagesRender}
             <div className="image_commit_box">

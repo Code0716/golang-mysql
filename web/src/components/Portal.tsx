@@ -8,11 +8,7 @@ type PortalProps = {
   children: React.ReactNode;
 };
 
-export const Portal: FC<PortalProps> = ({
-  domId,
-  className = 'portal',
-  children,
-}) => {
+export const Portal: FC<PortalProps> = ({ domId, className, children }) => {
   useEffect(() => {
     return () => document.body.removeChild(target);
   }, []);
