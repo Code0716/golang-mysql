@@ -2,10 +2,8 @@
 
 use Golang and MySql and React
 
-image server on web or Raspberry Pi 
-
-Golang で MySql の table を取得するサンプル。
-（world.sql を利用）<br><br>
+画像を保存するサイト。
+機能追加中…
 
 Golang <br>
 Gin GORM <br>
