@@ -1,6 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 
-export const Select = ({ value, option, onChange }) => {
+type Props = {
+  value: string;
+  option: { value: string }[];
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+};
+
+export const Select = ({ value, option, onChange }: Props) => {
   const options = option.map(opt => (
     <option key={opt.value} value={opt.value}>
       {opt.value}

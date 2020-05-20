@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 
 //reduxのloggerの実装
 const composeEnhancers =
-  (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose) || compose;
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const history = createBrowserHistory();
 /* Storeの実装 */

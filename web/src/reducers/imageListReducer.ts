@@ -25,7 +25,15 @@ const initialState: State = {
   currentBase64: undefined,
 };
 
-export function imageListReducer(state = initialState, { type, payload }) {
+export interface Action {
+  type: String;
+  payload?: any;
+}
+
+export function imageListReducer(
+  state = initialState,
+  { type, payload }: Action,
+) {
   switch (type) {
     case ActionTypes.CHANGE_STATE:
       return {

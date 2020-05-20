@@ -26,11 +26,12 @@ export const ImageDetaile: React.FC = () => {
 
   useEffect(() => {
     getImage();
-    return () =>
+    return () => {
       dispatch({
         type: ActionTypes.CHANGE_STATE,
         payload: { currentBase64: undefined },
       });
+    };
   }, [params.id]);
 
   // check exist prev or next

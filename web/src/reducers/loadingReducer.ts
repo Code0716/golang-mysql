@@ -8,9 +8,11 @@ export type loading = {
 const initialState: loading = {
   load: false,
 };
-
+type Props = {
+  type: string;
+};
 // reducer
-export function reducer(state = initialState, action) {
+export function reducer(state = initialState, action: Props) {
   switch (action.type) {
     case ActionTypes.LOADING:
       return { ...state, load: true };

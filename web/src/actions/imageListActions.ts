@@ -47,13 +47,11 @@ export const imageListActions = () => {
 
   const { images, preUploadImages, currentBase64 } = imageList;
 
-  const initialize = useCallback(
-    () =>
-      dispatch({
-        type: ActionTypes.INITIALIZE,
-      }),
-    [dispatch],
-  );
+  const initialize = useCallback(() => {
+    dispatch({
+      type: ActionTypes.INITIALIZE,
+    });
+  }, [dispatch]);
 
   //  画像一覧
   const getImages = useCallback(async () => {
@@ -104,7 +102,7 @@ export const imageListActions = () => {
     async (files: File[]) => {
       dispatch(loading());
       const postData = new FormData();
-      const dateArr = [];
+      const dateArr: Date[] = [];
 
       files.forEach(element => {
         // lastModifiedが空のときの処理を入れる
@@ -135,7 +133,7 @@ export const imageListActions = () => {
       try {
         const _copyImages = cloneDeep(preUploadImages);
         const newState: LoadImage[] = [];
-        let deleteImage: ImageInfo;
+        let deleteImage!: ImageInfo;
 
         _copyImages.forEach((elm: LoadImage) => {
           if (elm.info.ID === id) {

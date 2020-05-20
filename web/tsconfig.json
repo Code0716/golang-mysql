@@ -7,7 +7,7 @@
     "declaration": false,
     "sourceMap": true,
     //厳密な型チェックオプションを有効に
-    //"strict": true,
+    "strict": true,
     // TSはECMAScript 5に変換
     "target": "es5",
     //生成されるモジュールコードを指定

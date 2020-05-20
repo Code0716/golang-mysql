@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 import { Select } from '../components/Select';
 import { FormContainer } from '../components/FormContainer';
 import { testGetPostActions } from '../actions/testGetPostActions';
 import { shotMessageAction } from '../actions/shotMessageActions';
-
+type tableStyle = {
+  width: number;
+  height: number;
+  index: number;
+};
 const TestGetPost = () => {
   const [getInput, setGetInput] = useState('/city');
   const [postInput, setPostInput] = useState('');
@@ -33,7 +38,9 @@ const TestGetPost = () => {
         <Select
           value={getInput}
           option={selctData}
-          onChange={e => setGetInput(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setGetInput(e.target.value)
+          }
         />
         <button className="action_button" onClick={() => get(getInput)}>
           <span>GET button</span>
@@ -80,14 +87,14 @@ const TestGetPost = () => {
           migrate
         </button>
       </div>
-      <AutoSizer>
-        {({ width, height }) => (
+      {/*  <AutoSizer>
+        {({ width, height }: tableStyle) => (
           <Table
             data={getData}
             height={height}
             width={width}
             rowHeight={35}
-            rowGetter={({ index }) => getData[index]}
+            rowGetter={({ index }: tableStyle) => getData[index]}
             rowCount={getData.length}
             rowClassName="d-flex"
           >
@@ -95,7 +102,7 @@ const TestGetPost = () => {
             <Column width={200} label="code" dataKey="code" />
           </Table>
         )}
-      </AutoSizer>
+        </AutoSizer>*/}
     </FormContainer>
   );
 };

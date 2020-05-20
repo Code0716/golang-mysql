@@ -10,7 +10,9 @@ type PortalProps = {
 
 export const Portal: FC<PortalProps> = ({ domId, className, children }) => {
   useEffect(() => {
-    return () => document.body.removeChild(target);
+    return () => {
+      document.body.removeChild(target);
+    };
   }, []);
 
   const target = document.createElement('div');

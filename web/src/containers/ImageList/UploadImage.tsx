@@ -25,22 +25,24 @@ export const UploadImage: React.FC = () => {
 
   useEffect(() => {
     getPreImagesInfo();
-    return () =>
+    return () => {
       dispatch({
         type: ActionTypes.CHANGE_STATE,
         payload: { preUploadImagesRender: [] },
       });
+    };
   }, []);
 
   const handleChangeFile = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const target: HTMLInputElement = e.target as HTMLInputElement;
-      let files: File[] = [];
+      let files: Array<File | null> = [];
 
-      for (let index = 0; index < target.files.length; index++) {
-        files.push(target.files.item(index));
+      if (target.files !== null) {
+        for (let index = 0; index < target.files.length; index++) {
+          files.push(target.files.item(index));
+        }
       }
-
       addPreUploadImages(files);
     },
     [preUploadImages],

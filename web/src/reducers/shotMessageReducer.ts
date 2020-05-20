@@ -11,8 +11,13 @@ const initialState: shotMessProps = {
   message: undefined,
 };
 
+export type Action = {
+  type: string;
+  message: string;
+};
+
 // reducer
-export function reducer(state = initialState, { type, message }) {
+export function reducer(state = initialState, { type, message }: Action) {
   switch (type) {
     case ActionTypes.INIT:
       return initialState;
