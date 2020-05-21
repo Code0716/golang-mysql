@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     // export default を許可する。初期値はfalse
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
     // jsもトランスパイルできるようにする。
     "allowJs": true,
     "declaration": false,

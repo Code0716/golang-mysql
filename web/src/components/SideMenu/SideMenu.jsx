@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { LinksPathnames } from '../../constant/commonConstant';
 import './style.scss';
 
-const SideMenu = () => {
+export const SideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const pathname = useSelector(({ router }) => router.location.pathname);
@@ -66,5 +66,3 @@ const SideMenu = () => {
     </aside>
   );
 };
-
-export default SideMenu;

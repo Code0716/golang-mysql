@@ -1,6 +1,6 @@
 'use strict';
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
@@ -12,8 +12,8 @@ import { LinksPathnames } from './constant/commonConstant';
 import { Home } from '../src/containers/Home';
 import { ImageList } from './containers/ImageList/ImageList';
 import TestGetPost from '../src/containers/TestGetPost';
-import NotFound from './containers/NotFound.jsx';
-import SideMenu from './components/SideMenu/SideMenu.jsx';
+import { NotFound } from './containers/NotFound.jsx';
+import { SideMenu } from './components/SideMenu/SideMenu.jsx';
 import { Loading } from './components/Loading/Loading';
 import { ShotMessage } from './util/ShotMessage/ShotMessage';
 import './sass/style.scss';

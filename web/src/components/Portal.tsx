@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FC, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 
 type PortalProps = {
   domId: string;
