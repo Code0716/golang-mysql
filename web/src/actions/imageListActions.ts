@@ -99,15 +99,17 @@ export const imageListActions = () => {
 
   // add preupload image
   const addPreUploadImages = useCallback(
-    async (files: File[]) => {
+    async (files: Array<File | null>) => {
       dispatch(loading());
       const postData = new FormData();
       const dateArr: Date[] = [];
 
       files.forEach(element => {
         // lastModifiedが空のときの処理を入れる
-        dateArr.push(new Date(element.lastModified));
-        postData.append('images', element);
+        if (element !== null) {
+          dateArr.push(new Date(element.lastModified));
+          postData.append('images', element);
+        }
       });
       // 撮影日の配列
       postData.append('date', JSON.stringify(dateArr));
