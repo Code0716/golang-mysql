@@ -3,7 +3,7 @@ services:
   go_db:
     image: mysql:8.0.13
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
       - ./mysql:/docker-entrypoint-initdb.d
     container_name: golang_db
     networks:
