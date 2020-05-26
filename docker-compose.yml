@@ -1,7 +1,7 @@
-version: '3.7'
+version: '3.8'
 services:
   go_db:
-    image: mysql:5.7.21
+    image: mysql:8.0.13
     volumes:
       - ./mysql_data:/var/lib/mysql
       - ./mysql:/docker-entrypoint-initdb.d

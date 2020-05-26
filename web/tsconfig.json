@@ -14,7 +14,6 @@
     "module": "esnext",
     // JSXの書式を有効に設定
     "jsx": "react",
-    //"jsx": "preserve",
     "moduleResolution": "node",
     "lib": ["esnext", "es5", "es6", "dom"]
   }
