@@ -8,10 +8,9 @@ import (
 )
 
 func TestImages(t *testing.T) {
-	var item Upload
+	var item Preupload
 	db := db.ConnectMySQL(constants.DBWorld)
 	defer db.Close()
-	db.Table("preupload").Find(&item)
+	db.Table("upload").Find(&item)
 	t.Log(item)
-
 }

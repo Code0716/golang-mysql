@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-// EncodeBase64 image Encode to base64 NOT USE NOW
+// EncodeBase64 image Encode to base64
 func EncodeBase64(savePath string, fileNama string) string {
 	file, err := os.Open(savePath + fileNama)
 	defer file.Close()

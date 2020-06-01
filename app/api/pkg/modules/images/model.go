@@ -46,7 +46,6 @@ type (
 
 	operateAllData interface {
 		getAllFileInfo()
-		//	DeleteAllFileInfo()
 	}
 )
 

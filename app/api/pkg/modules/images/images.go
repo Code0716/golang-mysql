@@ -16,7 +16,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	// "github.com/rwcarlsen/goexif/exif"
 )
 
 // Upload Preupload image and regist db
@@ -24,7 +23,6 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	form, _ := ginContext.MultipartForm()
 	files := form.File["images"]
 
-	//lastMod := ginContext.Request.FormValue("date")
 	lastMod := ginContext.PostForm("date")
 	lastModBytes := []byte(lastMod)
 	lastModArr := make([]*time.Time, len(lastMod))
@@ -56,6 +54,7 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 			// regist to db file info
 			newImage := Preupload{Title: f.Filename, Path: constants.PreImagePath + f.Filename, ShotDate: lastModArr[i]}
 			saveImageInfo(&newImage)
+
 			jsonData[i] = map[string]interface{}{"info": newImage}
 		}(index, file)
 
