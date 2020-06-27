@@ -28,7 +28,10 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	lastModArr := make([]*time.Time, len(lastMod))
 
 	if err := json.Unmarshal(lastModBytes, &lastModArr); err != nil {
-		ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		ginContext.JSON(
+			http.StatusInternalServerError,
+			gin.H{"message": err.Error()},
+		)
 	}
 
 	// return json
@@ -42,8 +45,14 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 		go func(f *multipart.FileHeader) {
 			defer wg.Done()
 
-			if err := ginContext.SaveUploadedFile(f, constants.PreImagePath+f.Filename); err != nil {
-				ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+			if err := ginContext.SaveUploadedFile(
+				f,
+				constants.PreImagePath+f.Filename,
+			); err != nil {
+				ginContext.JSON(
+					http.StatusInternalServerError,
+					gin.H{"message": err.Error()},
+				)
 				return
 			}
 
@@ -52,12 +61,14 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 		go func(i int, f *multipart.FileHeader) {
 			defer wg.Done()
 			// regist to db file info
-			newImage := Preupload{Title: f.Filename, Path: constants.PreImagePath + f.Filename, ShotDate: lastModArr[i]}
+			newImage := Preupload{
+				Title:    f.Filename,
+				Path:     constants.PreImagePath + f.Filename,
+				ShotDate: lastModArr[i],
+			}
 			saveImageInfo(&newImage)
-
 			jsonData[i] = map[string]interface{}{"info": newImage}
 		}(index, file)
-
 	}
 
 	wg.Wait()
@@ -98,7 +109,10 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 		go func(img Preupload) {
 
 			if err := preuploadToUpload(db, img); err != nil {
-				ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+				ginContext.JSON(
+					http.StatusInternalServerError,
+					gin.H{"message": err.Error()},
+				)
 			}
 			finPreUpload <- true
 		}(image)
@@ -119,7 +133,12 @@ func preuploadToUpload(db *gorm.DB, image Preupload) error {
 			return err
 		}
 		// uploadに保存
-		if err := tx.Create(&Upload{Title: image.Title, Path: constants.ImagePath + image.Title, ShotDate: image.ShotDate}).Error; err != nil {
+		if err := tx.Create(
+			&Upload{
+				Title:    image.Title,
+				Path:     constants.ImagePath + image.Title,
+				ShotDate: image.ShotDate,
+			}).Error; err != nil {
 			return err
 		}
 		// ファイル移動
@@ -191,7 +210,10 @@ func DeleteAllImages(ginContext *gin.Context) {
 
 	for _, image := range images {
 		if err := deleteImageAndInfo(db, image, flag); err != nil {
-			ginContext.JSON(http.StatusInternalServerError, gin.H{"message": err.Error(), "path": image})
+			ginContext.JSON(
+				http.StatusInternalServerError,
+				gin.H{"message": err.Error(), "path": image},
+			)
 		}
 	}
 
