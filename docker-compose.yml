@@ -39,7 +39,7 @@ services:
       MYSQL_PASSWORD: dbpassword
 
   go_react:
-    image: node:slim
+    image: node:14.5.0-alpine3.11
     container_name: golang_react
     networks:
       - container-link
@@ -48,7 +48,7 @@ services:
       - ./images:/web/dist/images
       - /web/node_modules/
     working_dir: /web
-    command: bash -c 'yarn && yarn dev'
+    command: sh -c 'yarn && yarn dev'
     ports:
       - 8080:8080
     depends_on:
