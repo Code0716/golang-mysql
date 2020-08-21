@@ -8,10 +8,12 @@
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --history-api-fallback --mode development",
     "watch": "webpack --watch",
-    "progress": "webpack --watch --progress"
+    "progress": "webpack --watch --progress",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-typescript": "^7.10.4",
     "@types/classnames": "^2.2.10",
     "@types/history": "^4.7.6",
     "@types/lodash": "^4.14.152",
@@ -19,8 +21,12 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-virtualized": "^9.21.10",
     "@types/redux": "^3.6.0",
+    "babel-jest": "^26.3.0",
+    "babel-preset-env": "^1.7.0",
     "classnames": "^2.2.6",
+    "jest": "^26.4.1",
     "react-router-dom": "^5.2.0",
+    "react-test-renderer": "^16.13.1",
     "react-virtualized": "^9.21.2",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
