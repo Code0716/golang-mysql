@@ -14,5 +14,5 @@ React(hooks)<br>
 react-redux<br>
 connected-react-router<br>
 <br>
-※テスト用画面のmigrateボタンを押下してから利用します。
+※テスト用画面のmigrateボタンを押下してからmigrateしてから利用します。
 
