@@ -5417,13 +5417,15 @@ INSERT INTO `countrylanguage` VALUES ('ZWE','Shona','F',72.1);
 commit;
 
 
-/*
+
 DROP TABLE IF EXISTS `preupload`;
 
 CREATE TABLE `preupload` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Title` text NOT NULL DEFAULT '',
-  `Create` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ShotDate` datetime 
+  `CreatedDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `DeletedDate` datetime 
   `Path` text NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -5434,11 +5436,13 @@ DROP TABLE IF EXISTS `upload`;
 CREATE TABLE `upload` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Title` text NOT NULL DEFAULT '',
-  `Create` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `Path` text NOT NULL DEFAULT '',
+  `ShotDate` datetime 
+  `CreatedDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `DeletedDate` datetime   `Path` text NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-*/
+
+
 --
 -- Dumping events for database 'world'
 --
