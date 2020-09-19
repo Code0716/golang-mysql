@@ -4,12 +4,10 @@ import { reducers } from '../reducers';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 
-//reduxのloggerの実装
 const composeEnhancers =
   (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const history = createBrowserHistory();
-/* Storeの実装 */
 
 export const rootReducer = combineReducers({
   ...reducers,
