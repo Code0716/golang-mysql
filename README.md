@@ -4,7 +4,6 @@ use Golang and MySql and React
 
 画像を保存するサイト。
 機能追加中…
-※現在動作しません。(GORMを新しいのに対応できていない)
 
 
 Golang <br>
