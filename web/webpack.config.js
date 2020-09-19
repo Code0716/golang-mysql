@@ -16,11 +16,11 @@ module.exports = [
       rules: [
         {
           // 拡張子 .js .jsx の場合
-          test: /\.(js|jsx)$/,
+          test: /\.(js|jsx|ts|tsx))$/,
           use: [
             {
               // Babel を利用する
-              loader: 'babel-loader',
+              loader: ['babel-loader', 'ts-loader'],
               // Babel のオプションを指定する
               options: {
                 presets: [
@@ -43,13 +43,6 @@ module.exports = [
           ],
           // node_modules は除外する
           exclude: /node_modules/,
-        },
-        {
-          // 拡張子 .ts もしくは .tsx の場合
-          test: /\.(ts|tsx)$/,
-          // TypeScript をコンパイルする
-          use: 'ts-loader',
-          exclude: '/node_modules/',
         },
         {
           test: /\.(scss)$/,
