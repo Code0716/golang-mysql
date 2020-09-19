@@ -12,9 +12,4 @@ module.exports = {
     '@babel/preset-react',
     '@babel/preset-typescript',
   ],
-  env: {
-    development: {
-      plugins: [['babel-plugin-styled-components']],
-    },
-  },
 };
