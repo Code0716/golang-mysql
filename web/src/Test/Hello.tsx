@@ -1,9 +1,9 @@
-import * as React from 'react'
+import * as React from 'react';
 
 type Props = {
-    name: string
-}
+  name: string;
+};
 
 export const Hello: React.FC<Props> = ({ name }) => {
-    return <div>HELLO,{name}</div>
-}
+  return <div>HELLO,{name}</div>;
+};
