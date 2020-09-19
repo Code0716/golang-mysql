@@ -4,7 +4,6 @@ use Golang and MySql and React
 
 画像を保存するサイト。
 機能追加中…
-※現在動作しません。(GORMを新しいのに対応できていない)
 
 
 Golang <br>
@@ -15,5 +14,5 @@ React(hooks)<br>
 react-redux<br>
 connected-react-router<br>
 <br>
-※テスト用画面のmigrateボタンを押下してから利用します。
+※テスト用画面のmigrateボタンを押下してからmigrateしてから利用します。
 
