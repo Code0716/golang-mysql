@@ -2,17 +2,15 @@
 
 use Golang and MySql and React
 
-画像を保存するサイト。
-機能追加中…
+画像を保存するサイト。 
+機能追加中… 
 
 
-Golang <br>
-Gin GORM <br>
+Golang 
+Gin GORM 
 
 TypeScript
-React(hooks)<br>
-react-redux<br>
-connected-react-router<br>
-<br>
+React(hooks) 
+react-redux 
+connected-react-router 
 ※テスト用画面のmigrateボタンを押下してからmigrateしてから利用します。
-
