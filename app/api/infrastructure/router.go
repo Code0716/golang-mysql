@@ -8,7 +8,6 @@ import (
 )
 
 func Router() {
-
 	router := gin.Default()
 
 	// CORS 対応
@@ -20,7 +19,6 @@ func Router() {
 	api := router.Group("/api")
 	{
 		cityController := controllers.NewCityController(ConnectMySQL())
-
 		api.GET("/city", func(c *gin.Context) { cityController.GetAll(c) }) // 全レコード取得 cities
 
 		preImagesController := controllers.NewPreImagesController(ConnectMySQL())
