@@ -21,8 +21,13 @@ func Router() {
 	{
 		cityController := controllers.NewCityController(ConnectMySQL())
 
-		// 全レコード取得 cities
-		api.GET("/city", func(c *gin.Context) { cityController.GetAll(c) })
+		api.GET("/city", func(c *gin.Context) { cityController.GetAll(c) }) // 全レコード取得 cities
+
+		preImagesController := controllers.NewPreImagesController(ConnectMySQL())
+		api.GET("/image/pre_upload", func(c *gin.Context) { preImagesController.GetAll(c) }) // Preuploadされた一覧を取得
+
+		imagesController := controllers.NewImagesController(ConnectMySQL())
+		api.GET("/image/upload", func(c *gin.Context) { imagesController.GetAll(c) }) // uploadされた一覧を取得
 
 	}
 

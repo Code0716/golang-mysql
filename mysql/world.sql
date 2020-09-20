@@ -5423,9 +5423,9 @@ DROP TABLE IF EXISTS `preupload`;
 CREATE TABLE `preupload` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Title` text NOT NULL DEFAULT '',
-  `ShotDate` datetime 
+  `ShotDate` datetime,
   `CreatedDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `DeletedDate` datetime 
+  `DeletedDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `Path` text NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -5436,9 +5436,10 @@ DROP TABLE IF EXISTS `upload`;
 CREATE TABLE `upload` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Title` text NOT NULL DEFAULT '',
-  `ShotDate` datetime 
+  `ShotDate` datetime,
   `CreatedDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `DeletedDate` datetime   `Path` text NOT NULL DEFAULT '',
+  `DeletedDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Path` text NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
