@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { AutoSizer, Column, Table } from 'react-virtualized';
+//import { AutoSizer, Column, Table } from 'react-virtualized';
 import { Select } from '../components/Select';
 import { FormContainer } from '../components/FormContainer';
 import { testGetPostActions } from '../actions/testGetPostActions';
@@ -12,7 +12,7 @@ type tableStyle = {
 };
 const TestGetPost = () => {
   const [getInput, setGetInput] = useState('/city');
-  const [postInput, setPostInput] = useState('');
+  const [postInput, setPostInput] = useState(null);
   const [textArea, setTextArea] = useState('');
 
   const { getData, postData, get, post, migrate } = testGetPostActions();
