@@ -37,7 +37,7 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	// return json
 	jsonData := make([]map[string]interface{}, len(files))
 
-	wg := new(sync.WaitGroup)
+	wg := sync.WaitGroup
 	// save images
 	for index, file := range files {
 		wg.Add(2)
