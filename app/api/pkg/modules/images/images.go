@@ -5,6 +5,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+
 	//"reflect"
 	"encoding/json"
 	"sync"
@@ -37,18 +38,19 @@ func (pre PreImageController) Upload(ginContext *gin.Context) {
 	// return json
 	jsonData := make([]map[string]interface{}, len(files))
 
-	wg := new(sync.WaitGroup)
+	var wg sync.WaitGroup
 	// save images
 	for index, file := range files {
 		wg.Add(2)
 
 		go func(f *multipart.FileHeader) {
 			defer wg.Done()
-
-			if err := ginContext.SaveUploadedFile(
+			err := ginContext.SaveUploadedFile(
 				f,
 				constants.PreImagePath+f.Filename,
-			); err != nil {
+			)
+			if err != nil {
+				// conterollerに渡して、調整するべき。
 				ginContext.JSON(
 					http.StatusInternalServerError,
 					gin.H{"message": err.Error()},
@@ -102,13 +104,12 @@ func (pre PreImageController) ComitUpload(ginContext *gin.Context) {
 	//現在pre_uploadデータベースにあるものを取得
 	getAllImageInfo(&images)
 
-	// goroutine で記述する意味がないかも。
-	finPreUpload := make(chan bool)
+	finPreUpload := make(chan bool, len(images))
 
 	for _, image := range images {
 		go func(img Preupload) {
-
-			if err := preuploadToUpload(db, img); err != nil {
+			err := preuploadToUpload(db, img)
+			if err != nil {
 				ginContext.JSON(
 					http.StatusInternalServerError,
 					gin.H{"message": err.Error()},
