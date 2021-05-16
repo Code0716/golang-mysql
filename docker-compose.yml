@@ -56,8 +56,8 @@ services:
 
 networks:
   default:
-    external:
-      name: bridge
+    external: true
+    name: bridge
   container-link:
     name: golang-mysql
 

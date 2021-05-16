@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FC } from 'react';
 
 type Props = {
   value: string;
@@ -6,7 +7,7 @@ type Props = {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-export const Select = ({ value, option, onChange }: Props) => {
+export const Select: FC<Props> = ({ value, option, onChange }: Props) => {
   const options = option.map(opt => (
     <option key={opt.value} value={opt.value}>
       {opt.value}
