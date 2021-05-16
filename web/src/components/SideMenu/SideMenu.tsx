@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { LinksPathnames } from '../../constant/commonConstant';
+
 import './style.scss';
 
-export const SideMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const pathname = useSelector(({ router }) => router.location.pathname);
-
-  useEffect(() => setIsOpen(false), [pathname]);
+type LinkType = {
+  label: string;
+  url: string;
+};
+export const SideMenu = (): JSX.Element => {
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const links = [
     {
@@ -26,7 +26,7 @@ export const SideMenu = () => {
     },
   ];
 
-  const linksList = links => {
+  const linksList = (links: LinkType[]) => {
     const linkArray = links.map(item => (
       <li key={item.url}>
         <Link to={item.url}>{item.label}</Link>
@@ -43,7 +43,7 @@ export const SideMenu = () => {
           className="check"
           id="checked"
           checked={isOpen}
-          onChange={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen(!isOpen)}
         />
         <label className="menu-btn" htmlFor="checked">
           <span

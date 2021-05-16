@@ -13,6 +13,7 @@ describe('Select.tsx test', () => {
   const wrapper = shallow(
     <Select value={value} option={option} onChange={fn} />,
   );
+
   test('Select value', () => {
     expect(wrapper.find('select').props().value).toBe(value);
     wrapper.setProps({ value: 'test2' });
@@ -21,7 +22,6 @@ describe('Select.tsx test', () => {
 
   test('Select onChange', () => {
     expect(wrapper.find('select').props().onChange).toEqual(fn);
-
     wrapper.find('select').simulate('change');
     expect(fn).toHaveBeenCalled();
   });

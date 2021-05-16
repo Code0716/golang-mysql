@@ -12,7 +12,7 @@ import { Home } from '../src/containers/Home';
 import { ImageList } from './containers/ImageList/ImageList';
 import TestGetPost from '../src/containers/TestGetPost';
 import { NotFound } from './containers/NotFound.jsx';
-import { SideMenu } from './components/SideMenu/SideMenu.jsx';
+import { SideMenu } from './components/SideMenu/SideMenu';
 import { Loading } from './components/Loading/Loading';
 import { ShotMessage } from './util/ShotMessage/ShotMessage';
 import './sass/style.scss';
