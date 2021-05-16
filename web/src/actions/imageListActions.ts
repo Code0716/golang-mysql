@@ -6,7 +6,7 @@ import { push } from 'connected-react-router';
 import { cloneDeep } from 'lodash';
 import { RootState } from '../store/store';
 
-import { LoadImage, ImageInfo } from '../reducers/imageListReducer';
+import { LoadImage, ImageInfo, State } from '../reducers/imageListReducer';
 import { loading, unloading } from '../actions/loadingActions';
 import { ActionTypes as shotMessageAT } from './shotMessageActions';
 
@@ -43,7 +43,7 @@ export const imageListActions = () => {
   const params: RouteParams = useParams();
 
   //store
-  const imageList = useSelector(({ imageList }: RootState) => imageList);
+  const imageList = useSelector(({ imageList }: RootState): State => imageList);
 
   const { images, preUploadImages, currentBase64 } = imageList;
 

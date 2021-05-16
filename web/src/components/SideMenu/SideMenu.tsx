@@ -43,7 +43,7 @@ export const SideMenu = (): JSX.Element => {
           className="check"
           id="checked"
           checked={isOpen}
-          onClick={() => setIsOpen(!isOpen)}
+          onChange={() => setIsOpen(!isOpen)}
         />
         <label className="menu-btn" htmlFor="checked">
           <span
