@@ -9,7 +9,7 @@ type LinkType = {
   url: string;
 };
 export const SideMenu = (): JSX.Element => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   const links = [
     {

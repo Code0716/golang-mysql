@@ -11,7 +11,7 @@ type Props = {
 const _sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const ShotMessage: React.FC = () => {
-  const [portalStyle, setPortalStyle] = useState('shot_message_box');
+  const [portalStyle, setPortalStyle] = useState<string>('shot_message_box');
   const {
     // stre
     show,
@@ -39,8 +39,7 @@ export const ShotMessage: React.FC = () => {
         <Portal domId="shot_message" className="shot_message_portal">
           <div className={portalStyle}>
             <div className="massage_box">
-              {'Message : '}
-              <span>{message}</span>
+              Message :<span>{message}</span>
             </div>
           </div>
         </Portal>

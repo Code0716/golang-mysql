@@ -17,11 +17,11 @@ export const ImageDetaile: React.FC = () => {
   const paramsID = Number(params.id);
   const {
     // store
-    getImage,
     images,
     currentBase64,
     // actions
     forwordToDetaile,
+    getImage,
   } = imageListActions();
 
   useEffect(() => {
