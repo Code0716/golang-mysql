@@ -64,6 +64,7 @@ export const ImageDetaile: React.FC = () => {
         </button>
       )}
       <div className="image_box">
+        {console.log(currentBase64)}
         {currentBase64 ? (
           <div className="inner_box">
             <img src={`data:image/png;base64,${currentBase64}`} />
