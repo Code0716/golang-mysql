@@ -2,6 +2,7 @@ package encoding
 
 import (
 	"encoding/base64"
+	"fmt"
 	"os"
 	"testing"
 )
@@ -20,25 +21,34 @@ func TestEncodeBase64(t *testing.T) {
 	fi, _ := file.Stat() // interface
 	size := fi.Size()    // file size
 
-	data := make([]byte, size)
-	file.Read(data)
+	mockData := make([]byte, size)
+	file.Read(mockData)
 	tests := []struct {
 		name string
 		args args
 		want string
 	}{
 		{
-			name: "test",
+			name: "画像通る場合",
 			args: args{
 				savePath: savePath,
 				fileName: fileName,
 			},
-			want: base64.StdEncoding.EncodeToString(data),
+			want: base64.StdEncoding.EncodeToString(mockData),
+		},
+		{
+			name: "画像通らない場合",
+			args: args{
+				savePath: savePath,
+				fileName: "のおおおおお",
+			},
+			want: "open /images/upload/のおおおおお: no such file or directory",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := EncodeBase64(tt.args.savePath, tt.args.fileName); got != tt.want {
+				fmt.Println("ここ", got)
 				t.Errorf("EncodeBase64() = %v, want %v", got, tt.want)
 			}
 		})
