@@ -3,9 +3,8 @@ package modules
 import (
 	"net/http"
 
-	"../../constants"
-	"../db"
-
+	"github.com/Code0716/golang-mysql/app/api/constants"
+	"github.com/Code0716/golang-mysql/app/api/pkg/db"
 	"github.com/gin-gonic/gin"
 )
 

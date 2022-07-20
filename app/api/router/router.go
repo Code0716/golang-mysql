@@ -1,11 +1,10 @@
 package router
 
 import (
-	"../pkg/modules"
-	"../pkg/modules/images"
-	"../pkg/modules/migrate"
-	"../pkg/scraping"
-
+	"github.com/Code0716/golang-mysql/app/api/pkg/modules"
+	"github.com/Code0716/golang-mysql/app/api/pkg/modules/images"
+	"github.com/Code0716/golang-mysql/app/api/pkg/modules/migrate"
+	"github.com/Code0716/golang-mysql/app/api/pkg/scraping"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )

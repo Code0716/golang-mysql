@@ -1,10 +1,10 @@
 package images
 
 import (
-	"../../../constants"
-	"../../db"
 	"time"
 
+	"github.com/Code0716/golang-mysql/app/api/constants"
+	"github.com/Code0716/golang-mysql/app/api/pkg/db"
 	"github.com/jinzhu/gorm"
 )
 

@@ -11,10 +11,9 @@ import (
 	"sync"
 	"time"
 
-	"../../../constants"
-	"../../db"
-	"../encoding"
-
+	"github.com/Code0716/golang-mysql/app/api/constants"
+	"github.com/Code0716/golang-mysql/app/api/pkg/db"
+	"github.com/Code0716/golang-mysql/app/api/pkg/modules/encoding"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )

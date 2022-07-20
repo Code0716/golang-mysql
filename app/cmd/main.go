@@ -1,8 +1,6 @@
 package main
 
-import (
-	"../api/router"
-)
+import "github.com/Code0716/golang-mysql/app/api/router"
 
 func main() {
 	// Routing

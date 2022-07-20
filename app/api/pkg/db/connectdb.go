@@ -3,8 +3,7 @@ package db
 import (
 	"fmt"
 
-	"../../constants"
-
+	"github.com/Code0716/golang-mysql/app/api/constants"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
